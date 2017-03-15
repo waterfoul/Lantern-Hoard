@@ -4,9 +4,10 @@ const args = require('./args');
 const logger = new winston.Logger({
 	transports: [
 		new (winston.transports.Console)({
-			json: true,
+			prettyPrint: true,
 			colorize: true,
-			level: args.verbose === 1 ? 'info' : 'warn'
+			timestamp: true,
+			level: args.verbose >= 1 ? 'info' : 'warn'
 		}),
 	],
 });
