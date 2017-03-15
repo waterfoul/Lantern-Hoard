@@ -1,0 +1,17 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "extends": "fullstack",
+  "rules": {
+    "semi": ["error", "always"],
+    "indent": ["error", "tab"],
+    "space-infix-ops": ["error"],
+    "no-shadow": ["error"],
+    "no-trailing-spaces": ["error"],
+    "eol-last": ["error"],
+    "no-undef": ["error"],
+    "no-unused-expressions": ["warn"]
+  }
+}
