@@ -44,6 +44,7 @@ const app = express()
 	.get('/*', (_, res) => res.sendFile(resolve(__dirname, '..', 'browser', 'index.html')))
 
 	.use((err, req, res, next) => {
+		res.sendStatus(500);
 		logger.error(err);
 	});
 
