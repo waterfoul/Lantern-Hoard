@@ -1,3 +1,8 @@
 node_modules
 npm-debug.log
 .idea/workspace.xml
+
+browser/static/bundle.js
+browser/static/bundle.js.map
+browser/static/index.css
+browser/static/index.css.map

@@ -1,7 +1,6 @@
 const winston = require('winston');
 const args = require('./args');
 
-console.log(args.verbose >= 2 ? 'debug' : args.verbose === 1 ? 'info' : 'warn');
 const logger = new winston.Logger({
   transports: [
     new (winston.transports.Console)({
