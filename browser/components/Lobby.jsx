@@ -1,12 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-export const Root = connect(
+export const Lobby = connect(
 	({ auth }) => ({ user: auth })
 )(
-	({ user, children }) => (
+	({ user }) => (
 		<div>
-			{children}
+			{JSON.stringify(user)}
+			Hello!
 		</div>
 	)
 );
