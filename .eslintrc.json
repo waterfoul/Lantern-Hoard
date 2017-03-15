@@ -5,6 +5,7 @@
   },
   "extends": "fullstack",
   "rules": {
+    "arrow-parens": ["error", "always"],
     "semi": ["error", "always"],
     "indent": ["error", "tab"],
     "space-infix-ops": ["error"],

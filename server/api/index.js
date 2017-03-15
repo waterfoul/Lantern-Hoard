@@ -1,6 +1,6 @@
 const express = require('express');
 
-module.exports = express.Router('api')
+module.exports = new express.Router('api')
 	.use('/', (req, res, next) => {
 		res.sendStatus(404);
 	});

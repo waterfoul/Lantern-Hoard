@@ -3,9 +3,10 @@ import {connect} from 'react-redux';
 
 export const Home = connect(
 	({ auth }) => ({ user: auth })
-) (
-	({ user, children }) => (
+)(
+	({ user }) => (
 		<div>
+			{JSON.stringify(user)}
 			Hello!
 		</div>
 	)

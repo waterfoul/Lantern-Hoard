@@ -8,8 +8,9 @@ export const auth = (state = null, action) => {
 	switch (action.type) {
 	case AUTHENTICATED:
 		return action.user;
+	default:
+		return state;
 	}
-	return state;
 };
 
 //action creators
@@ -18,19 +19,19 @@ export const authenticated = (user) => ({
 });
 
 //thunks
-export const logout = () => (
-	dispatch =>
-		axios.post('/api/auth/logout')
-			.then(() => dispatch(whoami()))
-			.catch(() => dispatch(whoami()))
-);
-
 export const whoami = () => (
-	dispatch =>
+	(dispatch) =>
 		axios.get('/api/auth/whoami')
-			.then(response => {
+			.then((response) => {
 				const user = response.data;
 				dispatch(authenticated(user));
 			})
-			.catch(failed => dispatch(authenticated(null)))
+			.catch(() => dispatch(authenticated(null)))
+);
+
+export const logout = () => (
+	(dispatch) =>
+		axios.post('/api/auth/logout')
+			.then(() => dispatch(whoami()))
+			.catch(() => dispatch(whoami()))
 );

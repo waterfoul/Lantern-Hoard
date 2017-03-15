@@ -11,11 +11,11 @@ module.exports = yargs
 		count: true,
 		description: 'Increases verbosity 0 times = Warnings+, 1 = Debug+, 2 = Verbose+'
 	},
-  port: {
+	port: {
 		alias: 'p',
 	  default: 1337,
-    number: true
-  },
+		number: true
+	},
 	facebookClientId: {
 		description: 'Oauth facebook client Id'
 	},

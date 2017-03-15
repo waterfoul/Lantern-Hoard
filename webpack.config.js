@@ -41,8 +41,8 @@ module.exports = {
 		}]
 	},
 	plugins: devMode ? [
-			new LiveReloadPlugin({
-				appendScriptTag: true
-			})
-		] : []
+		new LiveReloadPlugin({
+			appendScriptTag: true
+		})
+	] : []
 };
