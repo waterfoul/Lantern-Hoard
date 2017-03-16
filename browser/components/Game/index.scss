@@ -1,0 +1,30 @@
+#game-monster {
+	img {
+		width: 100%;
+	}
+}
+#game-board {
+	img {
+		width: 100%;
+	}
+}
+#game-board-wrapper {
+	padding: 0 220px 0 220px;
+}
+#game-character-card-wrapper {
+	> div {
+		border: 1px solid black;
+		border-radius: 20px 20px 0 0;
+	}
+}
+#game-character-card-2 {
+	background-color: #7B68EE;
+}
+
+#game-character-card-3 {
+	background-color: #3CB371;
+}
+
+#game-character-card-4 {
+	background-color: #DAA520;
+}

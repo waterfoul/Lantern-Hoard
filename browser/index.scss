@@ -1,1 +1,24 @@
 @import "../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap";
+@import "../node_modules/bootstrap-social/bootstrap-social.scss";
+
+$fa-font-path: 'font-awesome';
+@import "../node_modules/font-awesome/scss/font-awesome";
+
+@import "./components/Game/index";
+
+html, body, #root, #root > div, #root > div > div {
+  width: 100%;
+  height: 100%;
+}
+
+#login-parent {
+  position: relative;
+  height: 100%;
+}
+#login-child {
+  position: absolute;
+  width: 727px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
