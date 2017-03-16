@@ -1,0 +1,22 @@
+// Associated to user
+// A Name
+// XP
+// Character modifier card list (card names, comma seperated)
+// 6 Stats (integers)
+	// Movement (# of spaces)
+	// Accuracy (to hit)
+	// Strength (to wound)
+	// Evasion (to dodge)
+	// Luck (to crit)
+	// Speed (dice count)
+// A survival limit (int)
+// A survival amt (int)
+// Survival skills (array of ints)
+// An insanity value (int)
+// Brain injury y/n (bool)
+// A Courage value value (number)
+// A Courage value skill (enum)
+// A Understanding value value (number)
+// A Understanding value skill (enum)
+// A weapon proficiency (enum)
+// A weapon proficency level (number)
