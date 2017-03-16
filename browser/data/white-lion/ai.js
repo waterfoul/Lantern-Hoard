@@ -1,4 +1,12 @@
-import {closestThreatFacingInRange, closestThreatInFieldOfView, closestKnockedDownInRange, closestInRange} from '../../data-helpers/pick';
+import {
+	closestThreatFacingInRange,
+	closestThreatInFieldOfView,
+	closestKnockedDownInRange,
+	closestInRange,
+	lastToWoundInRange,
+	randomThreatInFieldOfView,
+	randomInRange
+} from '../../data-helpers/pick';
 
 export function sniff(boardState) {
 	return null;
@@ -153,23 +161,23 @@ export const ai = {
 				}
 			]
 		},
-		'Revenge': {
+		Revenge: {
 			img: '/static/white-lion/ai/revenge.jpg',
 			actions: [
 				{
 					type: 'pick',
 					options: [
-						closestKnockedDownInRange,
-						closestInRange,
+						lastToWoundInRange,
+						closestThreatInFieldOfView,
 						sniff
 					]
 				},
 				{
 					type: 'attack',
 					move: true,
-					speed: 1,
+					speed: 2,
 					accuracy: 2,
-					damage: 1,
+					damage: 2,
 					trigger: {
 						type: 'afterDamage',
 						action: (boardState, target) => {}
@@ -178,10 +186,46 @@ export const ai = {
 			]
 		},
 		'Size Up': {
-			img: '/static/white-lion/ai/size-up.jpg'
+			img: '/static/white-lion/ai/size-up.jpg',
+			actions: [
+				{
+					type: 'pick',
+					options: [
+						randomThreatInFieldOfView,
+						sniff
+					]
+				},
+				{
+					type: 'special',
+					action: (boardState, target) => {}
+				}
+			],
 		},
 		'Vicious Claw': {
-			img: '/static/white-lion/ai/vicious-claw.jpg'
+			img: '/static/white-lion/ai/vicious-claw.jpg',
+			actions: [
+				{
+					type: 'pick',
+					options: [
+						randomInRange,
+						sniff
+					]
+				},
+				{
+					type: 'attack',
+					move: true,
+					speed: 2,
+					accuracy: 2,
+					damage: 1,
+					trigger: {
+						type: 'afterDamage',
+						action: (boardState, target) => {}
+					}
+				}
+			],
+			alternate: (boardState) => {
+				return true;
+			}
 		}
 	},
 	advanced: {

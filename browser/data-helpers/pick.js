@@ -14,10 +14,14 @@ export function closestInRange(boardState) {
 
 }
 
-export function closestInRange(boardState) {
+export function lastToWoundInRange(boardState) {
 
 }
 
-export function closestInRange(boardState) {
+export function randomThreatInFieldOfView(boardState) {
+
+}
+
+export function randomInRange(boardState) {
 
 }
