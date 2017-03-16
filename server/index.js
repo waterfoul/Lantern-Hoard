@@ -6,6 +6,7 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 const {resolve} = require('path');
 const args = require('./utils/args');
+const db = require('./db');
 
 const app = express()
 
@@ -48,9 +49,11 @@ const app = express()
 		logger.error(err);
 	});
 
-const server = app.listen(args.port, () => {
-	const { address, port } = server.address();
-	const host = address === '::' ? 'localhost' : address;
-	const urlSafeHost = host.includes(':') ? `[${host}]` : host;
-	logger.info(`Listening on http://${urlSafeHost}:${port}`);
-});
+db.didSync.then(() => {
+	const server = app.listen(args.port, () => {
+		const {address, port} = server.address();
+		const host = address === '::' ? 'localhost' : address;
+		const urlSafeHost = host.includes(':') ? `[${host}]` : host;
+		logger.info(`Listening on http://${urlSafeHost}:${port}`);
+	});
+}).catch((e) => logger.error('Failed to start server', e))
