@@ -5,7 +5,9 @@ import {
 	closestInRange,
 	lastToWoundInRange,
 	randomThreatInFieldOfView,
-	randomInRange
+	randomInRange,
+	victimOfGrabLastRound,
+	closestWithMostBleeding
 } from '../../data-helpers/pick';
 
 export function sniff(boardState) {
@@ -229,32 +231,129 @@ export const ai = {
 		}
 	},
 	advanced: {
-		'Alert': {
-			img: '/static/white-lion/ai/alert.jpg'
+		Alert: {
+			img: '/static/white-lion/ai/alert.jpg',
+			actions: [
+				{
+					type: 'mood',
+					trigger: (boardState) => {}
+				}
+			]
 		},
 		'Blood Thirsty': {
-			img: '/static/white-lion/ai/blood-thirsty.jpg'
+			img: '/static/white-lion/ai/blood-thirsty.jpg',
+			actions: [
+				{
+					type: 'mood',
+					trigger: (boardState) => {}
+				},
+				{
+					type: 'special',
+					action: (boardState, target) => {}
+				}
+			]
 		},
 		'Bloody Claw': {
-			img: '/static/white-lion/ai/bloody-claw.jpg'
+			img: '/static/white-lion/ai/bloody-claw.jpg',
+			actions: [
+				{
+					type: 'pick',
+					options: [
+						closestWithMostBleeding,
+						sniff
+					]
+				},
+				{
+					type: 'attack',
+					move: true,
+					speed: 2,
+					accuracy: 2,
+					damage: 2,
+					trigger: {
+						type: 'afterDamage',
+						action: (boardState, target) => {}
+					}
+				}
+			],
+			alternate: (boardState) => {
+				return true;
+			}
 		},
-		'Enraged': {
-			img: '/static/white-lion/ai/enraged.jpg'
+		Enraged: {
+			img: '/static/white-lion/ai/enraged.jpg',
+			actions: [
+				{
+					type: 'mood',
+					trigger: (boardState) => {},
+					persistant: {
+						damage: 1
+					}
+				},
+				{
+					type: 'special',
+					action: (boardState, target) => {}
+				}
+			]
 		},
 		'Ground Fighting': {
-			img: '/static/white-lion/ai/ground-fighting.jpg'
+			img: '/static/white-lion/ai/ground-fighting.jpg',
+			actions: [
+				{
+					type: 'mood',
+					trigger: (boardState) => {}
+				}
+			]
 		},
 		'Lick Wounds': {
-			img: '/static/white-lion/ai/lick-wounds.jpg'
+			img: '/static/white-lion/ai/lick-wounds.jpg',
+			actions: [
+				{
+					type: 'special',
+					action: (boardState, target) => {}
+				}
+			]
 		},
-		'Maul': {
-			img: '/static/white-lion/ai/maul.jpg'
+		Maul: {
+			img: '/static/white-lion/ai/maul.jpg',
+			actions: [
+				{
+					type: 'pick',
+					options: [
+						victimOfGrabLastRound,
+						closestKnockedDownInRange,
+						sniff
+					]
+				},
+				{
+					type: 'attack',
+					move: true,
+					speed: 2,
+					accuracy: 2,
+					damage: 3,
+					trigger: {
+						type: 'afterDamage',
+						action: (boardState, target) => {}
+					}
+				}
+			]
 		},
 		'Smart Cat': {
-			img: '/static/white-lion/ai/smart-cat.jpg'
+			img: '/static/white-lion/ai/smart-cat.jpg',
+			actions: [
+				{
+					type: 'special',
+					action: (boardState, target) => {}
+				}
+			]
 		},
 		'Terrifying Roar': {
-			img: '/static/white-lion/ai/terrifying-roar.jpg'
+			img: '/static/white-lion/ai/terrifying-roar.jpg',
+			actions: [
+				{
+					type: 'special',
+					action: (boardState, target) => {}
+				}
+			]
 		}
 	},
 	legendary: {

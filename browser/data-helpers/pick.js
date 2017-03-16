@@ -25,3 +25,11 @@ export function randomThreatInFieldOfView(boardState) {
 export function randomInRange(boardState) {
 
 }
+
+export function closestWithMostBleeding(boardState) {
+
+}
+
+export function victimOfGrabLastRound(boardState) {
+
+}
