@@ -1,20 +1,18 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Character} from './Character';
+import {Board} from './Board';
+import {MonsterInfo} from './MonsterInfo';
 
 export const Game = connect(
 	({ auth }) => ({ user: auth })
 )(
 	({ user }) => (
-		<div>
-			<div id="game-board-wrapper" className="container-fluid">
-				<div className="row no-gutters">
-					<div id="game-board" className="col-md-10">
-						<img src="/static/board.jpg" />
-					</div>
-					<div id="game-monster" className="col-md-2">
-						<img src="/static/monster-info.jpg" />
-					</div>
+		<div id="game">
+			<div id="game-board-wrapper">
+				<div>
+					<div id="game-board"><Board /></div>
+					<div id="game-monster"><MonsterInfo /></div>
 				</div>
 			</div>
 			<div id="game-character-card-wrapper" className="container-fluid">
