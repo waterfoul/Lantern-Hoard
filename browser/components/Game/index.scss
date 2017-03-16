@@ -28,29 +28,33 @@
 #game-character-card-4 {
 	background-color: #DAA520;
 }
-#player-gear-grid {
-	// position: absolute;
+
+#player-gear-grid > div {
+	position: relative;
+	display: inline-block;
+}
+
+#player-gear-grid-items {
+	position: absolute;
+	padding: 1.5%;
 	top: 0;
 	left: 0;
-	width: 50%;
-	height: 50%;
+	width: 100%;
+	height: 100%;
 	display: grid;
 	grid-template-columns:
 		1fr 1fr 1fr;
 	grid-template-rows:
 		1fr 1fr 1fr;
 	.geared {
-	background-color: black;
-	border-radius: 10%;
-	margin: 15%
+		// position: relative;
+		background-color: darkslategray;
+		margin: 2%
 	}
 
 	@for $x from 0 through 3 {
 		.x-#{$x} {
 			grid-column-start: $x + 1;
-		}
-		.x-#{$x} {
-			grid-column-end: $x + 3;
 		}
 	}
 
@@ -58,12 +62,13 @@
 		.y-#{$y} {
 			grid-row-start: 3 - $y;
 		}
-		.y-#{$y} {
-			grid-row-end: 3 - $y + 2;
-		}
 	}
 }
 
-#player-armor-gear-wrapper {
+// #player-armor-gear-wrapper {
+// 	padding-left: 5px;
+// }
 
+#player-token-board {
+	padding-right: 0px;
 }
