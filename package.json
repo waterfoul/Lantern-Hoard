@@ -2,9 +2,11 @@
   "dependencies": {
     "axios": "^0.15.3",
     "body-parser": "^1.17.1",
+    "bootstrap-social": "^5.1.1",
     "cookie-session": "^2.0.0-beta.1",
     "express": "^4.15.2",
     "express-winston": "^2.3.0",
+    "font-awesome": "^4.7.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "passport-github2": "^0.1.10",

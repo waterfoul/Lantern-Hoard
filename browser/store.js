@@ -13,6 +13,3 @@ export const store = createStore(
 		)
 	)
 );
-
-// Set the auth info at start
-store.dispatch(whoami());
