@@ -1,4 +1,4 @@
-import {closestThreatFacingInRange, closestThreatInFieldOfView} from '../../static-helpers/pick';
+import {closestThreatFacingInRange, closestThreatInFieldOfView, closestKnockedDownInRange, closestInRange} from '../../data-helpers/pick';
 
 export function sniff(boardState) {
 	return null;
@@ -32,22 +32,150 @@ export const ai = {
 			]
 		},
 		Chomp: {
-			img: '/static/white-lion/ai/chomp.jpg'
+			img: '/static/white-lion/ai/chomp.jpg',
+			actions: [
+				{
+					type: 'pick',
+					options: [
+						closestThreatFacingInRange,
+						closestThreatInFieldOfView,
+						sniff
+					]
+				},
+				{
+					type: 'attack',
+					move: true,
+					speed: 1,
+					accuracy: 2,
+					damage: 1,
+					trigger: {
+						type: 'afterHit',
+						action: (boardState, target, hits) => {}
+					}
+				}
+			],
+			alternate: (boardState) => {
+				return true;
+			}
 		},
 		Claw: {
-			img: '/static/white-lion/ai/claw.jpg'
+			img: '/static/white-lion/ai/claw.jpg',
+			actions: [
+				{
+					type: 'pick',
+					options: [
+						closestThreatFacingInRange,
+						closestThreatInFieldOfView,
+						sniff
+					]
+				},
+				{
+					type: 'attack',
+					move: true,
+					speed: 2,
+					accuracy: 2,
+					damage: 1
+				}
+			]
 		},
 		'Combo Claw': {
-			img: '/static/white-lion/ai/combo-claw.jpg'
+			img: '/static/white-lion/ai/combo-claw.jpg',
+			actions: [
+				{
+					type: 'pick',
+					options: [
+						closestThreatFacingInRange,
+						closestThreatInFieldOfView,
+						sniff
+					]
+				},
+				{
+					type: 'attack',
+					move: true,
+					speed: 2,
+					accuracy: 4,
+					damage: 1
+				},
+				{
+					type: 'special',
+					action: (boardState) => {}
+				}
+			],
+			alternate: (boardState) => {
+				return true;
+			}
 		},
 		Grasp: {
-			img: '/static/white-lion/ai/grasp.jpg'
+			img: '/static/white-lion/ai/grasp.jpg',
+			actions: [
+				{
+					type: 'pick',
+					options: [
+						closestKnockedDownInRange,
+						closestInRange,
+						sniff
+					]
+				},
+				{
+					type: 'attack',
+					move: true,
+					speed: 1,
+					accuracy: 2,
+					damage: 1,
+					trigger: {
+						type: 'afterDamage',
+						action: (boardState, target) => {}
+					}
+				}
+			]
 		},
 		'Power Swat': {
-			img: '/static/white-lion/ai/power-swat.jpg'
+			img: '/static/white-lion/ai/power-swat.jpg',
+			actions: [
+				{
+					type: 'pick',
+					options: [
+						closestThreatFacingInRange,
+						closestThreatInFieldOfView,
+						sniff
+					]
+				},
+				{
+					type: 'attack',
+					move: true,
+					speed: 1,
+					accuracy: 2,
+					damage: 2,
+					trigger: {
+						type: 'afterDamage',
+						action: (boardState, target) => {}
+					}
+				}
+			]
 		},
 		'Revenge': {
-			img: '/static/white-lion/ai/revenge.jpg'
+			img: '/static/white-lion/ai/revenge.jpg',
+			actions: [
+				{
+					type: 'pick',
+					options: [
+						closestKnockedDownInRange,
+						closestInRange,
+						sniff
+					]
+				},
+				{
+					type: 'attack',
+					move: true,
+					speed: 1,
+					accuracy: 2,
+					damage: 1,
+					trigger: {
+						type: 'afterDamage',
+						action: (boardState, target) => {}
+					}
+				}
+			]
 		},
 		'Size Up': {
 			img: '/static/white-lion/ai/size-up.jpg'
