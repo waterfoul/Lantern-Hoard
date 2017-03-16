@@ -6,11 +6,9 @@ const User = require('../db/models/user');
 const OAuth = require('../db/models/oauth');
 const auth = require('express').Router();
 
-console.log(args);
-
 OAuth.setupStrategy({
 	provider: 'facebook',
-	strategy: require('passport-facebook').Strategy,
+	Strategy: require('passport-facebook').Strategy,
 	config: {
 		clientID: args.facebookClientId,
 		clientSecret: args.facebookClientSecret,
@@ -23,7 +21,7 @@ OAuth.setupStrategy({
 
 OAuth.setupStrategy({
 	provider: 'google',
-	strategy: require('passport-google-oauth').OAuth2Strategy,
+	Strategy: require('passport-google-oauth').OAuth2Strategy,
 	config: {
 		clientID: args.googleClientId,
 		clientSecret: args.googleClientSecret,
@@ -35,7 +33,7 @@ OAuth.setupStrategy({
 
 OAuth.setupStrategy({
 	provider: 'github',
-	strategy: require('passport-github2').Strategy,
+	Strategy: require('passport-github2').Strategy,
 	config: {
 		clientID: args.githubClientId,
 		clientSecret: args.githubClientSecret,
