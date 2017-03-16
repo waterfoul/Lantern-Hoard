@@ -1,22 +1,123 @@
-// Associated to user
-// A Name
-// XP
-// Character modifier card list (card names, comma seperated)
-// 6 Stats (integers)
-	// Movement (# of spaces)
-	// Accuracy (to hit)
-	// Strength (to wound)
-	// Evasion (to dodge)
-	// Luck (to crit)
-	// Speed (dice count)
-// A survival limit (int)
-// A survival amt (int)
-// Survival skills (array of ints)
-// An insanity value (int)
-// Brain injury y/n (bool)
-// A Courage value value (number)
-// A Courage value skill (enum)
-// A Understanding value value (number)
-// A Understanding value skill (enum)
-// A weapon proficiency (enum)
-// A weapon proficency level (number)
+const Sequelize = require('sequelize');
+const db = require('../index.js');
+
+const Character = db.define('character', {
+	name: {
+		type: Sequelize.STRING,
+		allowNull: false,
+		defaultValue: 'Unnamed Survivor',
+		validate: {
+			notEmpty: true
+		}
+	},
+	xp: {
+		type: Sequelize.INTEGER,
+		allowNull: false,
+		defaultValue: 0
+	},
+	modifierCards: {
+		type: Sequelize.STRING,
+		allowNull: false,
+		defaultValue: '',
+		get: function () { return this.getDataValue('modifierCards').split('\x11'); },
+		set: function (val) { this.setDataValue('modifierCards', val.join('\x11')); }
+	},
+	movement: {
+		type: Sequelize.INTEGER,
+		allowNull: false,
+		defaultValue: 5
+	},
+	accuracy: {
+		type: Sequelize.INTEGER,
+		allowNull: false,
+		defaultValue: 0
+	},
+	strength: {
+		type: Sequelize.INTEGER,
+		allowNull: false,
+		defaultValue: 0
+	},
+	evasion: {
+		type: Sequelize.INTEGER,
+		allowNull: false,
+		defaultValue: 0
+	},
+	luck: {
+		type: Sequelize.INTEGER,
+		allowNull: false,
+		defaultValue: 0
+	},
+	speed: {
+		type: Sequelize.INTEGER,
+		allowNull: false,
+		defaultValue: 0
+	},
+	survivalLimit: {
+		type: Sequelize.INTEGER,
+		allowNull: false,
+		defaultValue: 1
+	},
+	survivalAmount: {
+		type: Sequelize.INTEGER,
+		allowNull: false,
+		defaultValue: 1
+	},
+	survivalSkillDodge: {
+		type: Sequelize.BOOLEAN,
+		allowNull: false,
+		defaultValue: true
+	},
+	survivalSkillEncourage: {
+		type: Sequelize.BOOLEAN,
+		allowNull: false,
+		defaultValue: false
+	},
+	survivalSkillSurge: {
+		type: Sequelize.BOOLEAN,
+		allowNull: false,
+		defaultValue: false
+	},
+	survivalSkillDash: {
+		type: Sequelize.BOOLEAN,
+		allowNull: false,
+		defaultValue: false
+	},
+	insanity: {
+		type: Sequelize.INTEGER,
+		allowNull: false,
+		defaultValue: 0
+	},
+	brainInjury: {
+		type: Sequelize.BOOLEAN,
+		allowNull: false,
+		defaultValue: false
+	},
+	courage: {
+		type: Sequelize.INTEGER,
+		allowNull: false,
+		defaultValue: 0
+	},
+	courageSkills: {
+		type: Sequelize.ENUM('Stalwart', 'Prepared', 'Matchmaker')
+	},
+	understanding: {
+		type: Sequelize.INTEGER,
+		allowNull: false,
+		defaultValue: 0
+	},
+	understandingSkill: {
+		type: Sequelize.ENUM('Analyze', 'Explore', 'Tinker')
+	},
+	weaponProficiency: {
+		type: Sequelize.ENUM('Axe', 'Bow', 'Club', 'Dagger', 'Fist & Tooth', 'Grand', 'Katar', 'Shield', 'Spear', 'Sword', 'Twilight Sword', 'Whip')
+	},
+	weaponProficiencyLevel: {
+		type: Sequelize.INTEGER,
+		allowNull: false,
+		defaultValue: 0
+	}
+});
+
+// Associated to User
+
+module.exports = Character;
