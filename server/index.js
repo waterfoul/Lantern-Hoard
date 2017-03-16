@@ -56,4 +56,4 @@ db.didSync.then(() => {
 		const urlSafeHost = host.includes(':') ? `[${host}]` : host;
 		logger.info(`Listening on http://${urlSafeHost}:${port}`);
 	});
-}).catch((e) => logger.error('Failed to start server', e))
+}).catch((e) => logger.error('Failed to start server', e));
