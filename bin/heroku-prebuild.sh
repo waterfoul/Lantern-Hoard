@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -xe
+
 NPM_CONFIG_PRODUCTION=false
 
 npm install

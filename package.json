@@ -56,7 +56,7 @@
     "test": "mocha --compilers js:babel-register browser/**/*.test.js browser/**/*.test.jsx server/**/*.test.js",
     "test-watch": "npm run test -- --watch",
     "seed": "node db/seed.js",
-    "heroku-prebuild": "bin/heroku-prebuild.sh",
+    "heroku-prebuild": "./bin/heroku-prebuild.sh",
     "lint": "eslint --ext js,jsx .",
     "ci": "npm --silent run lint && npm --silent run test",
     "fix": "eslint --ext js,jsx . --fix"
