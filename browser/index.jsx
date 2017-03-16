@@ -8,7 +8,9 @@ import {Root} from './components/Root';
 import {RootSelector} from './components/RootSelector';
 import {Login} from './components/Login';
 import {Game} from './components/Game';
-import {Lobby} from './components/Lobby';
+import { Lobby } from './components/Lobby';
+
+import {Player} from './components/Game/Player';
 
 ReactDOM.render(
 	<Provider store={store}>
@@ -18,6 +20,8 @@ ReactDOM.render(
 				<Route path="/login" component={Login} />
 				<Route path="/lobby" component={Lobby} />
 				<Route path="/game" component={Game} />
+
+				<Route path="/player" component={Player} />
 			</Root>
 		</Router>
 	</Provider>,
