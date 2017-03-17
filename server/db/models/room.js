@@ -14,7 +14,8 @@ const Room = db.define('room', {
 		type: Sequelize.STRING,
 	},
 	gameState: {
-		type: Sequelize.STRING
+		type: Sequelize.JSON,
+		allowNull: false
 	}
 });
 
@@ -30,10 +31,10 @@ Blue character association
 
 Game State JSON
   - Deck states
+  - Active Monster cards
+  - Name
   - Monster info
   - Stats
-  - Name
-  - Active Monster cards
   - Board positions
   - Armor values and injuries
   - Gear grid

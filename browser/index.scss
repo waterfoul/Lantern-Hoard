@@ -5,6 +5,7 @@ $fa-font-path: 'font-awesome';
 @import "../node_modules/font-awesome/scss/font-awesome";
 
 @import "./components/Game/index";
+@import "./components/Lobby/index";
 
 html, body, #root, #root > div, #root > div > div {
   width: 100%;
@@ -21,4 +22,8 @@ html, body, #root, #root > div, #root > div > div {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+a[disabled] {
+  pointer-events: none;
 }

@@ -17,7 +17,7 @@ ReactDOM.render(
 				<Route exact path="/" component={RootSelector} />
 				<Route path="/login" component={Login} />
 				<Route path="/lobby" component={Lobby} />
-				<Route path="/game" component={Game} />
+				<Route path="/game/:id" component={Game} />
 			</Root>
 		</Router>
 	</Provider>,
