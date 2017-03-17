@@ -360,15 +360,15 @@ export const ai = {
 		'Golden Eyes': {
 			img: '/static/white-lion/ai/golden-eyes.jpg'
 		},
-		'Vanish': {
+		Vanish: {
 			img: '/static/white-lion/ai/vanish.jpg'
 		}
 	},
 	traits: {
-		'Cunning': {
+		Cunning: {
 			img: '/static/white-lion/ai/cunning.jpg'
 		},
-		'Merciless': {
+		Merciless: {
 			img: '/static/white-lion/ai/merciless.jpg'
 		}
 	}

@@ -14,7 +14,7 @@ export const auth = (state = null, action) => {
 };
 
 //action creators
-const authenticated = (user) => ({
+export const authenticated = (user) => ({
 	type: AUTHENTICATED, user
 });
 
