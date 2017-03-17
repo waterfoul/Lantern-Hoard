@@ -8,7 +8,7 @@ import {
 	randomInRange,
 	victimOfGrabLastRound,
 	closestWithMostBleeding
-} from '../../data-helpers/pick';
+} from '../../utils/pick';
 
 export function sniff(boardState) {
 	return null;

@@ -24,12 +24,12 @@ export const Room = ({room, user, join}) => {
 						className="btn btn-primary"
 						disabled={room.Player4 && !inRoom}
 						onClick={() => !inRoom ? join(room.id) : null}
-					> Join </Link>
+					>Join</Link>
 					<Link
 						to={`/game/${room.id}`}
 						disabled={inRoom}
 						className="btn btn-secondary"
-					> Watch</Link>
+					>Watch</Link>
 				</div>
 			</div>
 		</div>

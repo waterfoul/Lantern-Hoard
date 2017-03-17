@@ -5,7 +5,7 @@ import {firstStory} from '../../scenarios/firstStory';
 
 const scenarios = {
 	'First Story': firstStory
-}
+};
 
 export class CreateRoom extends Component {
 	constructor(props) {
@@ -26,12 +26,12 @@ export class CreateRoom extends Component {
 		this.setState({ showModal: true });
 	}
 
-	submit(e) {
-		e.preventDefault();
+	submit(event) {
+		event.preventDefault();
 		const data = {
-			name: e.target.elements['lobby-create-room-name'].value,
-			password: e.target.elements['lobby-create-room-password'].value,
-			gameState: scenarios[e.target.elements['lobby-create-room-scenario'].value](),
+			name: event.target.elements['lobby-create-room-name'].value,
+			password: event.target.elements['lobby-create-room-password'].value,
+			gameState: scenarios[event.target.elements['lobby-create-room-scenario'].value](),
 			player1_id: this.props.user.id
 		};
 		console.log(data);
