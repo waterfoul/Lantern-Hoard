@@ -1,4 +1,4 @@
-function shuffle (cards) {
+export function shuffle (cards) {
 	let shuffledCards = [...cards];
 	let i = 0
 		, j = 0

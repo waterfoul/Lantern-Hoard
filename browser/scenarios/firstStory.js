@@ -1,13 +1,20 @@
 import {shuffle} from '../utils/shuffle';
+import {Hl} from '../data/white-lion/hl';
 
 export function firstStory() {
 	return {
 		hl: {
-			deck: ['Beasts Ear', ...shuffle(['Beasts Back', 'Beasts Brow'])],
+			deck: [
+				'Strange Hand',
+				...shuffle(Object.keys(Hl).filter((ele) => (ele !== 'Strange Hand')))
+			],
 			discard: []
 		},
 		ai: {
-			deck: ['Alert', ...shuffle(['Bloodthirsty', 'Bloody Claw'])],
+			deck: [
+				'Claw',
+				...shuffle(['Chomp', 'Size Up', 'Power Swat', 'Grasp', 'Maul', 'Terrifying Roar', 'Enraged'])
+			],
 			discard: [],
 			wound: []
 		},
