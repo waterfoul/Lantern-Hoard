@@ -14,7 +14,8 @@ const Room = db.define('room', {
 		type: Sequelize.STRING,
 	},
 	gameState: {
-		type: Sequelize.STRING
+		type: Sequelize.JSON,
+		allowNull: false
 	}
 });
 
