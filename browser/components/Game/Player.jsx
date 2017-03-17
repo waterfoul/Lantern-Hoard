@@ -15,13 +15,17 @@ export const Player = connect(
 		<div>
 			<div id="player-card-wrapper" className="container-fluid">
 				<div className="row no-gutters">
+
 					<div id="player-token-board" className="col-md-2">
 						<img src="/static/gear-grid/tokens.jpg" id="player-tokens-image" />
 					</div>
+
 					<div id="player-armor-gear-wrapper" className="container-fluid">
+
 						<div id="player-gear-board" className="col-md-10">
 							<img src="/static/gear-grid/armor.jpg" id="player-armor-image" />
 						</div>
+
 						<div id="player-gear-grid" className="col-md-10">
 							<div>
 								<img src="/static/gear-grid/gear.jpg" id="player-gear-image" />
@@ -40,9 +44,9 @@ export const Player = connect(
 									].join(' ')} />
 								</div>
 							</div>
-						</div> {/* */} {/*armor-gear-wrapper*/}
-
+						</div> {/* */} {/*player-gear-grid*/}
 					</div>
+
 				</div>
 			</div>
 		</div>
