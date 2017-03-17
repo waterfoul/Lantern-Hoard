@@ -2,10 +2,12 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import {whoami} from '../reducers/auth';
+import {fetchList} from '../reducers/roomList';
 
 class RootComponent extends Component {
 	componentWillMount() {
 		this.props.whoami();
+		this.props.fetchList();
 	}
 
 	render () {
@@ -19,5 +21,5 @@ class RootComponent extends Component {
 
 export const Root = connect(
 	null,
-	{whoami}
+	{whoami, fetchList}
 )(RootComponent);

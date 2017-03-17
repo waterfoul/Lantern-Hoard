@@ -14,7 +14,7 @@ export const auth = (state = null, action) => {
 };
 
 //action creators
-export const authenticated = (user) => ({
+const authenticated = (user) => ({
 	type: AUTHENTICATED, user
 });
 
@@ -22,11 +22,11 @@ export const authenticated = (user) => ({
 export const whoami = () => (
 	(dispatch) =>
 		axios.get('/api/auth/whoami')
-			.then((response) => {
-				const user = response.data;
-				dispatch(authenticated(user));
+			.then((response) => dispatch(authenticated(response.data)))
+			.catch((e) => {
+				console.error('Error while logging in', e);
+				dispatch(authenticated(null));
 			})
-			.catch(() => dispatch(authenticated(null)))
 );
 
 export const logout = () => (
