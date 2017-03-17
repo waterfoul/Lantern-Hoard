@@ -68,3 +68,105 @@
 #player-token-board {
 	padding-right: 0px;
 }
+
+#player-armor-board {
+
+}
+
+// #player-armor-board-container {
+	// position: absolute;
+	// top: 0;
+	// left: 0;
+	// width: 100%;
+	// height: 100%;
+// }
+
+.player-armor-board-values {
+	position: absolute;
+	width: 19%;
+	height: 5.5%;
+	left: 10%;
+
+	> div {
+		position: absolute;
+		top: 20%;
+		left: 58%;
+		transform: translate(-50%, -50%);
+		font-size: 18vh;
+	}
+
+	$buff: 43%;
+	$diff: 26%;
+
+	&.head {
+		top: $buff;
+	}
+
+	&.body {
+		top: $buff;
+		left: $diff;
+	}
+
+	&.waist {
+		top: $buff;
+		left: $diff + ($diff / 1.7);
+	}
+
+	&.hand {
+		top: $buff;
+		left: $diff * 2.17;
+	}
+
+	&.foot {
+		top: $buff;
+		left: $diff * 2.77;
+	}
+}
+
+.player-armor-wound-values {
+	position: absolute;
+	width: 5%;
+	height: 5%;
+	//Uncomment these to help with alignment
+	// border-radius: 50%;
+	// background-color: green;
+	left: 23.5%;
+
+	> div {
+		position: absolute;
+		// top: 16%;
+		left: 5%;
+		transform: translate(-50%, -50%);
+		font-size: 6vh;
+	}
+	// $buff: 63.25%;
+	$diff: 26%;
+
+	&.head {
+		// top: $buff;
+	}
+
+	&.body-L {
+		top: $buff;
+		left: $diff;
+	}
+	&.body-H {
+		top: $buff;
+		left: $diff;
+	}
+
+	&.waist {
+		top: $buff;
+		left: $diff + ($diff / 1.7);
+	}
+
+	&.hand {
+		top: $buff;
+		left: $diff * 2.17;
+	}
+
+	&.foot {
+		top: $buff;
+		left: $diff * 2.77;
+	}
+}
