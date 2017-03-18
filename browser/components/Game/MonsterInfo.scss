@@ -1,0 +1,160 @@
+
+#game-board-monster {
+  position: relative;
+}
+
+#game-board-monster-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.game-board-monster-stats {
+  position: absolute;
+  width: 19%;
+  height: 5.5%;
+  //Uncomment these to help with alignment
+  //border-radius: 50%;
+  //background-color: green;
+  left: 4%;
+
+  > div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.5vh;
+  }
+
+  $luck: 12.5%;
+  $diff: 11.5%;
+
+  &.luck {
+    top: $luck;
+  }
+
+  &.accuracy {
+    top: $luck + $diff - 0.25;
+  }
+
+  &.evasion {
+    top: $luck + ($diff * 2) - 0.5;
+  }
+
+  &.speed {
+    top: $luck + ($diff * 3) - 1;
+  }
+
+  &.damage {
+    top: $luck + ($diff * 4) - 0.5;
+  }
+
+  &.toughness {
+    top: $luck + ($diff * 5) - 0.5;
+  }
+
+  &.movement {
+    top: $luck + ($diff * 6);
+  }
+}
+
+.game-board-monster-card {
+  //background-color: green;
+  position: absolute;
+  width: 32.4%;
+  height: 14.8%;
+
+  $column1: 28.5%;
+  $column2: 65.4%;
+  $row1: 1.3%;
+  $row2: $row1 + 15.9%;
+  $row3: $row2 + 15.8%;
+  $row4: $row3 + 18.4%;
+  $row5: $row4 + 16.3%;
+  $row6: $row5 + 16.1%;
+
+  img {
+    max-height: 100%;
+    max-width: 100%;
+    border-radius: 3px;
+  }
+
+  .numbers {
+    position: absolute;
+    top: 16%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    color: #6195A4;
+    font-weight: bold;
+
+
+  }
+
+  &.effect-0 {
+    left: $column1;
+    top: $row1;
+  }
+
+  &.effect-1 {
+    left: $column2;
+    top: $row1;
+  }
+
+  &.effect-2 {
+    left: $column1;
+    top: $row2;
+  }
+
+  &.effect-3 {
+    left: $column2;
+    top: $row2;
+  }
+
+  &.effect-4 {
+    left: $column1;
+    top: $row3;
+  }
+
+  &.effect-5 {
+    left: $column2;
+    top: $row3;
+  }
+
+  &.hl-discard {
+    left: $column1;
+    top: $row4;
+  }
+
+  &.hl-draw {
+    left: $column2;
+    top: $row4;
+
+    .numbers {
+      color: white;
+      font-weight: normal;
+    }
+  }
+
+  &.ai-discard {
+    left: $column1;
+    top: $row5;
+  }
+
+  &.ai-draw {
+    left: $column2;
+    top: $row5;
+  }
+
+  &.basic-action {
+    left: $column1 + 1%;
+    top: $row6;
+  }
+
+  &.ai-wound {
+    left: $column2;
+    top: $row6;
+  }
+}
