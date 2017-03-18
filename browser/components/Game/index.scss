@@ -29,11 +29,51 @@
 	background-color: #DAA520;
 }
 
-#player-gear-grid > div {
+
+#player-token-board-grid > div {
 	position: relative;
 	display: inline-block;
 }
 
+#player-token-board-tokens {
+	position: absolute;
+	padding: 1.5%;
+	top: 4.2%;
+	left: 2.15%;
+	width: 10%;
+	height: 5%;
+
+	display: grid;
+	grid-template-columns:
+		1fr 1fr;
+	grid-template-rows:
+		1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+
+	.tokened {
+		// position: relative;
+				//Uncomment these to help with alignment
+	border-radius: 50%;
+	background-color: green;
+		margin: 2%
+	}
+
+	@for $x from 0 through 2 {
+		.x-#{$x} {
+			grid-column-start: 2 - $x;
+		}
+	}
+
+	@for $y from 0 through 11 {
+		.y-#{$y} {
+			grid-row-start: $y +1;
+		}
+	}
+}
+
+#player-gear-grid > div {
+	position: relative;
+	display: inline-block;
+}
 #player-gear-grid-items {
 	position: absolute;
 	padding: 1.5%;
@@ -65,38 +105,27 @@
 	}
 }
 
-#player-token-board {
-	padding-right: 0px;
-}
-
-#player-armor-board {
-
-}
-
-// #player-armor-board-container {
-	// position: absolute;
-	// top: 0;
-	// left: 0;
-	// width: 100%;
-	// height: 100%;
-// }
-
 .player-armor-board-values {
 	position: absolute;
-	width: 19%;
-	height: 5.5%;
-	left: 10%;
+	width: 13%;
+	height: 25%;
+		//Uncomment these to help with alignment
+	// border-radius: 50%;
+	// background-color: green;
+	// top: 0;
+	left: 13%;
+	// bottom: 10%;
 
 	> div {
 		position: absolute;
-		top: 20%;
-		left: 58%;
+		top: 11%;
+		left: 46%;
 		transform: translate(-50%, -50%);
 		font-size: 18vh;
 	}
 
-	$buff: 43%;
-	$diff: 26%;
+	$buff: 43%; //fine
+	$diff: 26.7%; //+/- .1
 
 	&.head {
 		top: $buff;
@@ -109,64 +138,74 @@
 
 	&.waist {
 		top: $buff;
-		left: $diff + ($diff / 1.7);
+		left: $diff *1.515;
 	}
 
 	&.hand {
 		top: $buff;
-		left: $diff * 2.17;
+		left: $diff * 2.03;
 	}
 
 	&.foot {
 		top: $buff;
-		left: $diff * 2.77;
+		left: $diff * 2.55;
 	}
 }
 
 .player-armor-wound-values {
 	position: absolute;
-	width: 5%;
-	height: 5%;
+	width: 4.25%;
+	height: 10%;
 	//Uncomment these to help with alignment
 	// border-radius: 50%;
 	// background-color: green;
-	left: 23.5%;
+	// top: -10%;
+	left: 20%;
 
 	> div {
 		position: absolute;
-		// top: 16%;
-		left: 5%;
+		left: 30%;
 		transform: translate(-50%, -50%);
 		font-size: 6vh;
 	}
-	// $buff: 63.25%;
-	$diff: 26%;
+	$wuff: 65.5%;
+	$wiff: 29%;
 
 	&.head {
-		// top: $buff;
+		top: $wuff;
 	}
 
 	&.body-L {
-		top: $buff;
-		left: $diff;
+		top: $wuff;
+		left: $wiff;
 	}
 	&.body-H {
-		top: $buff;
-		left: $diff;
+		top: $wuff;
+		left: $wiff *1.165;
+	}
+	&.waist-L {
+		top: $wuff;
+		left: $wiff *1.480;
+	}
+	&.waist-H {
+		top: $wuff;
+		left: $wiff *1.645;
+	}
+	&.hand-L {
+		top: $wuff;
+		left: $wiff *1.955;
+	}
+	&.hand-H {
+		top: $wuff;
+		left: $wiff *2.12;
+	}
+	&.foot-L {
+		top: $wuff;
+		left: $wiff *2.43;
+	}
+	&.foot-H {
+		top: $wuff;
+		left: $wiff *2.595;
 	}
 
-	&.waist {
-		top: $buff;
-		left: $diff + ($diff / 1.7);
-	}
-
-	&.hand {
-		top: $buff;
-		left: $diff * 2.17;
-	}
-
-	&.foot {
-		top: $buff;
-		left: $diff * 2.77;
-	}
 }
