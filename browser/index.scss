@@ -4,8 +4,8 @@
 $fa-font-path: 'font-awesome';
 @import "../node_modules/font-awesome/scss/font-awesome";
 
-@import "./components/Game/index";
-@import "./components/Lobby/index";
+@import "./components/Game/_index";
+@import "./components/Lobby/_index";
 
 html, body, #root, #root > div, #root > div > div, #root > div > div > div {
   width: 100%;
