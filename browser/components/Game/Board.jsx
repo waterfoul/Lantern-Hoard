@@ -1,52 +1,52 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
+let display = true;
+
 export const Board = connect(
-	() => ({
-		boardState: {
-			positions: {
-				white: [Math.floor(Math.random() * 22), Math.floor(Math.random() * 16)],
-				yellow: [Math.floor(Math.random() * 22), Math.floor(Math.random() * 16)],
-				green: [Math.floor(Math.random() * 22), Math.floor(Math.random() * 16)],
-				blue: [Math.floor(Math.random() * 22), Math.floor(Math.random() * 16)],
-				monster: [Math.floor(Math.random() * 22), Math.floor(Math.random() * 16)]
-			}
-		}
+	({ room, flexBoxFix }) => ({
+		monsterStats: room.gameState.monsterStats,
+		positions: room.gameState.positions,
+		flexBoxFix
 	})
 )(
-	({ boardState }) => (
+	({ positions, monsterStats, flexBoxFix }) => (
 		<div>
+			<div style={{display: (flexBoxFix) ? 'block' : 'none'}}>
+				{/*This div is for fixing some flexbox issues, it just causes chrome to re-render the content below*/}
+			</div>
 			<img src="/static/board.jpg" className="game-main-image" />
 			<div id="game-board-grid">
-				<div className={[
+				{ positions.player1 ? <div className={[
 					'game-board-square',
 					'white',
-					'x-' + boardState.positions.white[0],
-					'y-' + boardState.positions.white[1]
-				].join(' ')} />
-				<div className={[
+					'x-' + positions.player1[0],
+					'y-' + positions.player1[1]
+				].join(' ')} /> : '' }
+				{ positions.player2 ? <div className={[
 					'game-board-square',
 					'yellow',
-					'x-' + boardState.positions.yellow[0],
-					'y-' + boardState.positions.yellow[1]
-				].join(' ')} />
-				<div className={[
+					'x-' + positions.player2[0],
+					'y-' + positions.player2[1]
+				].join(' ')} /> : '' }
+				{ positions.player3 ? <div className={[
 					'game-board-square',
 					'green',
-					'x-' + boardState.positions.green[0],
-					'y-' + boardState.positions.green[1]
-				].join(' ')} />
-				<div className={[
+					'x-' + positions.player3[0],
+					'y-' + positions.player3[1]
+				].join(' ')} /> : '' }
+				{ positions.player4 ? <div className={[
 					'game-board-square',
 					'blue',
-					'x-' + boardState.positions.blue[0],
-					'y-' + boardState.positions.blue[1]
-				].join(' ')} />
+					'x-' + positions.player4.blue[0],
+					'y-' + positions.player4.blue[1]
+				].join(' ')} /> : '' }
 				<div className={[
 					'game-board-square',
 					'monster',
-					'x-' + boardState.positions.monster[0],
-					'y-' + boardState.positions.monster[1]
+					'size-' + monsterStats.size,
+					'x-' + positions.monster[0],
+					'y-' + positions.monster[1]
 				].join(' ')} />
 			</div>
 		</div>

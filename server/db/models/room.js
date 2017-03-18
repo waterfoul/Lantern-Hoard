@@ -20,22 +20,3 @@ const Room = db.define('room', {
 });
 
 module.exports = Room;
-
-/*
-Associated with between 1 and 4 users
-Associated with 4 characters
-White character association
-Yellow character association
-Green character association
-Blue character association
-
-Game State JSON
-  - Deck states
-  - Active Monster cards
-  - Name
-  - Monster info
-  - Stats
-  - Board positions
-  - Armor values and injuries
-  - Gear grid
-*/

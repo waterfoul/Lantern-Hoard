@@ -78,8 +78,11 @@
 		.x-#{$x} {
 			grid-column-start: $x + 1;
 		}
-		.monster.x-#{$x} {
+		.size-2.x-#{$x} {
 			grid-column-end: $x + 3;
+		}
+		.size-3.x-#{$x} {
+			grid-column-end: $x + 4;
 		}
 	}
 
@@ -87,8 +90,11 @@
 		.y-#{$y} {
 			grid-row-start: 16 - $y;
 		}
-		.monster.y-#{$y} {
+		.size-2.y-#{$y} {
 			grid-row-end: 16 - $y + 2;
+		}
+		.size-3.y-#{$y} {
+			grid-row-end: 16 - $y + 3;
 		}
 	}
 }
