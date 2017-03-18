@@ -19,13 +19,8 @@ export const changeFixState = () => ({
 });
 
 //thunks
-export const startTriggers = () => (
+export const startTrigger = () => (
 	(dispatch) => {
-		// Initial change to make sure everything renders correctly
-		setTimeout(() => dispatch(changeFixState()), 10);
-		setTimeout(() => dispatch(changeFixState()), 100);
-		setTimeout(() => dispatch(changeFixState()), 1000);
-
 		let timeout = -1;
 		window.addEventListener('resize', () => {
 			clearTimeout(timeout);

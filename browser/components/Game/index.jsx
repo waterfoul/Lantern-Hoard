@@ -1,14 +1,20 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+
 import {Character} from './Character';
 import {Board} from './Board';
 import {MonsterInfo} from './MonsterInfo';
+
 import {fetch} from '../../reducers/room';
+import {changeFixState} from '../../reducers/flexBoxFix';
 
 
 class GameComponent extends Component {
 	componentWillMount() {
 		this.props.fetch(this.props.match.params.id);
+		setTimeout(this.props.changeFixState, 100);
+		setTimeout(this.props.changeFixState, 500);
+		setTimeout(this.props.changeFixState, 1000);
 	}
 
 	render() {
@@ -33,5 +39,5 @@ class GameComponent extends Component {
 
 export const Game  = connect(
 	({ room }) => ({ room }),
-	{fetch}
+	{fetch, changeFixState}
 )(GameComponent);

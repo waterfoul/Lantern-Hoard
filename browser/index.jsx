@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import {Provider} from 'react-redux';
 
 import {store} from './store';
-import {startTriggers} from './reducers/flexBoxFix';
+import {startTrigger} from './reducers/flexBoxFix';
 
 import {Root} from './components/Root';
 import {RootSelector} from './components/RootSelector';
@@ -12,18 +12,20 @@ import {Login} from './components/Login';
 import {Game} from './components/Game';
 import {Lobby} from './components/Lobby';
 
-store.dispatch(startTriggers());
+store.dispatch(startTrigger());
 
 ReactDOM.render(
 	<Provider store={store}>
-		<Router>
-			<Root>
-				<Route exact path="/" component={RootSelector} />
-				<Route path="/login" component={Login} />
-				<Route path="/lobby" component={Lobby} />
-				<Route path="/game/:id" component={Game} />
-			</Root>
-		</Router>
+		<Root>
+			<Router>
+				<div>
+					<Route exact path="/" component={RootSelector} />
+					<Route path="/login" component={Login} />
+					<Route path="/lobby" component={Lobby} />
+					<Route path="/game/:id" component={Game} />
+				</div>
+			</Router>
+		</Root>
 	</Provider>,
 	document.getElementById('root')
 );
