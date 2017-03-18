@@ -38,23 +38,31 @@
 #player-token-board-tokens {
 	position: absolute;
 	padding: 1.5%;
-	top: 4.2%;
-	left: 2.15%;
-	width: 10%;
-	height: 5%;
+	top: 1.8%;
+	left: 5.5%;
+	width: 85%;
+	height: 50%;
 
 	display: grid;
 	grid-template-columns:
 		1fr 1fr;
 	grid-template-rows:
-		1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+		1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 
 	.tokened {
 		// position: relative;
 				//Uncomment these to help with alignment
-	border-radius: 50%;
-	background-color: green;
-		margin: 2%
+		border-radius: 50%;
+		background-color: green;
+		margin: 2%;
+	}
+	.tokenedX {
+		// position: relative;
+		//Uncomment these to help with alignment
+		border-radius: 50%;
+		background-color: green;
+		margin: 2%;
+		left: 50%;
 	}
 
 	@for $x from 0 through 2 {
@@ -65,7 +73,7 @@
 
 	@for $y from 0 through 11 {
 		.y-#{$y} {
-			grid-row-start: $y +1;
+			grid-row-start: $y;
 		}
 	}
 }
