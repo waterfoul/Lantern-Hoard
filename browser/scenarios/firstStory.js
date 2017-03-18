@@ -30,8 +30,8 @@ export function firstStory() {
 			toughness: 6,
 			movement: 6
 		},
-		positons: {
-			monster: [11, 9],
+		positions: {
+			monster: [10, 8],
 			player1: null,
 			player2: null,
 			player3: null,

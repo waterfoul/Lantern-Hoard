@@ -4,11 +4,15 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import {Provider} from 'react-redux';
 
 import {store} from './store';
+import {startTriggers} from './reducers/flexBoxFix';
+
 import {Root} from './components/Root';
 import {RootSelector} from './components/RootSelector';
 import {Login} from './components/Login';
 import {Game} from './components/Game';
 import {Lobby} from './components/Lobby';
+
+store.dispatch(startTriggers());
 
 ReactDOM.render(
 	<Provider store={store}>

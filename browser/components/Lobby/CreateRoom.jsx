@@ -34,7 +34,7 @@ export class CreateRoom extends Component {
 			gameState: scenarios[event.target.elements['lobby-create-room-scenario'].value](),
 			player1_id: this.props.user.id
 		};
-		console.log(data);
+		this.props.createRoom(data);
 		this.close();
 	}
 

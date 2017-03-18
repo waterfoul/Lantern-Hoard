@@ -39,6 +39,7 @@ const app = express()
 	.use(passport.session())
 
 	.use('/static', express.static(resolve(__dirname, '..', 'browser', 'static')))
+	.use('/fonts/bootstrap/', express.static(resolve(__dirname, '..', 'node_modules', 'bootstrap-sass', 'assets', 'fonts', 'bootstrap')))
 
 	.use('/api', require('./api'))
 

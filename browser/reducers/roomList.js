@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 //actions
-export const LIST_RESULT = 'LIST_RESULT';
+export const ROOM_LIST = 'ROOM_LIST';
 
 //reducer
 export const roomList = (state = null, action) => {
 	switch (action.type) {
-	case LIST_RESULT:
+	case ROOM_LIST:
 		return action.list;
 	default:
 		return state;
@@ -15,7 +15,7 @@ export const roomList = (state = null, action) => {
 
 //action creators
 export const listResult = (list) => ({
-	type: LIST_RESULT,
+	type: ROOM_LIST,
 	list
 });
 
@@ -36,6 +36,16 @@ export const join = (roomId) => (
 			.then(() => dispatch(fetchList()))
 			.catch((e) => {
 				console.error('Error while joining room', e);
+				dispatch(fetchList());
+			})
+);
+
+export const create = (room) => (
+	(dispatch) =>
+		axios.post('/api/room', room)
+			.then(() => dispatch(fetchList()))
+			.catch((e) => {
+				console.error('Error while creating room', e);
 				dispatch(fetchList());
 			})
 );
