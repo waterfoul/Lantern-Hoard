@@ -16,7 +16,7 @@ export const Board = connect(
 				{/*This div is for fixing some flexbox issues, it just causes chrome to re-render the content below*/}
 			</div>
 			<img src="/static/board.jpg" className="game-main-image" />
-			<div id="game-board-grid">
+			<div className="game-board-grid">
 				{ positions.player1 ? <div className={[
 					'game-board-square',
 					'white',
@@ -38,8 +38,8 @@ export const Board = connect(
 				{ positions.player4 ? <div className={[
 					'game-board-square',
 					'blue',
-					'x-' + positions.player4.blue[0],
-					'y-' + positions.player4.blue[1]
+					'x-' + positions.player4[0],
+					'y-' + positions.player4[1]
 				].join(' ')} /> : '' }
 				<div className={[
 					'game-board-square',
