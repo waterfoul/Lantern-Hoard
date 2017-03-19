@@ -5,7 +5,7 @@ export const Character = connect(
 	({ room }) => ({
 		armor: room.gameState.armor
 	})
-) (({ armor, slot }) => (
+)(({ armor, slot }) => (
 	<div>
 		<div className="game-character-collapsed container-fluid">
 			<div className="col-md-5">

@@ -8,7 +8,7 @@ import {
 	randomInRange,
 	victimOfGrabLastRound,
 	closestWithMostBleeding
-} from '../../utils/pick';
+} from '../../../utils/pick';
 
 export function sniff(boardState) {
 	return null;
@@ -18,7 +18,7 @@ export const ai = {
 	back: '/static/white-lion/ai/back.jpg',
 	basic: {
 		'Bat Around': {
-			img: '/static/white-lion/ai/bat-around.jpg',
+			img: '/static/white-lion/ai/basic/bat-around.jpg',
 			actions: [
 				{
 					type: 'pick',
@@ -42,7 +42,7 @@ export const ai = {
 			]
 		},
 		Chomp: {
-			img: '/static/white-lion/ai/chomp.jpg',
+			img: '/static/white-lion/ai/basic/chomp.jpg',
 			actions: [
 				{
 					type: 'pick',
@@ -69,7 +69,7 @@ export const ai = {
 			}
 		},
 		Claw: {
-			img: '/static/white-lion/ai/claw.jpg',
+			img: '/static/white-lion/ai/basic/claw.jpg',
 			actions: [
 				{
 					type: 'pick',
@@ -89,7 +89,7 @@ export const ai = {
 			]
 		},
 		'Combo Claw': {
-			img: '/static/white-lion/ai/combo-claw.jpg',
+			img: '/static/white-lion/ai/basic/combo-claw.jpg',
 			actions: [
 				{
 					type: 'pick',
@@ -116,7 +116,7 @@ export const ai = {
 			}
 		},
 		Grasp: {
-			img: '/static/white-lion/ai/grasp.jpg',
+			img: '/static/white-lion/ai/basic/grasp.jpg',
 			actions: [
 				{
 					type: 'pick',
@@ -140,7 +140,7 @@ export const ai = {
 			]
 		},
 		'Power Swat': {
-			img: '/static/white-lion/ai/power-swat.jpg',
+			img: '/static/white-lion/ai/basic/power-swat.jpg',
 			actions: [
 				{
 					type: 'pick',
@@ -164,7 +164,7 @@ export const ai = {
 			]
 		},
 		Revenge: {
-			img: '/static/white-lion/ai/revenge.jpg',
+			img: '/static/white-lion/ai/basic/revenge.jpg',
 			actions: [
 				{
 					type: 'pick',
@@ -188,7 +188,7 @@ export const ai = {
 			]
 		},
 		'Size Up': {
-			img: '/static/white-lion/ai/size-up.jpg',
+			img: '/static/white-lion/ai/basic/size-up.jpg',
 			actions: [
 				{
 					type: 'pick',
@@ -204,7 +204,7 @@ export const ai = {
 			],
 		},
 		'Vicious Claw': {
-			img: '/static/white-lion/ai/vicious-claw.jpg',
+			img: '/static/white-lion/ai/basic/vicious-claw.jpg',
 			actions: [
 				{
 					type: 'pick',
@@ -232,7 +232,7 @@ export const ai = {
 	},
 	advanced: {
 		Alert: {
-			img: '/static/white-lion/ai/alert.jpg',
+			img: '/static/white-lion/ai/advanced/alert.jpg',
 			actions: [
 				{
 					type: 'mood',
@@ -241,7 +241,7 @@ export const ai = {
 			]
 		},
 		'Blood Thirsty': {
-			img: '/static/white-lion/ai/blood-thirsty.jpg',
+			img: '/static/white-lion/ai/advanced/blood-thirsty.jpg',
 			actions: [
 				{
 					type: 'mood',
@@ -254,7 +254,7 @@ export const ai = {
 			]
 		},
 		'Bloody Claw': {
-			img: '/static/white-lion/ai/bloody-claw.jpg',
+			img: '/static/white-lion/ai/advanced/bloody-claw.jpg',
 			actions: [
 				{
 					type: 'pick',
@@ -280,7 +280,7 @@ export const ai = {
 			}
 		},
 		Enraged: {
-			img: '/static/white-lion/ai/enraged.jpg',
+			img: '/static/white-lion/ai/advanced/enraged.jpg',
 			actions: [
 				{
 					type: 'mood',
@@ -296,7 +296,7 @@ export const ai = {
 			]
 		},
 		'Ground Fighting': {
-			img: '/static/white-lion/ai/ground-fighting.jpg',
+			img: '/static/white-lion/ai/advanced/ground-fighting.jpg',
 			actions: [
 				{
 					type: 'mood',
@@ -305,7 +305,7 @@ export const ai = {
 			]
 		},
 		'Lick Wounds': {
-			img: '/static/white-lion/ai/lick-wounds.jpg',
+			img: '/static/white-lion/ai/advanced/lick-wounds.jpg',
 			actions: [
 				{
 					type: 'special',
@@ -314,7 +314,7 @@ export const ai = {
 			]
 		},
 		Maul: {
-			img: '/static/white-lion/ai/maul.jpg',
+			img: '/static/white-lion/ai/advanced/maul.jpg',
 			actions: [
 				{
 					type: 'pick',
@@ -338,7 +338,7 @@ export const ai = {
 			]
 		},
 		'Smart Cat': {
-			img: '/static/white-lion/ai/smart-cat.jpg',
+			img: '/static/white-lion/ai/advanced/smart-cat.jpg',
 			actions: [
 				{
 					type: 'special',
@@ -347,7 +347,7 @@ export const ai = {
 			]
 		},
 		'Terrifying Roar': {
-			img: '/static/white-lion/ai/terrifying-roar.jpg',
+			img: '/static/white-lion/ai/advanced/terrifying-roar.jpg',
 			actions: [
 				{
 					type: 'special',
@@ -358,18 +358,20 @@ export const ai = {
 	},
 	legendary: {
 		'Golden Eyes': {
-			img: '/static/white-lion/ai/golden-eyes.jpg'
+			img: '/static/white-lion/ai/legendary/golden-eyes.jpg'
 		},
 		Vanish: {
-			img: '/static/white-lion/ai/vanish.jpg'
+			img: '/static/white-lion/ai/legendary/vanish.jpg'
 		}
 	},
 	traits: {
 		Cunning: {
-			img: '/static/white-lion/ai/cunning.jpg'
+			img: '/static/white-lion/ai/traits/cunning.jpg'
 		},
 		Merciless: {
-			img: '/static/white-lion/ai/merciless.jpg'
+			img: '/static/white-lion/ai/traits/merciless.jpg'
 		}
 	}
 };
+
+ai.cards = Object.assign({}, ai.basic, ai.advanced, ai.legendary, ai.traits);

@@ -1,12 +1,12 @@
 import {shuffle} from '../utils/shuffle';
-import {Hl} from '../data/white-lion/hl';
+import {whiteLion} from '../data/monsters/whiteLion';
 
 export function firstStory() {
 	return {
 		hl: {
 			deck: [
 				'Strange Hand',
-				...shuffle(Object.keys(Hl).filter((ele) => (ele !== 'Strange Hand')))
+				...shuffle(Object.keys(whiteLion.hl).filter((ele) => (ele !== 'Strange Hand')))
 			],
 			discard: []
 		},

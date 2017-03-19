@@ -1,7 +1,7 @@
 function moveForward(boardState) {}
 function jumpBack(boardState) {}
 
-export const Hl = {
+export const hl = {
 	'Beasts Back': {
 		img: '/static/white-lion/hl/beasts-back.jpg',
 		triggers: [

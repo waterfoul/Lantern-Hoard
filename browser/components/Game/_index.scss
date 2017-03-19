@@ -1,3 +1,5 @@
+@import './_MonsterInfo';
+
 #game {
 	flex-direction: column;
 	display: flex;
@@ -115,65 +117,4 @@
 
 #game-character-card-4 {
 	background-color: #DAA520;
-}
-
-#game-board-monster {
-	position: relative;
-}
-
-#game-board-monster-container {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-}
-
-.game-board-monster-stats {
-	position: absolute;
-	width: 19%;
-	height: 5.5%;
-	//Uncomment these to help with alignment
-	//border-radius: 50%;
-	//background-color: green;
-	left: 4%;
-
-	> div {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		font-size: 2.5vh;
-	}
-
-	$luck: 12.5%;
-	$diff: 11.5%;
-
-	&.luck {
-		top: $luck;
-	}
-
-	&.accuracy {
-		top: $luck + $diff - 0.25;
-	}
-
-	&.evasion {
-		top: $luck + ($diff * 2) - 0.5;
-	}
-
-	&.speed {
-		top: $luck + ($diff * 3) - 1;
-	}
-
-	&.damage {
-		top: $luck + ($diff * 4) - 0.5;
-	}
-
-	&.toughness {
-		top: $luck + ($diff * 5) - 0.5;
-	}
-
-	&.movement {
-		top: $luck + ($diff * 6);
-	}
 }
