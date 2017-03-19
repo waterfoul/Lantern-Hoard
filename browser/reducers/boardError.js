@@ -28,4 +28,4 @@ export const setError = (message) => (
 			dispatch(setErrorAction(message));
 		}
 	}
-)
+);

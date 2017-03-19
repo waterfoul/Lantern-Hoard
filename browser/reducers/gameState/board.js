@@ -17,13 +17,13 @@ const initialState = {
 //reducer
 export const board = (state = initialState, action) => {
 	switch (action.type) {
-		case CHANGE_BOARD_STATUS:
-			return {
-				status: action.status,
-				data: action.data
-			};
-		default:
-			return state;
+	case CHANGE_BOARD_STATUS:
+		return {
+			status: action.status,
+			data: action.data
+		};
+	default:
+		return state;
 	}
 };
 

@@ -81,5 +81,5 @@ export const Character = connect(
 				}
 			</div>
 		</div>
-	)
+	);
 });
