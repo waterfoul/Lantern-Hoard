@@ -20,8 +20,6 @@ ReactDOM.render(
 				<Route path="/login" component={Login} />
 				<Route path="/lobby" component={Lobby} />
 				<Route path="/game" component={Game} />
-
-				<Route path="/player" component={Player} />
 			</Root>
 		</Router>
 	</Provider>,
