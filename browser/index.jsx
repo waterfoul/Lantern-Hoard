@@ -12,8 +12,6 @@ import {Login} from './components/Login';
 import {Game} from './components/Game';
 import { Lobby } from './components/Lobby';
 
-import {Player} from './components/Game/Player';
-
 store.dispatch(startTrigger());
 
 ReactDOM.render(
