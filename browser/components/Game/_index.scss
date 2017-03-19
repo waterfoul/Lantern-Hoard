@@ -1,17 +1,116 @@
-#game-monster {
-	img {
+@import './_MonsterInfo';
+
+#game {
+	flex-direction: column;
+	display: flex;
+}
+#game-board  {
+	position: relative;
+}
+#game-board-wrapper {
+	flex-grow: 1;
+	position: relative;
+	> div {
+		height: 100%;
 		width: 100%;
+		position: absolute;
+		text-align: center;
+		> div {
+			height: 100%;
+			display: inline-block;
+			> div {
+				height: 100%;
+				overflow: hidden;
+				img.game-main-image {
+					width: auto;
+					height: 100%;
+				}
+			}
+		}
 	}
 }
 #game-board {
-	img {
-		width: 100%;
+	padding-right: 10px;
+	> div {
+		position: relative;
 	}
 }
-#game-board-wrapper {
-	padding: 0 220px 0 220px;
+.game-board-grid {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: grid;
+	grid-template-columns:
+					1fr 1fr 1fr 1fr 1fr
+					1fr 1fr 1fr 1fr 1fr
+					1fr 1fr 1fr 1fr 1fr
+					1fr 1fr 1fr 1fr 1fr
+					1fr 1fr;
+	grid-template-rows:
+					1fr 1fr 1fr 1fr 1fr
+					1fr 1fr 1fr 1fr 1fr
+					1fr 1fr 1fr 1fr 1fr
+					1fr;
+
+	.initialPlacement {
+		background-color: lightblue;
+		margin: 10%;
+		cursor: pointer;
+	}
+	.white {
+		background-color: white;
+		border-radius: 50%;
+		margin: 25%
+	}
+	.yellow {
+		background-color: yellow;
+		border-radius: 50%;
+		margin: 25%
+	}
+	.green {
+		background-color: green;
+		border-radius: 50%;
+		margin: 25%
+	}
+	.blue {
+		background-color: blue;
+		border-radius: 50%;
+		margin: 25%
+	}
+	.monster {
+		background-color: red;
+		border-radius: 50%;
+		margin: 15%
+	}
+
+	@for $x from 0 through 22 {
+		.x-#{$x} {
+			grid-column-start: $x + 1;
+		}
+		.size-2.x-#{$x} {
+			grid-column-end: $x + 3;
+		}
+		.size-3.x-#{$x} {
+			grid-column-end: $x + 4;
+		}
+	}
+
+	@for $y from 0 through 16 {
+		.y-#{$y} {
+			grid-row-start: 16 - $y;
+		}
+		.size-2.y-#{$y} {
+			grid-row-end: 16 - $y + 2;
+		}
+		.size-3.y-#{$y} {
+			grid-row-end: 16 - $y + 3;
+		}
+	}
 }
 #game-character-card-wrapper {
+	flex-grow: 0;
 	> div {
 		border: 1px solid black;
 		border-radius: 20px 20px 0 0;
@@ -29,6 +128,38 @@
 	background-color: #DAA520;
 }
 
+#game-board-error {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	z-index: 10;
+	background-color: rgba(201, 201, 201, 0.6);
+
+	div {
+		position: absolute;
+		display: inline-block;
+		height: auto !important;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		font-weight: bold;
+		font-size: 300%;
+	}
+}
+
+#game-board-status-overlay {
+	position: absolute !important;
+	top: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+
+	.game-board-grid {
+		padding-right: 10px;
+	}
+}
 
 #player-token-board-grid > div {
 	position: relative;
