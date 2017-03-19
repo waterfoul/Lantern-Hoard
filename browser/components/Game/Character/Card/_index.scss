@@ -7,9 +7,13 @@
 }
 
 
-#player-token-board-grid > div {
+.player-token-board-grid > div {
   position: relative;
-  display: inline-block;
+  width: 100%;
+}
+
+.player-tokens-image {
+  width: 100%;
 }
 
 #player-token-board-tokens {

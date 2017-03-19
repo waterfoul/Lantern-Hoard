@@ -1,31 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { TempTokens } from './TempTokens';
+
 export const Card = connect(
 	() => ({
-		playerTokenState: {
-			initialState: {
-				token1: [1, 1],
-				token2: [2, 1],
-				token3: [1, 2],
-				token4: [2, 2],
-				token5: [1, 3],
-				token6: [2, 3],
-				token7: [1, 4],
-				token8: [2, 4],
-				token9: [1, 5],
-				token10: [2, 5],
-				token11: [1, 6],
-				token12: [2, 6],
-				token13: [1, 7],
-				token14: [2, 7],
-				token15: [1, 8],
-				token16: [2, 8],
-				token17: [1, 9],
-				token18: [2, 9]
 
-			}
-		},
 		playerGearState: {
 			initialState: {
 				cloth: [1, 1],
@@ -77,85 +57,12 @@ export const Card = connect(
 		<div>
 			<div className="container-fluid character-card-wrapper">
 
-				<div id="player-token-board-grid" className="col-md-2">
-					<div>
-						<img src="/static/gear-grid/tokens.jpg" id="player-tokens-image" />
-
-						<div id="player-token-board-tokens">
-							<div className={[
-								'player-token-circle',
-								'tokened',
-								'x-' + playerTokenState.initialState.token1[0],
-								'y-' + playerTokenState.initialState.token1[1]
-							].join(' ')} />
-							<div className={[
-								'player-token-circle',
-								'tokenedX',
-								'x-' + playerTokenState.initialState.token2[0],
-								'y-' + playerTokenState.initialState.token2[1]
-							].join(' ')} />
-							<div className={[
-								'player-token-circle',
-								'tokened',
-								'x-' + playerTokenState.initialState.token3[0],
-								'y-' + playerTokenState.initialState.token3[1]
-							].join(' ')} />
-							<div className={[
-								'player-token-circle',
-								'tokened',
-								'x-' + playerTokenState.initialState.token4[0],
-								'y-' + playerTokenState.initialState.token4[1]
-							].join(' ')} />
-							<div className={[
-								'player-token-circle',
-								'tokened',
-								'x-' + playerTokenState.initialState.token5[0],
-								'y-' + playerTokenState.initialState.token5[1]
-							].join(' ')} />
-							<div className={[
-								'player-token-circle',
-								'tokened',
-								'x-' + playerTokenState.initialState.token6[0],
-								'y-' + playerTokenState.initialState.token6[1]
-							].join(' ')} />
-							<div className={[
-								'player-token-circle',
-								'tokened',
-								'x-' + playerTokenState.initialState.token7[0],
-								'y-' + playerTokenState.initialState.token7[1]
-							].join(' ')} />
-							<div className={[
-								'player-token-circle',
-								'tokened',
-								'x-' + playerTokenState.initialState.token8[0],
-								'y-' + playerTokenState.initialState.token8[1]
-							].join(' ')} />
-							<div className={[
-								'player-token-circle',
-								'tokened',
-								'x-' + playerTokenState.initialState.token9[0],
-								'y-' + playerTokenState.initialState.token9[1]
-							].join(' ')} />
-							<div className={[
-								'player-token-circle',
-								'tokened',
-								'x-' + playerTokenState.initialState.token10[0],
-								'y-' + playerTokenState.initialState.token10[1]
-							].join(' ')} />
-							<div className={[
-								'player-token-circle',
-								'tokened',
-								'x-' + playerTokenState.initialState.token11[0],
-								'y-' + playerTokenState.initialState.token11[1]
-							].join(' ')} />
-
-
-						</div>
-					</div>
+				<div className="col-md-4">
+					<TempTokens />
 				</div>
 
-				<div id="player-armor-gear-wrapper" className="container-fluid col-md-10" >
-
+				<div id="player-armor-gear-wrapper" className="container-fluid col-md-8" >
+				{/*
 					<div id="player-armor-board" className="col-md-10">
 						<img src="/static/gear-grid/armor.jpg" id="player-armor-image" />
 						<div id="player-armor-board-container">
