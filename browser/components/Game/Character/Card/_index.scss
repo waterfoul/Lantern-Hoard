@@ -16,13 +16,13 @@
   width: 100%;
 }
 
-#player-token-board-tokens {
+.player-token-board-tokens {
   position: absolute;
   padding: 1.5%;
-  top: 1.8%;
-  left: 5.5%;
-  width: 85%;
-  height: 50%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 
   display: grid;
   grid-template-columns:
@@ -30,33 +30,21 @@
   grid-template-rows:
           1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 
-  .tokened {
+  .token {
     // position: relative;
     //Uncomment these to help with alignment
     border-radius: 50%;
     background-color: green;
     margin: 2%;
   }
-  .tokenedX {
-    // position: relative;
-    //Uncomment these to help with alignment
-    border-radius: 50%;
-    background-color: green;
-    margin: 2%;
-    left: 50%;
-  }
 
-  @for $x from 0 through 2 {
-    .x-#{$x} {
-      grid-column-start: 2 - $x;
+  @for $idx from 0 through 17 {
+    .token-#{idx} {
+      grid-column-start: $idx % 2 +1;
+      grid-row-start: floor($idx / 2) +1;
     }
   }
 
-  @for $y from 0 through 11 {
-    .y-#{$y} {
-      grid-row-start: $y;
-    }
-  }
 }
 
 #player-gear-grid > div {
@@ -65,7 +53,7 @@
 }
 #player-gear-grid-items {
   position: absolute;
-  padding: 1.5%;
+  padding: 13% 5%;
   top: 0;
   left: 0;
   width: 100%;

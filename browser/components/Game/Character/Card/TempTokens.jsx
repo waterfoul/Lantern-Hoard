@@ -4,14 +4,23 @@ import { connect } from 'react-redux';
 export const TempTokens = connect(
 	() => ({
 		tokens: [
-			'Strength',
-			'Accuracy',
-			'Evasion',
+			'plus strength',
+			'plus accuracy',
+			'plus evasion',
 			'Lunacy',
-			'Speed',
-			'Damage',
-			'Luck',
-			'Movement',
+			'plus speed',
+			'plus damage',
+			'plus luck',
+			'plus movement',
+			'Bleed',
+			'minus strength',
+			'minus accuracy',
+			'minus evasion',
+			'Lunacy',
+			'minus speed',
+			'minus damage',
+			'minus luck',
+			'minus movement',
 			'Bleed'
 		]
 	})
@@ -20,8 +29,12 @@ export const TempTokens = connect(
 		<div>
 			<img src="/static/gear-grid/temp-tokens.jpg" className="player-tokens-image" />
 
-			<div id="player-token-board-tokens">
-				{tokens.map(token => (null))}
+			<div className="player-token-board-tokens">
+				{tokens.map((token, i) => (<div key={i} className={[
+					'token',
+					`token-${i}`,
+					token
+				].join(' ')} />))}
 			</div>
 		</div>
 	</div>

@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import {Collapsed} from './Collapsed';
-import {Card} from './Card';
+import { Collapsed } from './Collapsed';
+import { Card } from './Card';
 
 export class Character extends Component {
 	constructor() {
@@ -25,7 +25,8 @@ export class Character extends Component {
 		return (
 			<div>
 				<input type="checkbox" checked={this.state.fullCard} onChange={this.changeFullCard} />
-				{ this.state.fullCard ? <Card slot={this.props.slot} /> : <Collapsed slot={this.props.slot}/> }
+				<Collapsed slot={this.props.slot} />
+				{this.state.fullCard ? <Card slot={this.props.slot} /> : null}
 			</div>
 		);
 	}
