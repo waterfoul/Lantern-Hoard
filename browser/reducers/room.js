@@ -58,6 +58,7 @@ export const checkGameState = () => (
 		const {room: state} = getState();
 		if (!state.Player1 || !state.Player2 || !state.Player3 || !state.Player4) {
 			dispatch(setError('All characters must be controlled'));
+			dispatch(changeBoardStatus(BOARD_STATUSES.generic));
 		} else {
 			dispatch(setError(null));
 

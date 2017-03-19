@@ -24,7 +24,7 @@ export const moveToken = (token, location) => ({
 
 //thunks
 export const move = (token, location) => (
-	(dispatch, getState) => {
+	(dispatch) => {
 		dispatch(moveToken(token, location));
 		dispatch(checkGameState());
 	}

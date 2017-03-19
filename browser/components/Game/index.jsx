@@ -60,6 +60,6 @@ class GameComponent extends Component {
 }
 
 export const Game  = connect(
-	({ room }) => ({ room }),
+	({ room, boardError }) => ({ room, boardError }),
 	{fetch, changeFixState}
 )(GameComponent);
