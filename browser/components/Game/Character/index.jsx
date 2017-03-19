@@ -25,7 +25,6 @@ export class Character extends Component {
 		return (
 			<div>
 				<input type="checkbox" checked={this.state.fullCard} onChange={this.changeFullCard} />
-				{this.state.fullCard}
 				{ this.state.fullCard ? <Card slot={this.props.slot} /> : <Collapsed slot={this.props.slot}/> }
 			</div>
 		);
