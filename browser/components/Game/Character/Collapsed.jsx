@@ -1,10 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {takeControl} from '../../reducers/room';
-import {BOARD_STATUSES} from '../../../common/gameState/board';
+import {takeControl} from '../../../reducers/room';
+import {BOARD_STATUSES} from '../../../../common/gameState/board';
 
-export const Character = connect(
+export const Collapsed = connect(
 	({ room, boardError, auth }) => ({
 		armor: room.gameState.armor,
 		board: room.gameState.board || {},
