@@ -4,6 +4,7 @@ import {reducers} from './reducers';
 import thunkMiddleware from 'redux-thunk';
 
 import {changeFixState, CHANGE_FIX_STATE} from './reducers/flexBoxFix';
+import {ROOM_RESULT} from './reducers/room';
 import {send} from './socket';
 
 let timeout = -1;
@@ -23,7 +24,7 @@ const socketMiddleware = (store) => (next) => (action) => {
 
 	const {room: roomAfter} = store.getState();
 
-	if (room && roomAfter && room.gameState !== roomAfter.gameState && !action.fromSocket) {
+	if (room && roomAfter && room.gameState !== roomAfter.gameState && !action.fromSocket && action.type !== ROOM_RESULT) {
 		send(action);
 	}
 

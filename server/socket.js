@@ -8,6 +8,8 @@ const rooms = {};
 // This contains the update promises for each room, ensuring that only oen update is in progress for each room at a time
 const roomUpdate = {};
 
+let allClients = [];
+
 const svr = sockjs.createServer({
 	log: logger.log.bind(logger)
 });
@@ -19,8 +21,25 @@ function removeFrom(client, room) {
 	}
 }
 
+function sendTo(roomNum, message, excludedClient) {
+	logger.info('Broadcasting message to all clients for room', {roomNum, message});
+	if (rooms[roomNum]) {
+		rooms[roomNum].forEach((client) => {
+			if (client !== excludedClient) {
+				client.write(message);
+			}
+		});
+	}
+}
+
+function sendAll(message) {
+	logger.info('Broadcasting message to all clients', {message});
+	allClients.forEach((client) => client.write(message));
+}
+
 svr.on('connection', function(conn) {
 	let roomNum = -1;
+	allClients.push(conn);
 
 	conn.on('data', function(message) {
 		const data = JSON.parse(message);
@@ -35,11 +54,7 @@ svr.on('connection', function(conn) {
 		} else if (roomNum === data.room) {
 			rooms[roomNum] = rooms[roomNum] || [];
 
-			rooms[roomNum].forEach((client) => {
-				if (client !== conn) {
-					client.write(message);
-				}
-			});
+			sendTo(roomNum, message, conn);
 
 			const update = roomUpdate[roomNum] || Promise.resolve();
 
@@ -55,9 +70,12 @@ svr.on('connection', function(conn) {
 
 	conn.on('close', function() {
 		removeFrom(conn, roomNum);
+		allClients = allClients.filter((ele) => ele !== conn);
 	});
 });
 
 module.exports = {
-	svr: svr
+	svr: svr,
+	sendTo,
+	sendAll
 };

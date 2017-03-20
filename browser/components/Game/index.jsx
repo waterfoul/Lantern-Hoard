@@ -9,6 +9,7 @@ import {InitialPlacement} from './gameBoardOverlay/InitialPlacement';
 
 import {fetch} from '../../reducers/room';
 import {changeFixState} from '../../reducers/flexBoxFix';
+import {listResult} from '../../reducers/roomList';
 import {BOARD_STATUSES} from '../../../common/gameState/board';
 
 
@@ -18,6 +19,8 @@ class GameComponent extends Component {
 		setTimeout(this.props.changeFixState, 100);
 		setTimeout(this.props.changeFixState, 500);
 		setTimeout(this.props.changeFixState, 1000);
+		// clearing the room list so sw don't need to keep it updated
+		this.props.listResult(null);
 	}
 
 	getGameBoardOverlay() {
@@ -61,5 +64,5 @@ class GameComponent extends Component {
 
 export const Game  = connect(
 	({ room, boardError }) => ({ room, boardError }),
-	{fetch, changeFixState}
+	{fetch, changeFixState, listResult}
 )(GameComponent);

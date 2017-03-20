@@ -1,6 +1,8 @@
 import SockJS from 'sockjs-client';
 
 import {store} from './store';
+import {fetch} from './reducers/room';
+import {fetchList} from './reducers/roomList';
 
 const sock = new SockJS('/socket');
 
@@ -17,10 +19,18 @@ reconnect();
 
 sock.onmessage = function(e) {
 	const data = JSON.parse(e.data);
-	const {room} = store.getState();
+	console.log('data', data);
 
-	if (room && data.room === room.id) {
-		store.dispatch(Object.assign(data.body, {fromSocket: true}));
+	const {room, roomList} = store.getState();
+
+	if (data.fullUpdate && roomList) {
+		store.dispatch(fetchList());
+	} else if (room && data.room === room.id) {
+		if (data.update) {
+			store.dispatch(fetch(room.id));
+		} else {
+			store.dispatch(Object.assign(data.body, {fromSocket: true}));
+		}
 	}
 };
 
