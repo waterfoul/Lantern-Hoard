@@ -30,12 +30,13 @@ export const TempTokens = connect(
 			<img src="/static/gear-grid/temp-tokens.jpg" className="player-temp-tokens-image" />
 
 			<div className="player-token-board-temp-tokens">
-				{tokens.map((token, i) => (<div key={i} className={[
-					'token',
-					`token-${i}`,
-					token
-				].join(' ')} />))}
+				{tokens.map((token, i) => (<div
+key={i} className={[
+	'token',
+	`token-${i}`,
+	token
+].join(' ')} />))}
 			</div>
 		</div>
 	</div>
-	))
+	));

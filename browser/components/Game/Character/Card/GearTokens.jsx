@@ -26,12 +26,13 @@ export const GearTokens = connect(
 			<img src="/static/gear-grid/gear-tokens.jpg" className="player-gear-tokens-image" />
 
 			<div className="player-token-board-gear-tokens">
-				{tokens.map((token, i) => (<div key={i} className={[
-					'token',
-					`token-${i}`,
-					token
-				].join(' ')} />))}
+				{tokens.map((token, i) => (<div
+key={i} className={[
+	'token',
+	`token-${i}`,
+	token
+].join(' ')} />))}
 			</div>
 		</div>
 	</div>
-))
+));
