@@ -1,4 +1,14 @@
-#lobby-create-wrapper {
+#lobby-wrapper {
   text-align: center;
   padding: 5px;
+  background: url("/static/grass-background.jpg") no-repeat;
+  background-size: 100% auto;
+}
+
+.lobby-room {
+  background-color: rgba(100, 100, 100, 0.6);
+  border-radius: 10px;
+  margin: 15px;
+  padding: 5px;
+  height: 120px;
 }

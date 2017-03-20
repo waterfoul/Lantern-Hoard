@@ -11,11 +11,11 @@ export const Lobby = connect(
 	{ joinEvt: join, createRoom: create }
 )(
 	({ roomList, createRoom, joinEvt, user }) => (
-		<div>
+		<div id="lobby-wrapper">
 			<CreateRoom user={user} createRoom={createRoom} />
 			<div id="lobby-room-list" className="container-fluid">
 				{roomList ? roomList.map((room) => (
-					<div key={room.id} className="col-md-4">
+					<div key={room.id} className="col-md-3">
 						<Room room={room} user={user} join={joinEvt} />
 					</div>
 				)) : ''}

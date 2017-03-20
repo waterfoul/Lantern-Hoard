@@ -15,7 +15,7 @@ export const Room = ({room, user, join}) => {
 				<div>
 					{room.Player1 ? room.Player1.name : ''}
 					{room.Player2 ? ', ' + room.Player2.name : ''}
-					{room.Player3 ? ', ' + room.Player3.name : ''}
+					{room.Player3 ? (<span>,<br />{room.Player3.name}</span>) : ''}
 					{room.Player4 ? ', ' + room.Player4.name : ''}
 				</div>
 				<div className="btn-group">

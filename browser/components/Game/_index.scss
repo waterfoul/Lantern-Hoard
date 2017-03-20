@@ -4,6 +4,8 @@
 #game {
 	flex-direction: column;
 	display: flex;
+	background: url("/static/faces-background.jpg") no-repeat;
+	background-size: 100% auto;
 }
 #game-board  {
 	position: relative;
