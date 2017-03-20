@@ -5,7 +5,7 @@ const {gameStateReducer} = require('../common/gameState');
 
 // This holds the clients connected to each room
 const rooms = {};
-// This contains the update promises for each room, ensuring that only oen update is in progress for each room at a time
+// This contains the update promises for each room, ensuring that only one update is in progress for each room at a time
 const roomUpdate = {};
 
 let allClients = [];
@@ -75,7 +75,7 @@ svr.on('connection', function(conn) {
 });
 
 module.exports = {
-	svr: svr,
+	svr,
 	sendTo,
 	sendAll
 };

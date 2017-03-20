@@ -19,7 +19,6 @@ reconnect();
 
 sock.onmessage = function(e) {
 	const data = JSON.parse(e.data);
-	console.log('data', data);
 
 	const {room, roomList} = store.getState();
 

@@ -19,7 +19,7 @@ class GameComponent extends Component {
 		setTimeout(this.props.changeFixState, 100);
 		setTimeout(this.props.changeFixState, 500);
 		setTimeout(this.props.changeFixState, 1000);
-		// clearing the room list so sw don't need to keep it updated
+		// clearing the room list so we don't need to keep it updated
 		this.props.listResult(null);
 	}
 
