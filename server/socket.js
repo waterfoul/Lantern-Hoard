@@ -1,7 +1,7 @@
 const sockjs = require('sockjs');
 const logger = require('./utils/logger');
 const Room = require('./db/models/room');
-const {gameStateReducer} = require('../common/gameState')
+const {gameStateReducer} = require('../common/gameState');
 
 // This holds the clients connected to each room
 const rooms = {};
