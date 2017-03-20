@@ -12,19 +12,19 @@
   width: 100%;
 }
 
-.player-tokens-image {
+.player-temp-tokens-image {
   width: 100%;
 }
 
-.player-token-board-tokens {
+.player-token-board-temp-tokens {
   position: absolute;
-  padding: 1.5%;
+  padding: 13% 5%;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-
   display: grid;
+
   grid-template-columns:
           1fr 1fr;
   grid-template-rows:
@@ -34,8 +34,173 @@
     // position: relative;
     //Uncomment these to help with alignment
     border-radius: 50%;
+    background-size: 100% 100%;
     background-color: green;
     margin: 2%;
+
+    &.accuracy {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-accuracy.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-accuracy.png");
+      }
+    }
+    &.strength {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-strength.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-strength.png");
+      }
+    }
+    &.damage {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-damage.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-damage.png");
+      }
+    }
+    &.luck {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-luck.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-luck.png");
+      }
+    }
+    &.evasion {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-evasion.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-evasion.png");
+      }
+    }
+    &.speed {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-speed.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-speed.png");
+      }
+    }
+    &.movement {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-movement.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-movement.png");
+      }
+    }
+    &.bleed {
+        background-image: url("/static/gear-grid/tokens/bleed.png");
+
+    }
+    &.insanity {
+        background-image: url("/static/gear-grid/tokens/insanity.png");
+    }
+  }
+
+  @for $idx from 0 through 17 {
+    .token-#{idx} {
+      grid-column-start: $idx % 2 +1;
+      grid-row-start: floor($idx / 2) +1;
+    }
+  }
+
+}
+
+.player-gear-tokens-image {
+  width: 100%;
+}
+
+.player-token-board-gear-tokens {
+  position: absolute;
+  padding: 7% 5% 10% 5%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+
+  grid-template-columns:
+          1fr 1fr;
+  grid-template-rows:
+          1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+
+  .token {
+    // position: relative;
+    //Uncomment these to help with alignment
+    border-radius: 50%;
+    background-size: 100% 100%;
+    background-color: green;
+    margin: 2%;
+
+    &.accuracy {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-accuracy.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-accuracy.png");
+      }
+    }
+    &.strength {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-strength.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-strength.png");
+      }
+    }
+    &.damage {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-damage.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-damage.png");
+      }
+    }
+    &.luck {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-luck.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-luck.png");
+      }
+    }
+    &.evasion {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-evasion.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-evasion.png");
+      }
+    }
+    &.speed {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-speed.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-speed.png");
+      }
+    }
+    &.movement {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-movement.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-movement.png");
+      }
+    }
+    &.bleed {
+        background-image: url("/static/gear-grid/tokens/bleed.png");
+
+    }
+    &.insanity {
+        background-image: url("/static/gear-grid/tokens/insanity.png");
+    }
   }
 
   @for $idx from 0 through 17 {

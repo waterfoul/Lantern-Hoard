@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { TempTokens } from './TempTokens';
+import { GearTokens } from './GearTokens';
 
 export const Card = connect(
 	() => ({
@@ -59,10 +60,11 @@ export const Card = connect(
 
 				<div className="col-md-4">
 					<TempTokens />
+					<GearTokens />
 				</div>
 
 				<div id="player-armor-gear-wrapper" className="container-fluid col-md-8" >
-				{/*
+					{/*
 					<div id="player-armor-board" className="col-md-10">
 						<img src="/static/gear-grid/armor.jpg" id="player-armor-image" />
 						<div id="player-armor-board-container">
