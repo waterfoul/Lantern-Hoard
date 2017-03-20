@@ -3,6 +3,8 @@
 
 #game-character-card-wrapper {
   flex-grow: 0;
+  min-width: 80%;
+
   > div {
     position: relative;
     height: 100%;
@@ -10,16 +12,21 @@
     border-radius: 20px 20px 0 0;
   }
 }
+
+#game-character-card-1 {
+  background-color: #777777;
+}
+
 #game-character-card-2 {
-  background-color: #7B68EE;
+  background-color: #141659;
 }
 
 #game-character-card-3 {
-  background-color: #3CB371;
+  background-color: #165914;
 }
 
 #game-character-card-4 {
-  background-color: #DAA520;
+  background-color: #595514;
 }
 
 #game-board-error {
@@ -69,6 +76,14 @@
   }
 
   .attack-buttons {
-    white-space: normal;
+    div {
+      padding-left: 3px;
+      padding-right: 3px;
+    }
+    button {
+      width: 100%;
+      padding: 1px 0;
+      margin-bottom: 6px;
+    }
   }
 }

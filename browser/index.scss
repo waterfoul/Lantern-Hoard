@@ -1,4 +1,7 @@
-@import "../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap";
+@import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "../node_modules/bootswatch-sass/darkly/variables";
+@import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "../node_modules/bootswatch-sass/darkly/bootswatch";
 @import "../node_modules/bootstrap-social/bootstrap-social.scss";
 
 $fa-font-path: 'font-awesome';
@@ -15,10 +18,12 @@ html, body, #root, #root > div, #root > div > div, #root > div > div > div {
 #login-parent {
   position: relative;
   height: 100%;
+  background: url("/static/lantern-background.jpg") no-repeat center center;
+  background-size: 100% auto;
 }
 #login-child {
   position: absolute;
-  width: 727px;
+  width: 858px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

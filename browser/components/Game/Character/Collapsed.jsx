@@ -68,9 +68,13 @@ export const Collapsed = connect(
 									{getPlacementText()}
 								</div>
 							) : (
-								<div className="col-md-7 col-sm-12 attack-buttons">
-									<button className="btn btn-primary" disabled={boardError}>Fist & Tooth</button>
-									<button className="btn btn-primary" disabled={boardError}>Founding Stone</button>
+								<div className="col-md-7 col-sm-12 attack-buttons container-fluid">
+									<div className="col-md-6 col-sm-12"><button className="btn btn-primary btn-xs" disabled={boardError}>Fist & Tooth</button></div>
+									<div className="col-md-6 col-sm-12"><button className="btn btn-primary btn-xs" disabled={boardError}>Founding Stone</button></div>
+									<div className="col-md-6 col-sm-12"><button className="btn btn-primary btn-xs" disabled={boardError}>Leather Headband</button></div>
+									<div className="col-md-6 col-sm-12"><button className="btn btn-primary btn-xs" disabled={boardError}>Acid-Tooth Dagger</button></div>
+									<div className="col-md-6 col-sm-12"><button className="btn btn-primary btn-xs" disabled={boardError}>Blue Charm</button></div>
+									<div className="col-md-6 col-sm-12"><button className="btn btn-primary btn-xs" disabled={boardError}>Bone Axe</button></div>
 								</div>
 							)
 					) : (
