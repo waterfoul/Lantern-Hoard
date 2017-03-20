@@ -160,3 +160,21 @@
 		padding-right: 10px;
 	}
 }
+
+.game-character-collapsed {
+	white-space: nowrap;
+	overflow: hidden;
+	padding-left: 0;
+	padding-right: 0;
+
+	@media (min-width: 768px) {
+		.col-sm-12 {
+			padding-left: 6px;
+			padding-right: 6px;
+		}
+	}
+
+	.attack-buttons {
+		white-space: normal;
+	}
+}

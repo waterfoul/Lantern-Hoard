@@ -1,7 +1,8 @@
 import axios from 'axios';
-import {gameStateReducer} from './gameState';
+import {gameStateReducer} from '../../common/gameState';
 import {setError} from './boardError';
-import {changeBoardStatus, BOARD_STATUSES} from './gameState/board';
+import {BOARD_STATUSES} from '../../common/gameState/board';
+import {changeBoardStatus} from './gameState/board';
 
 //actions
 export const ROOM_RESULT = 'ROOM_RESULT';

@@ -1,5 +1,6 @@
 const logger = require('./utils/logger');
 const express = require('express');
+const http = require('http');
 const expressWinston = require('express-winston');
 const winston = require('winston');
 const passport = require('passport');
@@ -7,6 +8,7 @@ const bodyParser = require('body-parser');
 const {resolve} = require('path');
 const args = require('./utils/args');
 const db = require('./db');
+const socket = require('./socket');
 
 const app = express()
 
@@ -51,7 +53,9 @@ const app = express()
 	});
 
 db.didSync.then(() => {
-	const server = app.listen(args.port, () => {
+	const server = http.createServer(app);
+	socket.svr.installHandlers(server, {prefix: '/socket'});
+	server.listen(args.port, () => {
 		const {address, port} = server.address();
 		const host = address === '::' ? 'localhost' : address;
 		const urlSafeHost = host.includes(':') ? `[${host}]` : host;

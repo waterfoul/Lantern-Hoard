@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import {takeControl} from '../../reducers/room';
-import {BOARD_STATUSES} from '../../reducers/gameState/board';
+import {BOARD_STATUSES} from '../../../common/gameState/board';
 
 export const Character = connect(
 	({ room, boardError, auth }) => ({
@@ -27,7 +27,7 @@ export const Character = connect(
 	return (
 		<div>
 			<div className="game-character-collapsed container-fluid">
-				<div className="col-md-5">
+				<div className="col-md-5 col-sm-12">
 					<div>Character Name</div>
 					<div>{ room[`Player${slot + 1}`] ? room[`Player${slot + 1}`].name : 'Open' }</div>
 					<div>
@@ -64,17 +64,17 @@ export const Character = connect(
 				{ room[`Player${slot + 1}`] ?
 					(
 						board.status === BOARD_STATUSES.initialPlacement ? (
-								<div className="col-md-7">
+								<div className="col-md-7 col-sm-12">
 									{getPlacementText()}
 								</div>
 							) : (
-								<div className="col-md-7">
+								<div className="col-md-7 col-sm-12 attack-buttons">
 									<button className="btn btn-primary" disabled={boardError}>Fist & Tooth</button>
 									<button className="btn btn-primary" disabled={boardError}>Founding Stone</button>
 								</div>
 							)
 					) : (
-						<div className="col-md-7">
+						<div className="col-md-7 col-sm-12">
 							<button className="btn btn-primary" onClick={() => takeControlEvt(slot + 1)}>Control Character</button>
 						</div>
 					)

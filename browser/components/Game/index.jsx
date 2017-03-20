@@ -9,7 +9,7 @@ import {InitialPlacement} from './gameBoardOverlay/InitialPlacement';
 
 import {fetch} from '../../reducers/room';
 import {changeFixState} from '../../reducers/flexBoxFix';
-import {BOARD_STATUSES} from '../../reducers/gameState/board';
+import {BOARD_STATUSES} from '../../../common/gameState/board';
 
 
 class GameComponent extends Component {
@@ -49,10 +49,10 @@ class GameComponent extends Component {
 						</div>
 					</div>
 					<div id="game-character-card-wrapper" className="container-fluid">
-						<div id="game-character-card-1" className="col-md-3"><Character slot={0} /></div>
-						<div id="game-character-card-2" className="col-md-3"><Character slot={1} /></div>
-						<div id="game-character-card-3" className="col-md-3"><Character slot={2} /></div>
-						<div id="game-character-card-4" className="col-md-3"><Character slot={3} /></div>
+						<div id="game-character-card-1" className="col-md-3 col-sm-3"><Character slot={0} /></div>
+						<div id="game-character-card-2" className="col-md-3 col-sm-3"><Character slot={1} /></div>
+						<div id="game-character-card-3" className="col-md-3 col-sm-3"><Character slot={2} /></div>
+						<div id="game-character-card-4" className="col-md-3 col-sm-3"><Character slot={3} /></div>
 					</div>
 				</div>
 			) : null;
