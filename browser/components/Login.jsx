@@ -4,6 +4,9 @@ export const Login = () => (
 	<div>
 		<div id="login-parent">
 			<div id="login-child">
+				<div id="login-text">
+					THE LANTERN HOARD
+				</div>
 				<a href="/api/auth/login/google" className="btn btn-google btn-lg btn-social">
 					<i className="fa fa-google" />
 					Sign in with Google
