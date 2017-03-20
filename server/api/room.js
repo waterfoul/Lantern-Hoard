@@ -1,6 +1,7 @@
 const express = require('express');
 const Room = require('../db/models/room');
 const User = require('../db/models/user');
+const {sendTo, sendAll} = require('../socket');
 
 module.exports = (new express.Router('api/room'))
 	.get('/', (req, res, next) => (
@@ -39,7 +40,13 @@ module.exports = (new express.Router('api/room'))
 	))
 	.post('/', (req, res, next) => (
 		Room.create(req.body)
-			.then((room) => res.json(room).status(201))
+			.then((room) => {
+				res.json(room).status(201);
+
+				sendAll(JSON.stringify({
+					fullUpdate: true
+				}));
+			})
 			.catch(next)
 	))
 	.put('/:id', (req, res, next) => (
@@ -47,12 +54,24 @@ module.exports = (new express.Router('api/room'))
 			req.body,
 			{where: {_id: req.params.id}}
 		)
-			.then((room) => res.json(room))
+			.then((room) => {
+				res.json(room);
+
+				sendAll(JSON.stringify({
+					fullUpdate: true
+				}));
+			})
 			.catch(next)
 	))
 	.delete('/:id', (req, res, next) => (
 		Room.destroy({ where: { _id: req.params.id } })
-			.then(() => res.sendStatus(204))
+			.then(() => {
+				res.sendStatus(204);
+
+				sendAll(JSON.stringify({
+					fullUpdate: true
+				}));
+			})
 			.catch(next)
 	))
 
@@ -76,7 +95,17 @@ module.exports = (new express.Router('api/room'))
 				}
 				return room.save();
 			})
-			.then(() => res.sendStatus(204))
+			.then((room) => {
+				sendTo(room.id, JSON.stringify({
+					room: room.id,
+					update: true
+				}));
+
+				sendAll(JSON.stringify({
+					fullUpdate: true
+				}));
+				res.sendStatus(204);
+			})
 			.catch(next)
 	))
 
@@ -99,6 +128,16 @@ module.exports = (new express.Router('api/room'))
 				}
 				return room.save();
 			})
-			.then(() => res.sendStatus(204))
+			.then((room) => {
+				sendTo(room.id, JSON.stringify({
+					room: room.id,
+					update: true
+				}));
+
+				sendAll(JSON.stringify({
+					fullUpdate: true
+				}));
+				res.sendStatus(204);
+			})
 			.catch(next)
 	));
