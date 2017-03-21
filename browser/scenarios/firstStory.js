@@ -27,6 +27,7 @@ export function firstStory() {
 			evasion: 0,
 			speed: 0,
 			damage: 0,
+			range: 1,
 			toughness: 6,
 			movement: 6
 		},

@@ -37,7 +37,7 @@ class GameComponent extends Component {
 	}
 
 	render() {
-		return this.props.room ? (
+		return this.props.room && (
 				<div id="game">
 					<div id="game-board-wrapper">
 						<div>
@@ -58,7 +58,7 @@ class GameComponent extends Component {
 						<div id="game-character-card-4" className="col-md-3 col-sm-3"><Character slot={3} /></div>
 					</div>
 				</div>
-			) : null;
+			);
 	}
 }
 
