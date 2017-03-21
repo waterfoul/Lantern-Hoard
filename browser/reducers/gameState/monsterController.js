@@ -1,4 +1,5 @@
 import {monsters} from '../../data/monsters';
+import {drawAICard} from '../../../common/gameState/ai';
 
 function processPick(options, gameState, dispatch, i = 0) {
 	if (i >= options.length) {
@@ -33,11 +34,9 @@ export const startMonsterTurn = () => (
 		console.log('Begin Monster turn');
 
 		if (gameState.monsterController === user.id) {
-			// BEGIN NEEDS TO BE IN A REDUCER
-			let nextCard = gameState.ai.deck.shift();
-
-			gameState.ai.discard.unshift(nextCard);
-			// END NEEDS TO BE IN A REDUCER
+			dispatch(drawAICard());
+			const {room: updatedRoom} = getState();
+			const nextCard = updatedRoom.gameState.ai.discard[0];
 
 			const actions = monsters[gameState.monsterName].ai.cards[nextCard].actions;
 
