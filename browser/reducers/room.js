@@ -87,7 +87,6 @@ export const checkGameState = () => (
 				dispatch(changeBoardStatus(BOARD_STATUSES.generic));
 				dispatch(startMonsterTurn());
 			}
-			dispatch(startMonsterTurn());
 		}
 	}
 );
