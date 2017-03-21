@@ -3,6 +3,8 @@ import {gameStateReducer} from '../../common/gameState';
 import {setError} from './boardError';
 import {BOARD_STATUSES} from '../../common/gameState/board';
 import {changeBoardStatus} from './gameState/board';
+import {changeMonsterController} from '../../common/gameState/monsterController';
+import {startMonsterTurn} from './gameState/monsterController.js';
 
 //actions
 export const ROOM_RESULT = 'ROOM_RESULT';
@@ -56,7 +58,18 @@ export const takeControl = (slot) => (
 
 export const checkGameState = () => (
 	(dispatch, getState) => {
-		const {room: state} = getState();
+		const { room: state, auth: user } = getState();
+		if (
+			(
+				state.gameState.monsterController === undefined ||
+				state.gameState.monsterController === null
+			) &&
+			state.Player1.id === user.id
+		) {
+			dispatch(changeMonsterController(user.Id));
+		}
+
+
 		if (!state.Player1 || !state.Player2 || !state.Player3 || !state.Player4) {
 			dispatch(setError('All characters must be controlled'));
 			dispatch(changeBoardStatus(BOARD_STATUSES.generic));
@@ -70,8 +83,10 @@ export const checkGameState = () => (
 				!state.gameState.positions.player4
 			) {
 				dispatch(changeBoardStatus(BOARD_STATUSES.initialPlacement));
-			} else {
+			} else if (state.gameState.board.status === BOARD_STATUSES.initialPlacement)
+			{
 				dispatch(changeBoardStatus(BOARD_STATUSES.generic));
+				dispatch(startMonsterTurn());
 			}
 		}
 	}

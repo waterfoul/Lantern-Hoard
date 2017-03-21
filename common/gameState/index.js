@@ -2,6 +2,9 @@ const {combineReducers} = require('redux');
 
 const {board} = require('./board');
 const {positions} = require('./positions');
+const { monsterController } = require('./positions');
+
+
 
 const noop = (state) => (state || null);
 
@@ -14,7 +17,8 @@ const gameStateReducer = combineReducers({
 	monsterStats: noop,
 	positions,
 	gear: noop,
-	armor: noop
+	armor: noop,
+	monsterController
 });
 
 module.exports = {
