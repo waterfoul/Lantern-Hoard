@@ -9,6 +9,7 @@ import {InitialPlacement} from './gameBoardOverlay/InitialPlacement';
 
 import {fetch} from '../../reducers/room';
 import {changeFixState} from '../../reducers/flexBoxFix';
+import {listResult} from '../../reducers/roomList';
 import {BOARD_STATUSES} from '../../../common/gameState/board';
 
 
@@ -18,6 +19,8 @@ class GameComponent extends Component {
 		setTimeout(this.props.changeFixState, 100);
 		setTimeout(this.props.changeFixState, 500);
 		setTimeout(this.props.changeFixState, 1000);
+		// clearing the room list so we don't need to keep it updated
+		this.props.listResult(null);
 	}
 
 	getGameBoardOverlay() {
@@ -34,7 +37,7 @@ class GameComponent extends Component {
 	}
 
 	render() {
-		return this.props.room ? (
+		return this.props.room && (
 				<div id="game">
 					<div id="game-board-wrapper">
 						<div>
@@ -55,11 +58,11 @@ class GameComponent extends Component {
 						<div id="game-character-card-4" className="col-md-3 col-sm-3"><Character slot={3} /></div>
 					</div>
 				</div>
-			) : null;
+			);
 	}
 }
 
 export const Game  = connect(
 	({ room, boardError }) => ({ room, boardError }),
-	{fetch, changeFixState}
+	{fetch, changeFixState, listResult}
 )(GameComponent);

@@ -1,0 +1,353 @@
+.character-card-wrapper {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: green;
+}
+
+
+.player-token-board-grid > div {
+  position: relative;
+  width: 100%;
+}
+
+.player-temp-tokens-image {
+  width: 100%;
+}
+
+.player-token-board-temp-tokens {
+  position: absolute;
+  padding: 13% 5%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+
+  grid-template-columns:
+          1fr 1fr;
+  grid-template-rows:
+          1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+
+  .token {
+    // position: relative;
+    //Uncomment these to help with alignment
+    border-radius: 50%;
+    background-size: 100% 100%;
+    background-color: green;
+    margin: 2%;
+
+    &.accuracy {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-accuracy.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-accuracy.png");
+      }
+    }
+    &.strength {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-strength.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-strength.png");
+      }
+    }
+    &.damage {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-damage.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-damage.png");
+      }
+    }
+    &.luck {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-luck.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-luck.png");
+      }
+    }
+    &.evasion {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-evasion.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-evasion.png");
+      }
+    }
+    &.speed {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-speed.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-speed.png");
+      }
+    }
+    &.movement {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-movement.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-movement.png");
+      }
+    }
+    &.bleed {
+        background-image: url("/static/gear-grid/tokens/bleed.png");
+
+    }
+    &.insanity {
+        background-image: url("/static/gear-grid/tokens/insanity.png");
+    }
+  }
+
+  @for $idx from 0 through 17 {
+    .token-#{idx} {
+      grid-column-start: $idx % 2 +1;
+      grid-row-start: floor($idx / 2) +1;
+    }
+  }
+
+}
+
+.player-gear-tokens-image {
+  width: 100%;
+}
+
+.player-token-board-gear-tokens {
+  position: absolute;
+  padding: 7% 5% 10% 5%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+
+  grid-template-columns:
+          1fr 1fr;
+  grid-template-rows:
+          1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+
+  .token {
+    // position: relative;
+    //Uncomment these to help with alignment
+    border-radius: 50%;
+    background-size: 100% 100%;
+    background-color: green;
+    margin: 2%;
+
+    &.accuracy {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-accuracy.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-accuracy.png");
+      }
+    }
+    &.strength {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-strength.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-strength.png");
+      }
+    }
+    &.damage {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-damage.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-damage.png");
+      }
+    }
+    &.luck {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-luck.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-luck.png");
+      }
+    }
+    &.evasion {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-evasion.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-evasion.png");
+      }
+    }
+    &.speed {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-speed.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-speed.png");
+      }
+    }
+    &.movement {
+      &.plus {
+        background-image: url("/static/gear-grid/tokens/plus-movement.png");
+      }
+      &.minus {
+        background-image: url("/static/gear-grid/tokens/minus-movement.png");
+      }
+    }
+    &.bleed {
+        background-image: url("/static/gear-grid/tokens/bleed.png");
+
+    }
+    &.insanity {
+        background-image: url("/static/gear-grid/tokens/insanity.png");
+    }
+  }
+
+  @for $idx from 0 through 17 {
+    .token-#{idx} {
+      grid-column-start: $idx % 2 +1;
+      grid-row-start: floor($idx / 2) +1;
+    }
+  }
+
+}
+
+#player-gear-grid > div {
+  position: relative;
+  display: inline-block;
+}
+#player-gear-grid-items {
+  position: absolute;
+  padding: 13% 5%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns:
+          1fr 1fr 1fr;
+  grid-template-rows:
+          1fr 1fr 1fr;
+  .geared {
+    // position: relative;
+    background-color: darkslategray;
+    margin: 2%
+  }
+
+  @for $x from 0 through 3 {
+    .x-#{$x} {
+      grid-column-start: $x + 1;
+    }
+  }
+
+  @for $y from 0 through 3 {
+    .y-#{$y} {
+      grid-row-start: 3 - $y;
+    }
+  }
+}
+
+.player-armor-board-values {
+  position: absolute;
+  width: 13%;
+  height: 25%;
+  //Uncomment these to help with alignment
+  // border-radius: 50%;
+  // background-color: green;
+  // top: 0;
+  left: 13%;
+  // bottom: 10%;
+
+  > div {
+    position: absolute;
+    top: 11%;
+    left: 46%;
+    transform: translate(-50%, -50%);
+    font-size: 18vh;
+  }
+
+  $buff: 43%; //fine
+  $diff: 26.7%; //+/- .1
+
+  &.head {
+    top: $buff;
+  }
+
+  &.body {
+    top: $buff;
+    left: $diff;
+  }
+
+  &.waist {
+    top: $buff;
+    left: $diff *1.515;
+  }
+
+  &.hand {
+    top: $buff;
+    left: $diff * 2.03;
+  }
+
+  &.foot {
+    top: $buff;
+    left: $diff * 2.55;
+  }
+}
+
+.player-armor-wound-values {
+  position: absolute;
+  width: 4.25%;
+  height: 10%;
+  //Uncomment these to help with alignment
+  // border-radius: 50%;
+  // background-color: green;
+  // top: -10%;
+  left: 20%;
+
+  > div {
+    position: absolute;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    font-size: 6vh;
+  }
+  $wuff: 65.5%;
+  $wiff: 29%;
+
+  &.head {
+    top: $wuff;
+  }
+
+  &.body-L {
+    top: $wuff;
+    left: $wiff;
+  }
+  &.body-H {
+    top: $wuff;
+    left: $wiff *1.165;
+  }
+  &.waist-L {
+    top: $wuff;
+    left: $wiff *1.480;
+  }
+  &.waist-H {
+    top: $wuff;
+    left: $wiff *1.645;
+  }
+  &.hand-L {
+    top: $wuff;
+    left: $wiff *1.955;
+  }
+  &.hand-H {
+    top: $wuff;
+    left: $wiff *2.12;
+  }
+  &.foot-L {
+    top: $wuff;
+    left: $wiff *2.43;
+  }
+  &.foot-H {
+    top: $wuff;
+    left: $wiff *2.595;
+  }
+
+}

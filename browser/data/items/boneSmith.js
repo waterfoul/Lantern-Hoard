@@ -1,0 +1,85 @@
+export const boneSmith = {
+	'Bone Dagger': {
+		descriptors: ['weapon', 'melee', 'dagger', 'bone'],
+		traits: [],
+		dice: 3,
+		accuracy: 7,
+		strength: 1,
+		diceMods: {},
+		specialAbilities: {},
+		colorEdges: ['red', null, null, 'red'],
+		characterModifiers: {},
+		img: '/static/items/bone-dagger.jpg'
+	},
+	'Bone Blade': {
+		descriptors: ['weapon', 'melee', 'sword', 'bone'],
+		traits: [],
+		dice: 2,
+		accuracy: 6,
+		strength: 2,
+		diceMods: {},
+		specialAbilities: {},
+		colorEdges: [null, null, null, 'red'],
+		characterModifiers: {},
+		img: '/static/items/bone-blade.jpg'
+	},
+	'Bone Axe': {
+		descriptors: ['weapon', 'melee', 'axe', 'bone'],
+		traits: ['frail'],
+		dice: 2,
+		accuracy: 6,
+		strength: 3,
+		diceMods: {},
+		specialAbilities: {},
+		colorEdges: [null, null, null, 'red'],
+		characterModifiers: {},
+		img: '/static/items/bone-axe.jpg'
+	},
+	'Bone Darts': {
+		descriptors: ['weapon', 'ranged', 'thrown', 'bone'],
+		traits: ['frail'],
+		dice: 1,
+		accuracy: 7,
+		strength: 3,
+		range: 6,
+		diceMods: {},
+		specialAbilities: {},
+		colorEdges: [null, null, null, 'red'],
+		characterModifiers: {},
+		img: '/static/items/bone-darts.jpg'
+	},
+	'Skull Helm': {
+		value: 3,
+		slot: ['head'],
+		descriptors: ['armor', 'bone', 'fragile'],
+		traits: [],
+		specialAbilities: {},
+		colorEdges: [null, null, 'red', null],
+		characterModifiers: {},
+		img: '/static/items/skull-helm.jpg'
+	},
+	'Bone Pickaxe': {
+		descriptors: ['item', 'tool', 'bone'],
+		traits: ['frail'],
+		dice: 1,
+		accuracy: 8,
+		strength: 2,
+		diceMods: {},
+		specialAbilities: {},
+		colorEdges: ['green', null, null, null],
+		characterModifiers: {},
+		img: '/static/items/bone-pickaxe.jpg'
+	},
+	'Bone Sickle': {
+		descriptors: ['item', 'tool', 'bone'],
+		traits: ['frail'],
+		dice: 2,
+		accuracy: 8,
+		strength: 1,
+		diceMods: {},
+		specialAbilities: {},
+		colorEdges: ['green', null, null, null],
+		characterModifiers: {},
+		img: '/static/items/bone-sickle.jpg'
+	},
+};

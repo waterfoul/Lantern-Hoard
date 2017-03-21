@@ -10,7 +10,7 @@ import {Root} from './components/Root';
 import {RootSelector} from './components/RootSelector';
 import {Login} from './components/Login';
 import {Game} from './components/Game';
-import {Lobby} from './components/Lobby';
+import { Lobby } from './components/Lobby';
 
 import './socket';
 
