@@ -28,45 +28,6 @@ describe('utils/pick', () => {
 		};
 	});
 
-	describe('closestThreatFacingInRange', () => {
-		it('return null when all are out of range', () => {
-			return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(null);
-		});
-
-		it('finds the threat when others are not in range', () => {
-			scenario.positions.player1 = [9, 8];
-
-			return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(0);
-		});
-
-		it('finds the threat when others are near', () => {
-			scenario.positions.player2 = [9, 8];
-			scenario.positions.player1 = [7, 9];
-
-			return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(1);
-		});
-
-		describe('North', () => {
-			it('ignores targets who are not in front', () => {
-				scenario.monsterDirection = 'N';
-				scenario.positions.player1 = [12, 8];
-				scenario.positions.player2 = [9, 7];
-				scenario.positions.player3 = [10, 6];
-
-				return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(null);
-			});
-			it('catches targets who are in front', () => {
-				scenario.monsterDirection = 'N';
-				scenario.positions.player1 = [12, 8];
-				scenario.positions.player2 = [9, 7];
-				scenario.positions.player3 = [10, 6];
-				scenario.positions.player4 = [11, 9];
-
-				return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(3);
-			});
-		});
-	});
-
 	describe('getDistance', () => {
 		describe('size 1', () => {
 			it('calculates when above', () => {
@@ -137,108 +98,189 @@ describe('utils/pick', () => {
 	});
 
 	describe('isFront', () => {
-		describe('Facing N', () => {
-			it('is N', () => {
-				expect(isFront('N', [10, 8], [11, 8])).to.equal(true);
+		describe('directionality', () => {
+			function describeDirection(direction) {
+				it('is N', () => {
+					expect(isFront(direction, 1, [10, 8], [10, 9])).to.equal(direction === 'N');
+				});
+				it('is NE', () => {
+					expect(isFront(direction, 1, [10, 8], [11, 9])).to.equal(direction === 'N' || direction === 'E');
+				});
+				it('is E', () => {
+					expect(isFront(direction, 1, [10, 8], [11, 8])).to.equal(direction === 'E');
+				});
+				it('is SE', () => {
+					expect(isFront(direction, 1, [10, 8], [11, 7])).to.equal(direction === 'S' || direction === 'E');
+				});
+				it('is S', () => {
+					expect(isFront(direction, 1, [10, 8], [10, 7])).to.equal(direction === 'S');
+				});
+				it('is SW', () => {
+					expect(isFront(direction, 1, [10, 8], [9, 7])).to.equal(direction === 'S' || direction === 'W');
+				});
+				it('is W', () => {
+					expect(isFront(direction, 1, [10, 8], [9, 8])).to.equal(direction === 'W');
+				});
+				it('is NW', () => {
+					expect(isFront(direction, 1, [10, 8], [9, 9])).to.equal(direction === 'N' || direction === 'W');
+				});
+			}
+			describe('Facing N', () => {
+				describeDirection('N');
 			});
-			it('is NE', () => {
-				expect(isFront('N', [10, 8], [11, 9])).to.equal(true);
+			describe('Facing E', () => {
+				describeDirection('E');
 			});
-			it('is E', () => {
-				expect(isFront('N', [10, 8], [10, 9])).to.equal(false);
+			describe('Facing S', () => {
+				describeDirection('S');
 			});
-			it('is SE', () => {
-				expect(isFront('N', [10, 8], [9, 9])).to.equal(false);
-			});
-			it('is S', () => {
-				expect(isFront('N', [10, 8], [9, 8])).to.equal(false);
-			});
-			it('is SW', () => {
-				expect(isFront('N', [10, 8], [9, 7])).to.equal(false);
-			});
-			it('is W', () => {
-				expect(isFront('N', [10, 8], [10, 7])).to.equal(false);
-			});
-			it('is NW', () => {
-				expect(isFront('N', [10, 8], [11, 7])).to.equal(true);
-			});
-		});
-		describe('Facing E', () => {
-			it('is N', () => {
-				expect(isFront('N', [10, 8], [11, 8])).to.equal(false);
-			});
-			it('is NE', () => {
-				expect(isFront('N', [10, 8], [11, 9])).to.equal(true);
-			});
-			it('is E', () => {
-				expect(isFront('N', [10, 8], [10, 9])).to.equal(true);
-			});
-			it('is SE', () => {
-				expect(isFront('N', [10, 8], [9, 9])).to.equal(true);
-			});
-			it('is S', () => {
-				expect(isFront('N', [10, 8], [9, 8])).to.equal(false);
-			});
-			it('is SW', () => {
-				expect(isFront('N', [10, 8], [9, 7])).to.equal(false);
-			});
-			it('is W', () => {
-				expect(isFront('N', [10, 8], [10, 7])).to.equal(false);
-			});
-			it('is NW', () => {
-				expect(isFront('N', [10, 8], [11, 7])).to.equal(false);
+			describe('Facing W', () => {
+				describeDirection('W');
 			});
 		});
-		describe('Facing S', () => {
-			it('is N', () => {
-				expect(isFront('N', [10, 8], [11, 8])).to.equal(false);
-			});
-			it('is NE', () => {
-				expect(isFront('N', [10, 8], [11, 9])).to.equal(false);
-			});
-			it('is E', () => {
-				expect(isFront('N', [10, 8], [10, 9])).to.equal(false);
-			});
-			it('is SE', () => {
-				expect(isFront('N', [10, 8], [9, 9])).to.equal(true);
-			});
-			it('is S', () => {
-				expect(isFront('N', [10, 8], [9, 8])).to.equal(true);
-			});
-			it('is SW', () => {
-				expect(isFront('N', [10, 8], [9, 7])).to.equal(true);
-			});
-			it('is W', () => {
-				expect(isFront('N', [10, 8], [10, 7])).to.equal(false);
-			});
-			it('is NW', () => {
-				expect(isFront('N', [10, 8], [11, 7])).to.equal(false);
+		describe('size', () => {
+			describe('standard locations', () => {
+				it('is N', () => {
+					expect(isFront('N', 2, [10, 8], [10, 9])).to.equal(true);
+					expect(isFront('S', 2, [10, 8], [10, 9])).to.equal(false);
+					expect(isFront('E', 2, [10, 8], [10, 9])).to.equal(false);
+					expect(isFront('W', 2, [10, 8], [10, 9])).to.equal(false);
+				});
+				it('is E', () => {
+					expect(isFront('N', 2, [10, 8], [12, 8])).to.equal(false);
+					expect(isFront('S', 2, [10, 8], [12, 8])).to.equal(false);
+					expect(isFront('E', 2, [10, 8], [12, 8])).to.equal(true);
+					expect(isFront('W', 2, [10, 8], [12, 8])).to.equal(false);
+				});
+				it('is W', () => {
+					expect(isFront('N', 2, [10, 8], [9, 8])).to.equal(false);
+					expect(isFront('S', 2, [10, 8], [9, 8])).to.equal(false);
+					expect(isFront('E', 2, [10, 8], [9, 8])).to.equal(false);
+					expect(isFront('W', 2, [10, 8], [9, 8])).to.equal(true);
+				});
+				it('is S', () => {
+					expect(isFront('N', 2, [10, 8], [10, 6])).to.equal(false);
+					expect(isFront('S', 2, [10, 8], [10, 6])).to.equal(true);
+					expect(isFront('E', 2, [10, 8], [10, 6])).to.equal(false);
+					expect(isFront('W', 2, [10, 8], [10, 6])).to.equal(false);
+				});
 			});
 		});
-		describe('Facing W', () => {
-			it('is N', () => {
-				expect(isFront('N', [10, 8], [11, 8])).to.equal(false);
+		describe('changed locations', () => {
+			it('was SE', () => {
+				expect(isFront('N', 2, [10, 8], [12, 7])).to.equal(false);
+				expect(isFront('S', 2, [10, 8], [12, 7])).to.equal(false);
+				expect(isFront('E', 2, [10, 8], [12, 7])).to.equal(true);
+				expect(isFront('W', 2, [10, 8], [12, 7])).to.equal(false);
 			});
-			it('is NE', () => {
-				expect(isFront('N', [10, 8], [11, 9])).to.equal(false);
+			it('was SW', () => {
+				expect(isFront('N', 2, [10, 8], [9, 7])).to.equal(false);
+				expect(isFront('S', 2, [10, 8], [9, 7])).to.equal(false);
+				expect(isFront('E', 2, [10, 8], [9, 7])).to.equal(false);
+				expect(isFront('W', 2, [10, 8], [9, 7])).to.equal(true);
 			});
-			it('is E', () => {
-				expect(isFront('N', [10, 8], [10, 9])).to.equal(false);
+		});
+	});
+
+	describe('closestThreatFacingInRange', () => {
+		describe('range/closest', () => {
+			it('return null when all are out of range', () => {
+				return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(null);
 			});
-			it('is SE', () => {
-				expect(isFront('N', [10, 8], [9, 9])).to.equal(false);
+
+			it('finds the threat when others are not in range', () => {
+				scenario.positions.player1 = [10, 6];
+
+				return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(0);
 			});
-			it('is S', () => {
-				expect(isFront('N', [10, 8], [9, 8])).to.equal(false);
+
+			it('finds the threat when others are near', () => {
+				scenario.positions.player2 = [10, 6];
+				scenario.positions.player1 = [10, 5];
+
+				return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(1);
 			});
-			it('is SW', () => {
-				expect(isFront('N', [10, 8], [9, 7])).to.equal(true);
+		});
+
+		describe('facing', () => {
+			describe('North', () => {
+				it('ignores targets who are not in front', () => {
+					scenario.monsterDirection = 'N';
+					scenario.positions.player1 = [9, 8];
+					scenario.positions.player2 = [12, 7];
+					scenario.positions.player3 = [11, 6];
+
+					return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(null);
+				});
+				it('catches targets who are in front', () => {
+					scenario.monsterDirection = 'N';
+					scenario.positions.player1 = [9, 8];
+					scenario.positions.player2 = [12, 7];
+					scenario.positions.player3 = [11, 6];
+					scenario.positions.player4 = [10, 9];
+
+					return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(3);
+				});
 			});
-			it('is W', () => {
-				expect(isFront('N', [10, 8], [10, 7])).to.equal(true);
+
+			describe('South', () => {
+				it('ignores targets who are not in front', () => {
+					scenario.monsterDirection = 'S';
+					scenario.positions.player1 = [9, 8];
+					scenario.positions.player2 = [12, 7];
+					scenario.positions.player3 = [10, 9];
+
+					return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(null);
+				});
+				it('catches targets who are in front', () => {
+					scenario.monsterDirection = 'S';
+					scenario.positions.player1 = [9, 8];
+					scenario.positions.player2 = [12, 7];
+					scenario.positions.player3 = [10, 9];
+					scenario.positions.player4 = [11, 6];
+
+					return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(3);
+				});
 			});
-			it('is NW', () => {
-				expect(isFront('N', [10, 8], [11, 7])).to.equal(true);
+
+			describe('East', () => {
+				it('ignores targets who are not in front', () => {
+					scenario.monsterDirection = 'E';
+					scenario.positions.player1 = [9, 8];
+					scenario.positions.player2 = [10, 9];
+					scenario.positions.player3 = [11, 6];
+
+					return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(null);
+				});
+				it('catches targets who are in front', () => {
+					scenario.monsterDirection = 'E';
+					scenario.positions.player1 = [9, 8];
+					scenario.positions.player2 = [10, 9];
+					scenario.positions.player3 = [11, 6];
+					scenario.positions.player4 = [12, 7];
+
+					return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(3);
+				});
+			});
+
+			describe('West', () => {
+				it('ignores targets who are not in front', () => {
+					scenario.monsterDirection = 'W';
+					scenario.positions.player1 = [10, 9];
+					scenario.positions.player2 = [12, 7];
+					scenario.positions.player3 = [11, 6];
+
+					return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(null);
+				});
+				it('catches targets who are in front', () => {
+					scenario.monsterDirection = 'W';
+					scenario.positions.player1 = [10, 9];
+					scenario.positions.player2 = [12, 7];
+					scenario.positions.player3 = [11, 6];
+					scenario.positions.player4 = [9, 8];
+
+					return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(3);
+				});
 			});
 		});
 	});
