@@ -24,7 +24,7 @@ export const weaponCrafter = {
 		characterModifiers: {},
 		img: '/static/items/whistling-mace.jpg'
 	},
-	'Zanbato': {
+	Zanbato: {
 		descriptors: ['weapon', 'melee', 'grand weapon', 'two-handed', 'bone'],
 		traits: ['slow', 'frail', 'deadly'],
 		dice: 1,

@@ -1,6 +1,8 @@
 const BOARD_STATUSES = {
 	generic: 'GENERIC', // Used to show the board without overlays
 	initialPlacement: 'INITIAL_PLACEMENT', // Used to allow for initial character placement,
+	targetChoice: 'TARGET_CHOICE', // Used to allow the monster controller to choose a target
+	targetChosen: 'TARGET_CHOSEN', // Used to indicate that a target has been chosen
 	rollingToHit: 'ROLLING_TO_HIT'
 };
 

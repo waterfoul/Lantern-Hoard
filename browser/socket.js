@@ -4,7 +4,8 @@ import {store} from './store';
 import {fetch} from './reducers/room';
 import {fetchList} from './reducers/roomList';
 
-const sock = new SockJS('/socket');
+// If we are in node, skip socket init cause we are probably testing and it breaks things
+const sock = (global.process && global.process.title) ? {} : new SockJS('/socket');
 
 let connect = null;
 
