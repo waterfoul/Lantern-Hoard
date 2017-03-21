@@ -1,5 +1,14 @@
 function chooseBetween(characters, dispatch) {
-
+	return Promise.resolve(null);
+	// Many results, let the player pick
+	// set gameState.board.status to playerPick
+	// return new Promise((resolve, reject) => {
+	// 	// Send data to redux state to trigger the "player chooses" ui
+	// 	const unsub = store.subscribe(() => {
+	// 		// if gameState.board.status === playerFinishedPicking
+	// 		resolve(result);
+	// 	});
+	// });
 }
 
 function getXYDistance(size, monster, player) {
@@ -84,16 +93,7 @@ export function closestThreatFacingInRange(gameState, dispatch) {
 		// One result
 		return Promise.resolve(resultArr[0]);
 	} else {
-		return Promise.resolve(null);
-		// Many results, let the player pick
-		// set gameState.board.status to playerPick
-		// return new Promise((resolve, reject) => {
-		// 	// Send data to redux state to trigger the "player chooses" ui
-		// 	const unsub = store.subscribe(() => {
-		// 		// if gameState.board.status === playerFinishedPicking
-		// 		resolve(result);
-		// 	});
-		// });
+		return chooseBetween(resultArr, dispatch);
 	}
 }
 

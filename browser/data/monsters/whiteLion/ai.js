@@ -13,6 +13,7 @@ import {
 export function sniff(boardState) {
 	return Promise.resolve(null);
 }
+
 export const ai = {
 	back: '/static/white-lion/ai/back.jpg',
 	basic: {
