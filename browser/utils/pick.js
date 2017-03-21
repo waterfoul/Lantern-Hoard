@@ -35,31 +35,31 @@ export function isFront(monsterDirection, size, monster, player) {
 	}
 }
 
-export function closestThreatFacingInRange(boardState, dispatch) {
+export function closestThreatFacingInRange(gameState, dispatch) {
 	const positions = [
-		boardState.positions.player1,
-		boardState.positions.player2,
-		boardState.positions.player3,
-		boardState.positions.player4
+		gameState.positions.player1,
+		gameState.positions.player2,
+		gameState.positions.player3,
+		gameState.positions.player4
 	];
 
 	// Build the distance array, changing all invalid targets to null
 	const distances = positions.map((val, i) => {
-		if (!boardState.threats[i]) {
+		if (!gameState.threats[i]) {
 			// Not a threat
 			return null;
 		}
 		if (!isFront(
-				boardState.monsterDirection,
-				boardState.monsterStats.size,
-				boardState.positions.monster,
+				gameState.monsterDirection,
+				gameState.monsterStats.size,
+				gameState.positions.monster,
 				val
 			)) {
 			// Not in front so not facing
 			return null;
 		}
-		const distance = getDistance(boardState.monsterStats.size, boardState.positions.monster, val);
-		if (distance > boardState.monsterStats.movement + boardState.monsterStats.range) {
+		const distance = getDistance(gameState.monsterStats.size, gameState.positions.monster, val);
+		if (distance > gameState.monsterStats.movement + gameState.monsterStats.range) {
 			// Out of range
 			return null;
 		}
@@ -84,6 +84,7 @@ export function closestThreatFacingInRange(boardState, dispatch) {
 		// One result
 		return Promise.resolve(resultArr[0]);
 	} else {
+		return Promise.resolve(null);
 		// Many results, let the player pick
 		// set gameState.board.status to playerPick
 		// return new Promise((resolve, reject) => {
@@ -97,33 +98,33 @@ export function closestThreatFacingInRange(boardState, dispatch) {
 }
 
 export function closestThreatInFieldOfView(boardState) {
-
+	return Promise.resolve(null);
 }
 
 export function closestKnockedDownInRange(boardState) {
-
+	return Promise.resolve(null);
 }
 
 export function closestInRange(boardState) {
-
+	return Promise.resolve(null);
 }
 
 export function lastToWoundInRange(boardState) {
-
+	return Promise.resolve(null);
 }
 
 export function randomThreatInFieldOfView(boardState) {
-
+	return Promise.resolve(null);
 }
 
 export function randomInRange(boardState) {
-
+	return Promise.resolve(null);
 }
 
 export function closestWithMostBleeding(boardState) {
-
+	return Promise.resolve(null);
 }
 
 export function victimOfGrabLastRound(boardState) {
-
+	return Promise.resolve(null);
 }

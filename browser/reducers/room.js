@@ -66,7 +66,7 @@ export const checkGameState = () => (
 			) &&
 			state.Player1.id === user.id
 		) {
-			dispatch(changeMonsterController(user.Id));
+			dispatch(changeMonsterController(user.id));
 		}
 
 
@@ -83,11 +83,11 @@ export const checkGameState = () => (
 				!state.gameState.positions.player4
 			) {
 				dispatch(changeBoardStatus(BOARD_STATUSES.initialPlacement));
-			} else if (state.gameState.board.status === BOARD_STATUSES.initialPlacement)
-			{
+			} else if (state.gameState.board.status === BOARD_STATUSES.initialPlacement) {
 				dispatch(changeBoardStatus(BOARD_STATUSES.generic));
 				dispatch(startMonsterTurn());
 			}
+			dispatch(startMonsterTurn());
 		}
 	}
 );
