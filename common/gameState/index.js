@@ -12,9 +12,11 @@ const gameStateReducer = combineReducers({
 	effects: noop,
 	monsterName: noop,
 	monsterStats: noop,
+	monsterDirection: () => 'S', //Adding a stub here, TODO: replace this with a reducer
 	positions,
 	gear: noop,
-	armor: noop
+	armor: noop,
+	threats: () => [true, true, true, true] //Adding a stub here, TODO: replace this with a reducer
 });
 
 module.exports = {
