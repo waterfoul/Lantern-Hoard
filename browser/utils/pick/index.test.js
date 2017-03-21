@@ -1,7 +1,7 @@
 'use strict';
 
-import {closestThreatFacingInRange} from '.';
-import chai, {expect} from 'chai';
+import { closestThreatFacingInRange, closestInRange } from '.';
+import chai, { expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 
 chai.use(chaiAsPromised);
@@ -31,20 +31,20 @@ describe('utils/pick', () => {
 	describe('closestThreatFacingInRange', () => {
 		describe('range/closest', () => {
 			it('return null when all are out of range', () => {
-				return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(null);
+				return expect(closestThreatFacingInRange(scenario, () => { })).to.eventually.equal(null);
 			});
 
 			it('finds the threat when others are not in range', () => {
 				scenario.positions.player1 = [10, 6];
 
-				return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(0);
+				return expect(closestThreatFacingInRange(scenario, () => { })).to.eventually.equal(0);
 			});
 
 			it('finds the threat when others are near', () => {
 				scenario.positions.player2 = [10, 6];
 				scenario.positions.player1 = [10, 5];
 
-				return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(1);
+				return expect(closestThreatFacingInRange(scenario, () => { })).to.eventually.equal(1);
 			});
 		});
 
@@ -56,7 +56,7 @@ describe('utils/pick', () => {
 					scenario.positions.player2 = [12, 7];
 					scenario.positions.player3 = [11, 6];
 
-					return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(null);
+					return expect(closestThreatFacingInRange(scenario, () => { })).to.eventually.equal(null);
 				});
 				it('catches targets who are in front', () => {
 					scenario.monsterDirection = 'N';
@@ -65,7 +65,7 @@ describe('utils/pick', () => {
 					scenario.positions.player3 = [11, 6];
 					scenario.positions.player4 = [10, 9];
 
-					return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(3);
+					return expect(closestThreatFacingInRange(scenario, () => { })).to.eventually.equal(3);
 				});
 			});
 
@@ -76,7 +76,7 @@ describe('utils/pick', () => {
 					scenario.positions.player2 = [12, 7];
 					scenario.positions.player3 = [10, 9];
 
-					return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(null);
+					return expect(closestThreatFacingInRange(scenario, () => { })).to.eventually.equal(null);
 				});
 				it('catches targets who are in front', () => {
 					scenario.monsterDirection = 'S';
@@ -85,7 +85,7 @@ describe('utils/pick', () => {
 					scenario.positions.player3 = [10, 9];
 					scenario.positions.player4 = [11, 6];
 
-					return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(3);
+					return expect(closestThreatFacingInRange(scenario, () => { })).to.eventually.equal(3);
 				});
 			});
 
@@ -96,7 +96,7 @@ describe('utils/pick', () => {
 					scenario.positions.player2 = [10, 9];
 					scenario.positions.player3 = [11, 6];
 
-					return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(null);
+					return expect(closestThreatFacingInRange(scenario, () => { })).to.eventually.equal(null);
 				});
 				it('catches targets who are in front', () => {
 					scenario.monsterDirection = 'E';
@@ -105,7 +105,7 @@ describe('utils/pick', () => {
 					scenario.positions.player3 = [11, 6];
 					scenario.positions.player4 = [12, 7];
 
-					return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(3);
+					return expect(closestThreatFacingInRange(scenario, () => { })).to.eventually.equal(3);
 				});
 			});
 
@@ -116,7 +116,7 @@ describe('utils/pick', () => {
 					scenario.positions.player2 = [12, 7];
 					scenario.positions.player3 = [11, 6];
 
-					return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(null);
+					return expect(closestThreatFacingInRange(scenario, () => { })).to.eventually.equal(null);
 				});
 				it('catches targets who are in front', () => {
 					scenario.monsterDirection = 'W';
@@ -125,9 +125,33 @@ describe('utils/pick', () => {
 					scenario.positions.player3 = [11, 6];
 					scenario.positions.player4 = [9, 8];
 
-					return expect(closestThreatFacingInRange(scenario, () => {})).to.eventually.equal(3);
+					return expect(closestThreatFacingInRange(scenario, () => { })).to.eventually.equal(3);
 				});
 			});
 		});
 	});
+	describe('closestInRange', () => {
+		describe('range/closest', () => {
+			it('return null when all are out of range', () => {
+				return expect(closestInRange(scenario, () => { })).to.eventually.equal(null);
+			});
+
+			it('finds closest player when near', () => {
+				scenario.positions.player2 = [10, 6];
+				scenario.positions.player3 = [100, 6];
+				scenario.positions.player1 = [10, 5];
+
+				return expect(closestThreatFacingInRange(scenario, () => { })).to.eventually.equal(1);
+			});
+			it('works with multiple players in range', () => {
+				scenario.positions.player2 = [10, 6];
+				scenario.positions.player3 = [100, 6];
+				scenario.positions.player1 = [10, 5];
+				scenario.positions.player4 = [10, 5];
+
+				return expect(closestThreatFacingInRange(scenario, () => { })).to.eventually.equal(1);
+			});
+		});
+	});
+
 });

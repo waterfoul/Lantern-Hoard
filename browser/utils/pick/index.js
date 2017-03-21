@@ -1,4 +1,4 @@
-import {getDistance, isFront, chooseBetween} from './utils';
+import { getDistance, isFront, findClosestAndChoose } from './utils';
 
 export function closestThreatFacingInRange(gameState, dispatch) {
 	const positions = [
@@ -15,11 +15,11 @@ export function closestThreatFacingInRange(gameState, dispatch) {
 			return null;
 		}
 		if (!isFront(
-				gameState.monsterDirection,
-				gameState.monsterStats.size,
-				gameState.positions.monster,
-				val
-			)) {
+			gameState.monsterDirection,
+			gameState.monsterStats.size,
+			gameState.positions.monster,
+			val
+		)) {
 			// Not in front so not facing
 			return null;
 		}
@@ -30,27 +30,29 @@ export function closestThreatFacingInRange(gameState, dispatch) {
 		}
 		return distance;
 	});
+	// // moved below to utils.js
+	// // Get the minimum distance
+	// const min = Math.min.apply(Math, distances.filter((val) => val !== null));
 
-	// Get the minimum distance
-	const min = Math.min.apply(Math, distances.filter((val) => val !== null));
+	// // Null out the values > min, converting the correct values into their indexes
+	// let resultArr = distances
+	// 	.map((val, i) => val === min ? i : null);
 
-	// Null out the values > min, converting the correct values into their indexes
-	let resultArr = distances
-		.map((val, i) => val === min ? i : null);
+	// // Filter off the nulls
+	// resultArr = resultArr
+	// 	.filter((val) => val !== null);
 
-	// Filter off the nulls
-	resultArr = resultArr
-		.filter((val) => val !== null);
+	// if (resultArr.length === 0) {
+	// 	// No result
+	// 	return Promise.resolve(null);
+	// } else if (resultArr.length === 1) {
+	// 	// One result
+	// 	return Promise.resolve(resultArr[0]);
+	// } else {
+	// 	return chooseBetween(resultArr, dispatch);
+	// }
 
-	if (resultArr.length === 0) {
-		// No result
-		return Promise.resolve(null);
-	} else if (resultArr.length === 1) {
-		// One result
-		return Promise.resolve(resultArr[0]);
-	} else {
-		return chooseBetween(resultArr, dispatch);
-	}
+	return findClosestAndChoose(distances, dispatch);
 }
 
 export function closestThreatInFieldOfView(boardState) {
@@ -61,8 +63,24 @@ export function closestKnockedDownInRange(boardState) {
 	return Promise.resolve(null);
 }
 
-export function closestInRange(boardState) {
-	return Promise.resolve(null);
+export function closestInRange(gameState, dispatch) {
+	const positions = [
+		gameState.positions.player1,
+		gameState.positions.player2,
+		gameState.positions.player3,
+		gameState.positions.player4
+	];
+
+	const distances = positions.map((val, i) => {
+
+		const distance = getDistance(gameState.monsterStats.size, gameState.positions.monster, val); //size, monst type, player
+		if (distance > gameState.monsterStats.movement + gameState.monsterStats.range) {
+			// Out of range
+			return null;
+		}
+		return distance;
+	});
+	return findClosestAndChoose(distances, dispatch);
 }
 
 export function lastToWoundInRange(boardState) {
