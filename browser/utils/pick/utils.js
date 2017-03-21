@@ -1,4 +1,18 @@
+import {changeBoardStatusAction, BOARD_STATUSES} from '../../../common/gameState/board';
+import {store} from '../../store';
+
 export function chooseBetween(characters, dispatch) {
+	return new Promise((resolve, reject) => {
+		dispatch(changeBoardStatusAction(BOARD_STATUSES.targetChoice, characters));
+
+		const unsub = store.subscribe(() => {
+			const {room} = store.getState();
+			if(room.gameState.board.status === BOARD_STATUSES.targetChosen) {
+				resolve(room.gameState.board.data);
+				dispatch(changeBoardStatusAction(BOARD_STATUSES.generic));
+			}
+		});
+	});
 	return Promise.resolve(null);
 	// Many results, let the player pick
 	// set gameState.board.status to playerPick

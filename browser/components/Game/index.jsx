@@ -28,6 +28,8 @@ class GameComponent extends Component {
 			switch (this.props.room.gameState.board.status) {
 			case BOARD_STATUSES.initialPlacement:
 				return <InitialPlacement />;
+			case BOARD_STATUSES.targetChoice:
+				return <div id="game-board-error"><div>Please select a target</div></div>;
 			default:
 				return null;
 			}
@@ -41,10 +43,10 @@ class GameComponent extends Component {
 				<div id="game">
 					<div id="game-board-wrapper">
 						<div>
-							{this.props.boardError && (<div id="game-board-error"><div>{this.props.boardError}</div></div>)}
 							<div id="game-board">
 								<Board />
 								<div id="game-board-status-overlay">
+									{this.props.boardError && (<div id="game-board-error"><div>{this.props.boardError}</div></div>)}
 									{ this.getGameBoardOverlay() }
 								</div>
 							</div>
