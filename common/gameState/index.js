@@ -3,6 +3,7 @@ const {combineReducers} = require('redux');
 const {board} = require('./board');
 const {positions} = require('./positions');
 const { monsterController } = require('./monsterController');
+const { ai } = require('./ai');
 
 
 const noop = (state) => (state || null);
@@ -10,7 +11,7 @@ const noop = (state) => (state || null);
 const gameStateReducer = combineReducers({
 	board,
 	hl: noop,
-	ai: noop,
+	ai,
 	effects: noop,
 	monsterName: noop,
 	monsterStats: noop,
