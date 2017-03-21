@@ -11,7 +11,7 @@ import {
 } from '../../../utils/pick';
 
 export function sniff(boardState) {
-	return null;
+	return Promise.resolve(null);
 }
 export const ai = {
 	back: '/static/white-lion/ai/back.jpg',

@@ -7,7 +7,7 @@ function processPick(options, gameState, dispatch, i = 0) {
 
 	return options[i](gameState, dispatch).then((result) => {
 		if (result === null) {
-			return processPick(options, dispatch, i + 1);
+			return processPick(options, gameState, dispatch, i + 1);
 		}
 		return result;
 	});
@@ -15,7 +15,7 @@ function processPick(options, gameState, dispatch, i = 0) {
 
 function processActions(actions, gameState, dispatch, target, i = 0) {
 	if (actions[i].type === 'pick') {
-		return processPick(actions.options, dispatch).then((result) => {
+		return processPick(actions[i].options, gameState, dispatch).then((result) => {
 			return processActions(actions, gameState, dispatch, result, i + 1);
 		});
 	} if (actions[i].type === 'attack') {
