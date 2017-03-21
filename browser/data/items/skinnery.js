@@ -49,7 +49,7 @@ export const skinnery = {
 		characterModifiers: {},
 		img: '/static/items/rawhide-boots.jpg'
 	},
-	'Bandages': {
+	Bandages: {
 		descriptors: ['item'],
 		specialAbilities: {},
 		colorEdges: [null, null, 'green', 'blue'],

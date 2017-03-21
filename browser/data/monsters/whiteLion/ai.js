@@ -13,7 +13,6 @@ import {
 export function sniff(boardState) {
 	return null;
 }
-
 export const ai = {
 	back: '/static/white-lion/ai/back.jpg',
 	basic: {
@@ -375,3 +374,5 @@ export const ai = {
 };
 
 ai.cards = Object.assign({}, ai.basic, ai.advanced, ai.legendary, ai.traits);
+
+console.log(ai);
