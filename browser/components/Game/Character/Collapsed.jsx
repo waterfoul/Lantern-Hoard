@@ -24,7 +24,7 @@ function getButtons(
 	changeBoardStatusActionDisp
 ) {
 	if (room[`Player${slot + 1}`]) {
-		switch(board.status) {
+		switch (board.status) {
 		case BOARD_STATUSES.initialPlacement:
 			return (
 				<div className="col-md-7 col-sm-12">
