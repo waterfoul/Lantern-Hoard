@@ -14,7 +14,9 @@ export const startMonsterTurn = () => (
 
 			firstStory.ai.discard.unshift(nextCard);
 
-			console.log(firstStory.ai.discard[0]);
+			console.log(nextCard);
 		}
+
+		console.log('Begin Player turn');
 	}
 );

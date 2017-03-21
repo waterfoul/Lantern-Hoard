@@ -375,4 +375,4 @@ export const ai = {
 
 ai.cards = Object.assign({}, ai.basic, ai.advanced, ai.legendary, ai.traits);
 
-console.log(ai)
+console.log(ai);
