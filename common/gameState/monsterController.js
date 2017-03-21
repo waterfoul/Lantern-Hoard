@@ -5,10 +5,7 @@ const CHANGE_MONSTER_CONTROLLER = 'CHANGE_MONSTER_CONTROLLER';
 const monsterController = (state = null, action) => {
 	switch (action.type) {
 	case CHANGE_MONSTER_CONTROLLER:
-		return {
-			status: action.status,
-			data: action.data
-		};
+		return action.userId;
 	default:
 		return state;
 	}

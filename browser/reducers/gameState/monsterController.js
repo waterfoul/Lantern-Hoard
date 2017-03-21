@@ -1,4 +1,4 @@
-import { firstStory } from '../../scenarios/firstStory';
+import {monsters} from '../../data/monsters';
 
 
 //thunks
@@ -9,12 +9,15 @@ import { firstStory } from '../../scenarios/firstStory';
 export const startMonsterTurn = () => (
 	(dispatch, getState) => {
 		const { room, auth: user } = getState();
-		if (room.gameState.monsterController === user.id) {
-			let nextCard = firstStory.ai.deck.shift();
+		const { gameState } = room;
 
-			firstStory.ai.discard.unshift(nextCard);
+		if (gameState.monsterController === user.id) {
+			let nextCard = gameState.ai.deck.shift();
 
-			console.log(nextCard);
+			gameState.ai.discard.unshift(nextCard);
+
+			const card = monsters[gameState.monsterName].ai.cards[nextCard];
+			console.log(card);
 		}
 
 		console.log('Begin Player turn');

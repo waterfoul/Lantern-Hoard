@@ -2,7 +2,7 @@ const {combineReducers} = require('redux');
 
 const {board} = require('./board');
 const {positions} = require('./positions');
-const { monsterController } = require('./positions');
+const { monsterController } = require('./monsterController');
 
 
 const noop = (state) => (state || null);
