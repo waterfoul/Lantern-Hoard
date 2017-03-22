@@ -1,5 +1,6 @@
 const express = require('express');
 const Room = require('../db/models/room');
+const Character = require('../db/models/character');
 const User = require('../db/models/user');
 const {sendTo, sendAll} = require('../socket');
 
@@ -31,7 +32,11 @@ module.exports = (new express.Router('api/room'))
 					{ model: User, as: 'Player1' },
 					{ model: User, as: 'Player2' },
 					{ model: User, as: 'Player3' },
-					{ model: User, as: 'Player4' }
+					{ model: User, as: 'Player4' },
+					{ model: Character, as: 'Character1' },
+					{ model: Character, as: 'Character2' },
+					{ model: Character, as: 'Character3' },
+					{ model: Character, as: 'Character4' }
 				]
 			}
 		)
@@ -39,7 +44,12 @@ module.exports = (new express.Router('api/room'))
 			.catch(next)
 	))
 	.post('/', (req, res, next) => (
-		Room.create(req.body)
+		Room.create(req.body, { include: [
+			{ model: Character, as: 'Character1' },
+			{ model: Character, as: 'Character2' },
+			{ model: Character, as: 'Character3' },
+			{ model: Character, as: 'Character4' }
+		]})
 			.then((room) => {
 				res.json(room).status(201);
 
