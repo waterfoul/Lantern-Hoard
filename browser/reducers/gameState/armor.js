@@ -1,4 +1,5 @@
 import {damageArmorAction} from '../../../common/gameState/armor';
+import {knockDownCharacter} from '../../../common/gameState/knockedDownCharacters';
 
 export const damageArmor = (player, location, amount) => (
 	(dispatch, getState) => {
@@ -20,7 +21,7 @@ export const damageArmor = (player, location, amount) => (
 			playerArmor[location] !== -2 ||
 			playerArmor[location] - amount < -2
 		) {
-			// TODO: Knock down player
+			dispatch(knockDownCharacter(player));
 		}
 		if (playerArmor[location] !== -2) {
 			dispatch(damageArmorAction(player, location, amount));
