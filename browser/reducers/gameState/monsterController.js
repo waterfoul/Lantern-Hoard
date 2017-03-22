@@ -141,7 +141,6 @@ export const passMonsterController = () => (
 		if (playerIdx >= playerIds.length) {
 			playerIdx = 0;
 		}
-		console.log(playerIds, playerIdx);
 		dispatch(changeMonsterController(playerIds[playerIdx]));
 	}
 );
