@@ -25,7 +25,7 @@ export const Board = connect(
 				].join(' ')} /> : '' }
 				{ positions.player2 ? <div className={[
 					'game-board-square',
-					'yellow',
+					'blue',
 					'x-' + positions.player2[0],
 					'y-' + positions.player2[1]
 				].join(' ')} /> : '' }
@@ -37,7 +37,7 @@ export const Board = connect(
 				].join(' ')} /> : '' }
 				{ positions.player4 ? <div className={[
 					'game-board-square',
-					'blue',
+					'yellow',
 					'x-' + positions.player4[0],
 					'y-' + positions.player4[1]
 				].join(' ')} /> : '' }

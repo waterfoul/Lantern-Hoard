@@ -1,5 +1,6 @@
 @import './_MonsterInfo';
 @import './Character/_index';
+@import './gameBoardOverlay/_PlayerDamage';
 
 #game {
 	flex-direction: column;
@@ -109,6 +110,27 @@
 		}
 		.size-3.y-#{$y} {
 			grid-row-end: 16 - $y + 3;
+		}
+	}
+}
+
+.dice {
+	height: 10vh;
+	width: 10vh;
+	background-size: 100% auto;
+	display: inline-block;
+	background-repeat: no-repeat;
+	margin: 3px;
+
+	@for $i from 1 through 10 {
+		&.dice-#{$i} {
+			background-image: url("/static/dice/" + $i + ".png");
+		}
+	}
+
+	@for $i from 1 through 6 {
+		&.wound-#{$i} {
+			background-image: url("/static/wound-dice/" + $i + ".png");
 		}
 	}
 }

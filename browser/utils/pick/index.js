@@ -1,4 +1,5 @@
-import {getDistance, isFront, chooseBetween, randomIndex} from './utils';
+import {isFront, chooseBetween, randomIndex} from './utils';
+import {getDistance} from '../getDistance';
 
 export function closestThreatFacingInRange(gameState, dispatch) {
 	const positions = [

@@ -5,9 +5,12 @@ const DRAW_AI_CARD = 'DRAW_AI_CARD';
 const ai = (state = null, action) => {
 	switch (action.type) {
 	case DRAW_AI_CARD:
-		let nextCard = state.deck.shift();
-		state.discard.unshift(nextCard);
-		break;
+		const [next, ...deck] = state.deck;
+		const newState = Object.assign({}, state, {
+			deck: deck,
+			discard: [next, ...state.discard]
+		});
+		return newState;
 	default:
 		return state;
 	}
