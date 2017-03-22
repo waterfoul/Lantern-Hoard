@@ -31,6 +31,8 @@ class GameComponent extends Component {
 				return <InitialPlacement />;
 			case BOARD_STATUSES.targetChoice:
 				return <div className="game-board-grey-over"><div>Please select a target</div></div>;
+			case BOARD_STATUSES.selectActingCharacter:
+				return <div className="game-board-grey-over"><div>Please select a character to act</div></div>;
 			case BOARD_STATUSES.playerDamage:
 				return <PlayerDamage />;
 			default:

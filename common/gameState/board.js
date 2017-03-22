@@ -5,7 +5,9 @@ const BOARD_STATUSES = {
 	targetChosen: 'TARGET_CHOSEN', // Used to indicate that a target has been chosen
 	playerDamage: 'PLAYER_DAMAGE', // Used to show the dialog for player damage
 	playerDamageFinishe: 'PLAYER_DAMAGE_FINISH', // Triggers the finish of the player damage
-	rollingToHit: 'ROLLING_TO_HIT'
+	rollingToHit: 'ROLLING_TO_HIT',
+	selectActingCharacter: 'SELECT_ACTING_CHARACTER',
+	actingCharacterChosen: 'ACTING_CHARACTER_CHOSEN'
 };
 
 //actions

@@ -4,6 +4,7 @@ import {changeBoardStatusAction, BOARD_STATUSES} from '../../../common/gameState
 import {getDistance} from '../../utils/getDistance';
 import {moveMonster} from './positions';
 import {store} from '../../store';
+import {startPlayerTurn} from './playerTurn';
 
 function processPick(options, gameState, dispatch, i = 0) {
 	if (i >= options.length) {
@@ -110,7 +111,7 @@ export const startMonsterTurn = () => (
 			const actions = monsters[gameState.monsterName].ai.cards[nextCard].actions;
 
 			processActions(actions, gameState, dispatch).then(() => {
-				console.log('Begin Player turn');
+				dispatch(startPlayerTurn());
 			});
 		}
 	}
