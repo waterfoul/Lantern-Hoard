@@ -33,7 +33,7 @@ export function isFront(monsterDirection, size, monster, player) {
 	}
 }
 
-export const findClosestAndChoose = (distances) => {
+export const findClosestAndChoose = (distances, dispatch) => {
 	// Get the minimum distance
 	const min = Math.min.apply(Math, distances.filter((val) => val !== null));
 
@@ -55,7 +55,3 @@ export const findClosestAndChoose = (distances) => {
 		return chooseBetween(resultArr, dispatch);
 	}
 };
-
-export function randomIndex(array) {
-	return array[Math.floor(Math.random() * array.length)];
-}

@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 import {takeControl} from '../../../reducers/room';
 import {changeBoardStatusAction, BOARD_STATUSES} from '../../../../common/gameState/board';
+import {getStats} from '../../../utils/getStats';
 
 const getPlacementText = (positions, room, slot, user) => {
 	const placingPlayer = (!positions.player1 ? 0 : (!positions.player2 ? 1 : (!positions.player3 ? 2 : 3)));
@@ -92,32 +93,34 @@ export const Collapsed = connect(
 	}),
 	{takeControlEvt: takeControl, changeBoardStatusActionDisp: changeBoardStatusAction}
 )(({ armor, slot, room, board, positions, user, boardError, takeControlEvt, changeBoardStatusActionDisp }) => {
+	const character = room['Character' + (slot + 1)];
+	const stats = getStats(character, room.gameState, slot);
 	return (
 		<div>
 			<div className="game-character-collapsed container-fluid">
 				<div className="col-md-5 col-sm-12">
-					<div>Character Name</div>
+					<div>{character.name}</div>
 					<div>{ room[`Player${slot + 1}`] ? room[`Player${slot + 1}`].name : 'Open' }</div>
 					<div>
 						<i className="glyphicon glyphicon-screenshot" />&nbsp;
 						<span>
-						{0}
+							{stats.movement}
 							&nbsp;/&nbsp;
-							{0}
+							{stats.accuracy}
 							&nbsp;/&nbsp;
-							{0}
+							{stats.strength}
 							&nbsp;/&nbsp;
-							{0}
+							{stats.evasion}
 							&nbsp;/&nbsp;
-							{0}
+							{stats.luck}
 							&nbsp;/&nbsp;
-							{0}
+							{stats.speed}
 					</span>
 					</div>
 					<div>
 						<i className="glyphicon glyphicon-heart" />&nbsp;
 						<span>
-						{armor[slot].head}
+							{armor[slot].head}
 							&nbsp;/&nbsp;
 							{armor[slot].body}
 							&nbsp;/&nbsp;
