@@ -14,16 +14,17 @@ const getPlacementText = (positions, room, slot, user) => {
 	}
 };
 
-function getButtons(
+function getButtons({
 	positions,
 	room,
 	slot,
 	user,
 	board,
 	boardError,
+	monsterController,
 	takeControlEvt,
 	changeBoardStatusActionDisp
-) {
+}) {
 	if (room[`Player${slot + 1}`]) {
 		switch (board.status) {
 		case BOARD_STATUSES.initialPlacement:
@@ -37,8 +38,7 @@ function getButtons(
 				<div className="col-md-7 col-sm-12">
 					{room.gameState.board.data.indexOf(slot) !== -1 ? (
 							<div className="col-md-6 col-sm-12">
-								{/*TODO: Only show for monster controller*/}
-								<button className="btn btn-primary" onClick={() => changeBoardStatusActionDisp(BOARD_STATUSES.targetChosen, slot)}>Select</button>
+								{ user.id === monsterController ? <button className="btn btn-primary" onClick={() => changeBoardStatusActionDisp(BOARD_STATUSES.targetChosen, slot)}>Select</button> : 'Please Wait...' }
 							</div>
 						) : ''}
 				</div>
@@ -97,9 +97,10 @@ export const Collapsed = connect(
 	const character = room['Character' + (slot + 1)];
 	const stats = getStats(character, room.gameState, slot);
 	const player = room[`Player${slot + 1}`] || {};
+	const isMonsterController = monsterController === player.id;
 	return (
 		<div>
-			{ monsterController === player.id ? <img className="game-character-monster-controller" src="/static/monster-controller.jpg" /> : '' }
+			{ isMonsterController ? <img className="game-character-monster-controller" src="/static/monster-controller.jpg" /> : '' }
 			<div className="game-character-collapsed container-fluid">
 				<div className="col-md-5 col-sm-12">
 					<div>{character.name}</div>
@@ -135,7 +136,7 @@ export const Collapsed = connect(
 					</span>
 					</div>
 				</div>
-				{ getButtons(positions, room, slot, user, board, boardError, takeControlEvt, changeBoardStatusActionDisp) }
+				{ getButtons({positions, room, slot, user, board, boardError, monsterController, takeControlEvt, changeBoardStatusActionDisp}) }
 			</div>
 		</div>
 	);
