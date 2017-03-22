@@ -6,6 +6,7 @@ import {Board} from './Board';
 import {MonsterInfo} from './MonsterInfo';
 
 import {InitialPlacement} from './gameBoardOverlay/InitialPlacement';
+import {PlayerDamage} from './gameBoardOverlay/PlayerDamage';
 
 import {fetch} from '../../reducers/room';
 import {changeFixState} from '../../reducers/flexBoxFix';
@@ -29,7 +30,9 @@ class GameComponent extends Component {
 			case BOARD_STATUSES.initialPlacement:
 				return <InitialPlacement />;
 			case BOARD_STATUSES.targetChoice:
-				return <div id="game-board-error"><div>Please select a target</div></div>;
+				return <div className="game-board-grey-over"><div>Please select a target</div></div>;
+			case BOARD_STATUSES.playerDamage:
+				return <PlayerDamage />;
 			default:
 				return null;
 			}
