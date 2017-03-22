@@ -66,6 +66,6 @@ export const applyDamage = () => (
 		data.wounds.forEach((roll) => {
 			dispatch(damageArmor(data.target, locations[roll], data.damage));
 		});
-		dispatch(changeBoardStatus(BOARD_STATUSES.playerDamageFinished));
+		dispatch(changeBoardStatus(BOARD_STATUSES.playerDamageFinish));
 	}
 );

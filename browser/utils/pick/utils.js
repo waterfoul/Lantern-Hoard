@@ -8,6 +8,7 @@ export function chooseBetween(characters, dispatch) {
 
 		const unsub = store.subscribe(() => {
 			const {room} = store.getState();
+			console.log(room.gameState.board.status);
 			if (room.gameState.board.status === BOARD_STATUSES.targetChosen) {
 				resolve(room.gameState.board.data);
 				dispatch(changeBoardStatusAction(BOARD_STATUSES.generic));
