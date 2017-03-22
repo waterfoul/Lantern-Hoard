@@ -57,16 +57,24 @@ function attackPlayer(target, dispatch, speed, accuracy, damage) {
 
 	if (getDistance(gameState.monsterStats.size, gameState.positions.monster, gameState.positions['player' + (target + 1)]) === 1) {
 		return new Promise((resolve, reject) => {
-			dispatch(changeBoardStatusAction(BOARD_STATUSES.playerDamage, {speed, accuracy, damage, target}));
+			try {
+				dispatch(changeBoardStatusAction(BOARD_STATUSES.playerDamage, {speed, accuracy, damage, target}));
 
-			const unsub = store.subscribe(() => {
-				const {room: updated} = store.getState();
-				if (updated.gameState.board.status === BOARD_STATUSES.playerDamageFinish) {
-					resolve();
-					dispatch(changeBoardStatusAction(BOARD_STATUSES.generic));
-					unsub();
-				}
-			});
+				const unsub = store.subscribe(() => {
+					try {
+						const {room: updated} = store.getState();
+						if (updated.gameState.board.status === BOARD_STATUSES.playerDamageFinish) {
+							resolve();
+							dispatch(changeBoardStatusAction(BOARD_STATUSES.generic));
+							unsub();
+						}
+					} catch (err) {
+						reject(err);
+					}
+				});
+			} catch (err) {
+				reject(err);
+			}
 		});
 	} else {
 		return Promise.resolve();
@@ -113,7 +121,7 @@ export const startMonsterTurn = () => (
 			processActions(actions, gameState, dispatch).then(() => {
 				dispatch(passMonsterController());
 				console.log('Begin Player turn');
-			});
+			}).catch(console.error.bind(console, 'Error while processing the monster turn'));
 		}
 	}
 );
@@ -130,9 +138,10 @@ export const passMonsterController = () => (
 		playerIds = playerIds.filter((val, idx) => playerIds.indexOf(val) === idx);
 		let playerIdx = playerIds.indexOf(room.gameState.monsterController);
 		playerIdx++;
-		if (playerIdx > playerIds.length) {
+		if (playerIdx >= playerIds.length) {
 			playerIdx = 0;
 		}
+		console.log(playerIds, playerIdx);
 		dispatch(changeMonsterController(playerIds[playerIdx]));
 	}
 );

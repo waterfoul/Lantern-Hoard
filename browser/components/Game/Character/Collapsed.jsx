@@ -99,9 +99,9 @@ export const Collapsed = connect(
 	const player = room[`Player${slot + 1}`] || {};
 	return (
 		<div>
+			{ monsterController === player.id ? <img className="game-character-monster-controller" src="/static/monster-controller.jpg" /> : '' }
 			<div className="game-character-collapsed container-fluid">
 				<div className="col-md-5 col-sm-12">
-					{ monsterController === player.id ? 'Monster Controller' : '' }
 					<div>{character.name}</div>
 					<div>{ player.name || 'Open' }</div>
 					<div>
