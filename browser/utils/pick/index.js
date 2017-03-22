@@ -30,27 +30,6 @@ export function closestThreatFacingInRange(gameState, dispatch) {
 		}
 		return distance;
 	});
-	// // moved below to utils.js
-	// // Get the minimum distance
-	// const min = Math.min.apply(Math, distances.filter((val) => val !== null));
-
-	// // Null out the values > min, converting the correct values into their indexes
-	// let resultArr = distances
-	// 	.map((val, i) => val === min ? i : null);
-
-	// // Filter off the nulls
-	// resultArr = resultArr
-	// 	.filter((val) => val !== null);
-
-	// if (resultArr.length === 0) {
-	// 	// No result
-	// 	return Promise.resolve(null);
-	// } else if (resultArr.length === 1) {
-	// 	// One result
-	// 	return Promise.resolve(resultArr[0]);
-	// } else {
-	// 	return chooseBetween(resultArr, dispatch);
-	// }
 
 	return findClosestAndChoose(distances, dispatch);
 }
