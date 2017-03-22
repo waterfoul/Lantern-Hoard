@@ -5,11 +5,11 @@ const DRAW_AI_CARD = 'DRAW_AI_CARD';
 const ai = (state = null, action) => {
 	switch (action.type) {
 	case DRAW_AI_CARD:
+		const [next, ...deck] = state.deck;
 		const newState = Object.assign({}, state, {
-			deck: [...state.deck],
-			discard: [state.deck[0], ...state.discard]
+			deck: deck,
+			discard: [next, ...state.discard]
 		});
-		newState.deck.shift();
 		return newState;
 	default:
 		return state;
