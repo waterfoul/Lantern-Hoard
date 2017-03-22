@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import {takeControl} from '../../../reducers/room';
 import {changeBoardStatusAction, BOARD_STATUSES} from '../../../../common/gameState/board';
 import {getStats} from '../../../utils/getStats';
+import {PleaseWait} from './CollapsedActions/PleaseWait';
+import {PlayerTurn} from './CollapsedActions/PlayerTurn';
 
 const getPlacementText = (positions, room, slot, user) => {
 	const placingPlayer = (!positions.player1 ? 0 : (!positions.player2 ? 1 : (!positions.player3 ? 2 : 3)));
@@ -59,28 +61,13 @@ function getButtons(
 					{room.gameState.board.data.target === slot ? 'Damage Me' : ''}
 				</div>
 			);
+		case BOARD_STATUSES.playerTurn:
+			return (
+				<PlayerTurn slot={slot} />
+			);
 		default:
 			return (
-				<div className="col-md-7 col-sm-12 attack-buttons container-fluid">
-					<div className="col-md-6 col-sm-12">
-						<button className="btn btn-primary btn-xs" disabled={boardError}>Fist & Tooth</button>
-					</div>
-					<div className="col-md-6 col-sm-12">
-						<button className="btn btn-primary btn-xs" disabled={boardError}>Founding Stone</button>
-					</div>
-					<div className="col-md-6 col-sm-12">
-						<button className="btn btn-primary btn-xs" disabled={boardError}>Leather Headband</button>
-					</div>
-					<div className="col-md-6 col-sm-12">
-						<button className="btn btn-primary btn-xs" disabled={boardError}>Acid-Tooth Dagger</button>
-					</div>
-					<div className="col-md-6 col-sm-12">
-						<button className="btn btn-primary btn-xs" disabled={boardError}>Blue Charm</button>
-					</div>
-					<div className="col-md-6 col-sm-12">
-						<button className="btn btn-primary btn-xs" disabled={boardError}>Bone Axe</button>
-					</div>
-				</div>
+				<PleaseWait />
 			);
 		}
 	} else {

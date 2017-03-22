@@ -5,7 +5,7 @@ const {positions} = require('./positions');
 const { monsterController } = require('./monsterController');
 const { armor } = require('./armor');
 const { ai } = require('./ai');
-
+const { playerResources } = require('./playerResources');
 
 const noop = (state) => (state || null);
 
@@ -21,6 +21,7 @@ const gameStateReducer = combineReducers({
 	gear: noop,
 	armor,
 	monsterController,
+	playerResources,
 	threats: () => [true, true, true, true] //Adding a stub here, TODO: replace this with a reducer
 });
 
