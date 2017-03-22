@@ -1,5 +1,9 @@
 import {monsters} from '../../data/monsters';
 import {drawAICard} from '../../../common/gameState/ai';
+import {changeBoardStatusAction, BOARD_STATUSES} from '../../../common/gameState/board';
+import {getDistance} from '../../utils/getDistance';
+import {moveMonster} from './positions';
+import {store} from '../../store';
 
 function processPick(options, gameState, dispatch, i = 0) {
 	if (i >= options.length) {
@@ -14,13 +18,78 @@ function processPick(options, gameState, dispatch, i = 0) {
 	});
 }
 
+function getNewMonsterLocation(target, gameState) {
+	const playerPosition = gameState.positions['player' + (target + 1)];
+	const monsterSize = gameState.monsterStats.size;
+
+	const options = [];
+
+	for (let i = 0; i < monsterSize; i++) {
+		// above
+		options.push([playerPosition[0] - i, playerPosition[1] + monsterSize]);
+		// below
+		options.push([playerPosition[0] - i, playerPosition[1] - 1]);
+		// left
+		options.push([playerPosition[0] - monsterSize, playerPosition[1] - i]);
+		// right
+		options.push([playerPosition[0] + 1, playerPosition[1] - i]);
+	}
+
+	const distances = options.map((ele) => getDistance(gameState.monsterStats.size, gameState.positions.monster, ele));
+
+	const min = Math.min.apply(Math, distances);
+
+	const results = options.filter((ele, i) => distances[i] === min);
+
+	if(results.length === 0) {
+		return Promise.reject('FAILURE! No valid spot for the monster! UNIMPLEMENTED!');
+	} else if(results.length === 1) {
+		return Promise.resolve(results[0]);
+	} else {
+		return Promise.reject('FAILURE! More than one result! UNIMPLEMENTED!');
+	}
+};
+
+function attackPlayer(target, dispatch, speed, accuracy, damage) {
+	const {room} = store.getState();
+	const {gameState} = room;
+
+	if (getDistance(gameState.monsterStats.size, gameState.positions.monster, gameState.positions['player' + (target + 1)]) === 1) {
+		return new Promise((resolve, reject) => {
+			dispatch(changeBoardStatusAction(BOARD_STATUSES.playerDamage, {speed, accuracy, damage, target}));
+
+			const unsub = store.subscribe(() => {
+				const {room: updated} = store.getState();
+				if (updated.gameState.board.status === BOARD_STATUSES.playerDamageFinish) {
+					resolve();
+					dispatch(changeBoardStatusAction(BOARD_STATUSES.generic));
+					unsub();
+				}
+			});
+		});
+	} else {
+		return Promise.resolve();
+	}
+}
+
+function processAttack(target, gameState, dispatch, {move, speed, accuracy, damage}) {
+	if(move) {
+		return getNewMonsterLocation(target, gameState).then((newLocation) => {
+			dispatch(moveMonster(newLocation));
+			return attackPlayer(target, dispatch, speed, accuracy, damage);
+		});
+	} else {
+		return attackPlayer(target, dispatch, speed, accuracy, damage);
+	}
+}
+
 function processActions(actions, gameState, dispatch, target, i = 0) {
 	if (actions[i].type === 'pick') {
 		return processPick(actions[i].options, gameState, dispatch).then((result) => {
 			return processActions(actions, gameState, dispatch, result, i + 1);
 		});
 	} if (actions[i].type === 'attack') {
-		return Promise.reject('UNIMPLEMENTED');
+		return processAttack(target, gameState, dispatch, actions[i]);
 	} else {
 		return Promise.resolve();
 	}

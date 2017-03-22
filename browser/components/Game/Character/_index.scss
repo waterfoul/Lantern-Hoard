@@ -29,16 +29,16 @@
   background-color: #595514;
 }
 
-#game-board-error {
+.game-board-grey-over {
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
-  right: 0;
+  right: 10px;
   z-index: 10;
   background-color: rgba(201, 201, 201, 0.6);
 
-  div {
+  > div {
     position: absolute;
     display: inline-block;
     height: auto !important;

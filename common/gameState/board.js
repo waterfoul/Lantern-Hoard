@@ -3,6 +3,8 @@ const BOARD_STATUSES = {
 	initialPlacement: 'INITIAL_PLACEMENT', // Used to allow for initial character placement,
 	targetChoice: 'TARGET_CHOICE', // Used to allow the monster controller to choose a target
 	targetChosen: 'TARGET_CHOSEN', // Used to indicate that a target has been chosen
+	playerDamage: 'PLAYER_DAMAGE', // Used to show the dialog for player damage
+	playerDamageFinishe: 'PLAYER_DAMAGE_FINISH', // Triggers the finish of the player damage
 	rollingToHit: 'ROLLING_TO_HIT'
 };
 
