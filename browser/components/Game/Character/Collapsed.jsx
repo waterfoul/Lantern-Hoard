@@ -36,9 +36,16 @@ function getButtons(
 				<div className="col-md-7 col-sm-12">
 					{room.gameState.board.data.indexOf(slot) !== -1 ? (
 							<div className="col-md-6 col-sm-12">
+								{/*TODO: Only show for monster controller*/}
 								<button className="btn btn-primary" onClick={() => changeBoardStatusActionDisp(BOARD_STATUSES.targetChosen, slot)}>Select</button>
 							</div>
 						) : ''}
+				</div>
+			);
+		case BOARD_STATUSES.playerDamage:
+			return (
+				<div className="col-md-7 col-sm-12">
+					{room.gameState.board.data.target === slot ? 'Damage Me' : ''}
 				</div>
 			);
 		default:

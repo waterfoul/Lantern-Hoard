@@ -3,6 +3,7 @@ const {combineReducers} = require('redux');
 const {board} = require('./board');
 const {positions} = require('./positions');
 const { monsterController } = require('./monsterController');
+const { armor } = require('./armor');
 const { ai } = require('./ai');
 
 
@@ -18,7 +19,7 @@ const gameStateReducer = combineReducers({
 	monsterDirection: () => 'S', //Adding a stub here, TODO: replace this with a reducer
 	positions,
 	gear: noop,
-	armor: noop,
+	armor,
 	monsterController,
 	threats: () => [true, true, true, true] //Adding a stub here, TODO: replace this with a reducer
 });

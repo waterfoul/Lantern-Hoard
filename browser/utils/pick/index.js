@@ -1,4 +1,5 @@
-import { getDistance, isFront, findClosestAndChoose } from './utils';
+import {isFront, chooseBetween, randomIndex, findClosestAndChoose} from './utils';
+import {getDistance} from '../getDistance';
 
 export function closestThreatFacingInRange(gameState, dispatch) {
 	const positions = [
@@ -70,8 +71,28 @@ export function randomThreatInFieldOfView(boardState) {
 	return Promise.resolve(null);
 }
 
-export function randomInRange(boardState) {
-	return Promise.resolve(null);
+export function randomInRange(gameState) {
+	const distances = [
+		gameState.positions.player1,
+		gameState.positions.player2,
+		gameState.positions.player3,
+		gameState.positions.player4
+	].map((val) => {
+		const distance = getDistance(gameState.monsterStats.size, gameState.positions.monster, val);
+		if (distance > gameState.monsterStats.movement + gameState.monsterStats.range) {
+			// Out of range
+			return null;
+		}
+		return distance;
+	});
+
+	const min = Math.min.apply(Math, distances.filter((val) => val !== null));
+
+	const resultArr = distances
+		.map((val, i) => val === min ? i : null)
+		.filter((val) => val !== null);
+
+	return Promise.resolve(randomIndex(resultArr));
 }
 
 export function closestWithMostBleeding(boardState) {
