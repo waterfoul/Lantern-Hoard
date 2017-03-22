@@ -1,5 +1,7 @@
 import {shuffle} from '../utils/shuffle';
 import {whiteLion} from '../data/monsters/whiteLion';
+import {randomNames} from '../utils/randomNames';
+import {randomIndex} from '../utils/randomIndex';
 
 export function firstStory() {
 	return {
@@ -84,6 +86,18 @@ export function firstStory() {
 				['', 'Cloth', 'Founding Stone'],
 				['', '', '']
 			]
-		]
+		],
+		Character1: {
+			name: randomIndex(randomNames).name
+		},
+		Character2: {
+			name: randomIndex(randomNames).name
+		},
+		Character3: {
+			name: randomIndex(randomNames).name
+		},
+		Character4: {
+			name: randomIndex(randomNames).name
+		}
 	};
 }
