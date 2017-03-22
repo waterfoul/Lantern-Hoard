@@ -22,9 +22,9 @@ export const PlayerDamage = connect(
 			{ !data.rolls ? (<div><button className="btn btn-primary" onClick={rollForHitsEvt}>Roll For Hits</button></div>) : (
 				<div>
 					<div>{data.rolls.map((val, i) => (<div key={i} className="game-board-player-damage-dice">
-						<div className={`dice dice-${val}`}></div>
+						<div className={`dice dice-${val}`} />
 						<div>{data.hits[i] ? 'Hit!' : 'Miss!'}</div>
-						{ data.wounds ? (<div className={`dice wound-${data.wounds[i]}`}></div>) : null }
+						{ data.wounds ? (<div className={`dice wound-${data.wounds[i]}`} />) : null }
 					</div>))}</div>
 					{!data.wounds ?
 						(<div><button className="btn btn-primary" onClick={rollForMonsterWoundsEvt}>Roll For Wounds</button></div>) :

@@ -41,14 +41,14 @@ function getNewMonsterLocation(target, gameState) {
 
 	const results = options.filter((ele, i) => distances[i] === min);
 
-	if(results.length === 0) {
+	if (results.length === 0) {
 		return Promise.reject('FAILURE! No valid spot for the monster! UNIMPLEMENTED!');
-	} else if(results.length === 1) {
+	} else if (results.length === 1) {
 		return Promise.resolve(results[0]);
 	} else {
 		return Promise.reject('FAILURE! More than one result! UNIMPLEMENTED!');
 	}
-};
+}
 
 function attackPlayer(target, dispatch, speed, accuracy, damage) {
 	const {room} = store.getState();
@@ -73,7 +73,7 @@ function attackPlayer(target, dispatch, speed, accuracy, damage) {
 }
 
 function processAttack(target, gameState, dispatch, {move, speed, accuracy, damage}) {
-	if(move) {
+	if (move) {
 		return getNewMonsterLocation(target, gameState).then((newLocation) => {
 			dispatch(moveMonster(newLocation));
 			return attackPlayer(target, dispatch, speed, accuracy, damage);
