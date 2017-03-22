@@ -1,6 +1,7 @@
 import {monsters} from '../../data/monsters';
 import {drawAICard} from '../../../common/gameState/ai';
 import {changeBoardStatusAction, BOARD_STATUSES} from '../../../common/gameState/board';
+import {changeMonsterController} from '../../../common/gameState/monsterController';
 import {getDistance} from '../../utils/getDistance';
 import {moveMonster} from './positions';
 import {store} from '../../store';
@@ -110,8 +111,28 @@ export const startMonsterTurn = () => (
 			const actions = monsters[gameState.monsterName].ai.cards[nextCard].actions;
 
 			processActions(actions, gameState, dispatch).then(() => {
+				dispatch(passMonsterController());
 				console.log('Begin Player turn');
 			});
 		}
+	}
+);
+
+export const passMonsterController = () => (
+	(dispatch, getState) => {
+		const {room} = getState();
+		let playerIds = [
+			room.player1_id,
+			room.player2_id,
+			room.player3_id,
+			room.player4_id
+		];
+		playerIds = playerIds.filter((val, idx) => playerIds.indexOf(val) === idx);
+		let playerIdx = playerIds.indexOf(room.gameState.monsterController);
+		playerIdx++;
+		if (playerIdx > playerIds.length) {
+			playerIdx = 0;
+		}
+		dispatch(changeMonsterController(playerIds[playerIdx]));
 	}
 );

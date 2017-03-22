@@ -93,17 +93,24 @@ export const Collapsed = connect(
 		boardError
 	}),
 	{takeControlEvt: takeControl, changeBoardStatusActionDisp: changeBoardStatusAction}
-)(({ armor, slot, room, monsterController, board, positions, user, boardError, takeControlEvt, changeBoardStatusActionDisp }) => {
+<<<<<<< Updated upstream
+)(({ armor, slot, room, board, positions, user, boardError, takeControlEvt, changeBoardStatusActionDisp }) => {
 	const character = room['Character' + (slot + 1)];
 	const stats = getStats(character, room.gameState, slot);
-	const player = room[`Player${slot + 1}`] || {};
+=======
+)(({ armor, slot, room, monsterController, board, positions, user, boardError, takeControlEvt, changeBoardStatusActionDisp }) => {
+>>>>>>> Stashed changes
 	return (
 		<div>
 			<div className="game-character-collapsed container-fluid">
 				<div className="col-md-5 col-sm-12">
-					{ monsterController === player.id ? 'Monster Controller' : '' }
+<<<<<<< Updated upstream
 					<div>{character.name}</div>
-					<div>{ player.name || 'Open' }</div>
+=======
+					{ monsterController === room[`Player${slot + 1}`].id ? 'Monster Controller' : '' }
+					<div>Character Name</div>
+>>>>>>> Stashed changes
+					<div>{ room[`Player${slot + 1}`] ? room[`Player${slot + 1}`].name : 'Open' }</div>
 					<div>
 						<i className="glyphicon glyphicon-screenshot" />&nbsp;
 						<span>
