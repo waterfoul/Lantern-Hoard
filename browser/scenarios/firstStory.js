@@ -85,6 +85,11 @@ export function firstStory() {
 				['', '', ''],
 				['', 'Cloth', 'Founding Stone'],
 				['', '', '']
+			],
+			[
+				['', '', ''],
+				['', 'Cloth', 'Founding Stone'],
+				['', '', '']
 			]
 		],
 		Character1: {
