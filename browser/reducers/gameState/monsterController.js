@@ -21,7 +21,22 @@ function processPick(options, gameState, dispatch, i = 0) {
 	});
 }
 
-function getNewMonsterLocation(target, gameState) {
+function selectMonsterPosition(dispatch, positions) {
+	return new Promise((resolve, reject) => {
+		dispatch(changeBoardStatusAction(BOARD_STATUSES.showMonsterPositions, positions));
+
+		const unsub = store.subscribe(() => {
+			const { room } = store.getState();
+			if (room.gameState.board.status === BOARD_STATUSES.showMonsterPositionsResult) {
+				resolve(room.gameState.board.data);
+				dispatch(changeBoardStatusAction(BOARD_STATUSES.generic));
+				unsub();
+			}
+		});
+	});
+}
+
+function getNewMonsterLocation(target, gameState, dispatch) {
 	const playerPosition = gameState.positions['player' + (target + 1)];
 	const monsterSize = gameState.monsterStats.size;
 
@@ -49,7 +64,7 @@ function getNewMonsterLocation(target, gameState) {
 	} else if (results.length === 1) {
 		return Promise.resolve(results[0]);
 	} else {
-		return Promise.reject('FAILURE! More than one result! UNIMPLEMENTED!');
+		return selectMonsterPosition(dispatch, results);
 	}
 }
 
@@ -85,7 +100,7 @@ function attackPlayer(target, dispatch, speed, accuracy, damage) {
 
 function processAttack(target, gameState, dispatch, {move, speed, accuracy, damage}) {
 	if (move) {
-		return getNewMonsterLocation(target, gameState).then((newLocation) => {
+		return getNewMonsterLocation(target, gameState, dispatch).then((newLocation) => {
 			dispatch(moveMonster(newLocation));
 			return attackPlayer(target, dispatch, speed, accuracy, damage);
 		});

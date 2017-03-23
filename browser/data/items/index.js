@@ -24,7 +24,7 @@ export const items = Object.assign(
 			dice: 2,
 			accuracy: 7,
 			strength: 1,
-			diceMods: {},
+			np: {},
 			specialAbilities: [
 				{
 					name: 'Sling',

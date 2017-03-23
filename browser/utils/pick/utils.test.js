@@ -1,31 +1,115 @@
 'use strict';
 
-import {isFront} from './utils';
+import {isFront, checkFieldOfView} from './utils';
 import chai, {expect} from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 
 chai.use(chaiAsPromised);
 
 describe('utils/pick/utils', () => {
-	let scenario = null;
 
-	beforeEach(() => {
-		scenario = {
-			monsterStats: {
-				size: 2,
-				range: 1,
-				movement: 6
-			},
-			monsterDirection: 'S',
+	describe('checkFieldOfView', () => {
+		const gameState = {
 			positions: {
-				monster: [10, 8],
-				player1: [0, 0],
-				player2: [0, 0],
-				player3: [0, 0],
-				player4: [0, 0]
+				monster: [10, 8]
 			},
-			threats: [true, true, true, true]
+			monsterStats: {
+				size: 2
+			}
 		};
+		describe('monsterFacingNorth', () => {
+			beforeEach(() => {
+				gameState.monsterDirection = 'N';
+			});
+			it('has players to the left', () => {
+				expect(checkFieldOfView(gameState, [9, 8])).to.equal(true);
+				expect(checkFieldOfView(gameState, [6, 8])).to.equal(true);
+				expect(checkFieldOfView(gameState, [5, 8])).to.equal(true);
+				expect(checkFieldOfView(gameState, [9, 9])).to.equal(true);
+				expect(checkFieldOfView(gameState, [9, 7])).to.equal(true);
+			});
+			it('has players to the right', () => {
+				expect(checkFieldOfView(gameState, [12, 6])).to.equal(true);
+				expect(checkFieldOfView(gameState, [14, 11])).to.equal(true);
+				expect(checkFieldOfView(gameState, [12, 4])).to.equal(true);
+				expect(checkFieldOfView(gameState, [13, 13])).to.equal(true);
+				expect(checkFieldOfView(gameState, [16, 7])).to.equal(true);
+			});
+			it('has players above and below', () => {
+				expect(checkFieldOfView(gameState, [10, 5])).to.equal(true);
+				expect(checkFieldOfView(gameState, [10, 10])).to.equal(true);
+				expect(checkFieldOfView(gameState, [11, 2])).to.equal(true);
+				expect(checkFieldOfView(gameState, [9, 15])).to.equal(true);
+				expect(checkFieldOfView(gameState, [10, 12])).to.equal(true);
+			});
+			it('has players in its blind spot', () => {
+				expect(checkFieldOfView(gameState, [10, 6])).to.equal(false);
+				expect(checkFieldOfView(gameState, [11, 6])).to.equal(false);
+			});
+		});
+		describe('monsterFacingSouth', () => {
+			beforeEach(() => {
+				gameState.monsterDirection = 'S';
+			});
+			it('has players to the left', () => {
+				expect(checkFieldOfView(gameState, [9, 8])).to.equal(true);
+				expect(checkFieldOfView(gameState, [6, 8])).to.equal(true);
+			});
+			it('has players to the right', () => {
+				expect(checkFieldOfView(gameState, [12, 6])).to.equal(true);
+				expect(checkFieldOfView(gameState, [14, 11])).to.equal(true);
+			});
+			it('has players above and below', () => {
+				expect(checkFieldOfView(gameState, [10, 5])).to.equal(true);
+				expect(checkFieldOfView(gameState, [10, 14])).to.equal(true);
+			});
+			it('has players in its blind spot', () => {
+				expect(checkFieldOfView(gameState, [10, 9])).to.equal(false);
+				expect(checkFieldOfView(gameState, [11, 9])).to.equal(false);
+			});
+		});
+		describe('monsterFacingEast', () => {
+			beforeEach(() => {
+				gameState.monsterDirection = 'E';
+			});
+			it('has players to the left', () => {
+				expect(checkFieldOfView(gameState, [5, 8])).to.equal(true);
+				expect(checkFieldOfView(gameState, [6, 8])).to.equal(true);
+			});
+			it('has players to the right', () => {
+				expect(checkFieldOfView(gameState, [12, 6])).to.equal(true);
+				expect(checkFieldOfView(gameState, [14, 11])).to.equal(true);
+			});
+			it('has players above and below', () => {
+				expect(checkFieldOfView(gameState, [10, 5])).to.equal(true);
+				expect(checkFieldOfView(gameState, [10, 14])).to.equal(true);
+			});
+			it('has players in its blind spot', () => {
+				expect(checkFieldOfView(gameState, [9, 8])).to.equal(false);
+				expect(checkFieldOfView(gameState, [9, 7])).to.equal(false);
+			});
+		});
+		describe('monsterFacingWest', () => {
+			beforeEach(() => {
+				gameState.monsterDirection = 'W';
+			});
+			it('has players to the left', () => {
+				expect(checkFieldOfView(gameState, [5, 8])).to.equal(true);
+				expect(checkFieldOfView(gameState, [6, 8])).to.equal(true);
+			});
+			it('has players to the right', () => {
+				expect(checkFieldOfView(gameState, [12, 6])).to.equal(true);
+				expect(checkFieldOfView(gameState, [14, 11])).to.equal(true);
+			});
+			it('has players above and below', () => {
+				expect(checkFieldOfView(gameState, [10, 5])).to.equal(true);
+				expect(checkFieldOfView(gameState, [10, 14])).to.equal(true);
+			});
+			it('has players in its blind spot', () => {
+				expect(checkFieldOfView(gameState, [12, 8])).to.equal(false);
+				expect(checkFieldOfView(gameState, [12, 7])).to.equal(false);
+			});
+		});
 	});
 
 	describe('isFront', () => {
