@@ -5,6 +5,8 @@ import {changeMonsterController} from '../../../common/gameState/monsterControll
 import {getDistance} from '../../utils/getDistance';
 import {moveMonster} from './positions';
 import {store} from '../../store';
+import {endMonster, beginMonster} from '../../../common/gameState/knockedDownCharacters';
+
 
 function processPick(options, gameState, dispatch, i = 0) {
 	if (i >= options.length) {
@@ -110,6 +112,7 @@ export const startMonsterTurn = () => (
 		const {gameState} = room;
 
 		console.log('Begin Monster turn');
+		dispatch(beginMonster());
 
 		if (gameState.monsterController === user.id) {
 			dispatch(drawAICard());
@@ -120,6 +123,7 @@ export const startMonsterTurn = () => (
 
 			processActions(actions, gameState, dispatch).then(() => {
 				dispatch(passMonsterController());
+				dispatch(endMonster());
 				console.log('Begin Player turn');
 			}).catch(console.error.bind(console, 'Error while processing the monster turn'));
 		}
