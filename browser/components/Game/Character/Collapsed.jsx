@@ -35,6 +35,12 @@ function getButtons({
 					{getPlacementText(positions, room, slot, user)}
 				</div>
 			);
+		case BOARD_STATUSES.showMonsterPositions:
+			return (
+				<div className="col-md-7 col-sm-12">
+					{ user.id === monsterController ? 'Move the monster' : '' }
+				</div>
+			);
 		case BOARD_STATUSES.targetChoice:
 			return (
 				<div className="col-md-7 col-sm-12">

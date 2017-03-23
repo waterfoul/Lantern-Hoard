@@ -1,0 +1,25 @@
+.monster.monster-option {
+  background-size: auto 20px !important;
+  background-color: transparent;
+
+  &.option-0 {
+    $color: rgba(0,255,0,1);
+    background: repeating-linear-gradient(45deg, $color 0, rgba(255,255,255,0) 12.5%, rgba(255,255,255,0) 25%, rgba(255,255,255,0) 37.5%, $color 50%, rgba(255,255,255,0) 62.5%, rgba(255,255,255,0) 75%, rgba(255,255,255,0) 87.5%, $color 100%);
+    border: 1px dashed $color;
+  }
+  &.option-1 {
+    $color: rgba(0,255,255,1);
+    background: repeating-linear-gradient(45deg, $color 0, rgba(255,255,255,0) 12.5%, rgba(255,255,255,0) 25%, rgba(255,255,255,0) 37.5%, $color 50%, rgba(255,255,255,0) 62.5%, rgba(255,255,255,0) 75%, rgba(255,255,255,0) 87.5%, $color 100%);
+    border: 1px dashed $color;
+  }
+  &.option-2 {
+    $color: rgba(255,255,0,1);
+    background: repeating-linear-gradient(45deg, $color 0, rgba(255,255,255,0) 12.5%, rgba(255,255,255,0) 25%, rgba(255,255,255,0) 37.5%, $color 50%, rgba(255,255,255,0) 62.5%, rgba(255,255,255,0) 75%, rgba(255,255,255,0) 87.5%, $color 100%);
+    border: 1px dashed $color;
+  }
+  &.option-3 {
+    $color: rgba(255, 255, 255,1);
+    background: repeating-linear-gradient(45deg, $color 0, rgba(255,255,255,0) 12.5%, rgba(255,255,255,0) 25%, rgba(255,255,255,0) 37.5%, $color 50%, rgba(255,255,255,0) 62.5%, rgba(255,255,255,0) 75%, rgba(255,255,255,0) 87.5%, $color 100%);
+    border: 1px dashed $color;
+  }
+}

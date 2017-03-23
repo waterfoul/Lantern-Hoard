@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {rollToHit, rollToWound, closeAttack} from '../../../reducers/gameState/playerTurn';
 import {monsters} from '../../../data/monsters';
 
 export const SelectMonsterTarget = connect(
