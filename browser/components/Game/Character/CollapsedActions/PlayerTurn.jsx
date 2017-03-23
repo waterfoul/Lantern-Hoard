@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { PleaseWait } from './PleaseWait';
-import { moveCharacter } from '../../../../reducers/gameState/playerTurn';
+import { moveCharacter, startAttack } from '../../../../reducers/gameState/playerTurn';
 import { changeBoardStatusAction, BOARD_STATUSES } from '../../../../../common/gameState/board';
-import {items} from '../../../../data/items';
+import { items } from '../../../../data/items';
 
 
 export const PlayerTurn = connect(
@@ -15,9 +15,10 @@ export const PlayerTurn = connect(
 	}),
 	{
 		moveCharacterDispatch: moveCharacter,
-		changeBoardStatusActionDispatch: changeBoardStatusAction
+		changeBoardStatusActionDispatch: changeBoardStatusAction,
+		startAttackDispatch: startAttack
 	}
-)(({ slot, room, board, user, playerResources, moveCharacterDispatch, changeBoardStatusActionDispatch }) => {
+)(({ slot, room, board, user, playerResources, moveCharacterDispatch, changeBoardStatusActionDispatch, startAttackDispatch }) => {
 	if (slot === board.data && user.id === room[`Player${slot + 1}`].id) {
 		const gear = room.gameState.gear[slot].reduce((acc, ele) => [...acc, ...ele], []).filter((ele) => ele != "");
 		const actionList = gear.reduce((acc, ele) => {
@@ -31,7 +32,7 @@ export const PlayerTurn = connect(
 					movement: item.traits.indexOf('cumbersome') !== -1,
 					action: true,
 					cb: () => {
-						// dispatch attack with weapon
+						startAttackDispatch(slot, ele);
 					}
 				});
 			}

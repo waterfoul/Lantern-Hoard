@@ -1,21 +1,10 @@
-// Determine which character will act (player's choice)
-// move and then act || act and then move
-// Determine if there are more characters who need a turn
-// If so, repeat
-// When all characters have taken a turn, go to Monster turn
-
-// function to choose which character will go (similar to chooseBetween)
-
-// function to move a character (only controlling player can move the character)
-
-// function to use an action
-
-// Buttons for action, move, and end turn
 import { startMonsterTurn } from './monsterController';
 import { BOARD_STATUSES, changeBoardStatusAction } from '../../../common/gameState/board';
 import { store } from '../../store';
 import { moveToken } from '../../../common/gameState/positions';
 import { changePlayerResources, useMovement, useAction } from '../../../common/gameState/playerResources';
+import { items } from '../../data/items';
+import { getAccuracy } from '../../utils/getStats';
 
 // Gets player input for selecting character turn
 function selectActingCharacter(dispatch, characters) {
@@ -98,5 +87,41 @@ export const startPlayerTurn = () => (
 			.then(() => {
 				dispatch(startMonsterTurn());
 			});
+	}
+);
+
+export const startAttack = (slot, weapon) => (
+	(dispatch, getState) => {
+		const item = items[weapon];
+		if (item.traits.indexOf('cumbersome')) {
+			dispatch(useMovement());
+		}
+		dispatch(useAction());
+		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerAttack, {
+			item,
+			slot
+		}));
+	}
+);
+
+export const rollToHit = () => (
+	(dispatch, getState) => {
+		const {room} = getState();
+		const data = Object.assign({}, room.gameState.board.data);
+		const playerAcc = getAccuracy(room[`Character${data.slot + 1}`], room.gameState, data.slot);
+		data.hitRolls = [];
+		data.hitCards = [];
+		data.woundRolls = [];
+		for (let i = 0; i < data.item.dice; i++) {
+			const result = Math.floor(Math.random() * 10) + 1;
+			data.hitRolls.push(result);
+			if (result !== 1 && (result === 10 || (result - data.item.accuracy + playerAcc) >= 0)) {
+				data.hitCards.push({});
+			} else {
+				data.hitCards.push(null);
+			}
+			data.woundRolls.push(null);
+		}
+		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerAttack, data));
 	}
 );

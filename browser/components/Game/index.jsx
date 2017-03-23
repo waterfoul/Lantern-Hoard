@@ -8,6 +8,7 @@ import {MonsterInfo} from './MonsterInfo';
 import {InitialPlacement} from './gameBoardOverlay/InitialPlacement';
 import {MoveCharacter} from './gameBoardOverlay/MoveCharacter';
 import {PlayerDamage} from './gameBoardOverlay/PlayerDamage';
+import {PlayerAttack} from './gameBoardOverlay/PlayerAttack';
 
 import {fetch} from '../../reducers/room';
 import {changeFixState} from '../../reducers/flexBoxFix';
@@ -38,6 +39,8 @@ class GameComponent extends Component {
 				return <div className="game-board-grey-over"><div>Please select a character to act</div></div>;
 			case BOARD_STATUSES.playerDamage:
 				return <PlayerDamage />;
+			case BOARD_STATUSES.playerAttack:
+				return <PlayerAttack />;
 			default:
 				return null;
 			}
