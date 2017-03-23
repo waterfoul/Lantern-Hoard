@@ -2,6 +2,7 @@ import {monsters} from '../../data/monsters';
 import {drawAICard} from '../../../common/gameState/ai';
 import {changeBoardStatusAction, BOARD_STATUSES} from '../../../common/gameState/board';
 import {changeMonsterController} from '../../../common/gameState/monsterController';
+import {changeMonsterDirection} from '../../../common/gameState/monsterDirection';
 import {getDistance} from '../../utils/getDistance';
 import {moveMonster} from './positions';
 import {store} from '../../store';
@@ -99,13 +100,30 @@ function attackPlayer(target, dispatch, speed, accuracy, damage) {
 }
 
 function processAttack(target, gameState, dispatch, {move, speed, accuracy, damage}) {
-	if (move) {
-		return getNewMonsterLocation(target, gameState, dispatch).then((newLocation) => {
-			dispatch(moveMonster(newLocation));
+	if (target !== null) {
+		if (move) {
+			return getNewMonsterLocation(target, gameState, dispatch).then((newLocation) => {
+				dispatch(moveMonster(newLocation));
+				const playerLoc = gameState.positions[`player${target + 1}`];
+				const diffX = playerLoc[0] - newLocation[0];
+				const diffY = playerLoc[1] - newLocation[1];
+				if (diffY < -1) {
+					dispatch(changeMonsterDirection('S'));
+				} else if (diffX < 0) {
+					dispatch(changeMonsterDirection('W'));
+				} else if (diffX > 1) {
+					dispatch(changeMonsterDirection('E'));
+				} else {
+					dispatch(changeMonsterDirection('N'));
+				}
+				console.log(gameState.positions[`player${target + 1}`], newLocation, diffX, diffY, target);
+				return attackPlayer(target, dispatch, speed, accuracy, damage);
+			});
+		} else {
 			return attackPlayer(target, dispatch, speed, accuracy, damage);
-		});
+		}
 	} else {
-		return attackPlayer(target, dispatch, speed, accuracy, damage);
+		return Promise.resolve();
 	}
 }
 
