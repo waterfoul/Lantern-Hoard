@@ -1,6 +1,10 @@
 'use strict';
 
-import { closestThreatFacingInRange, closestInRange } from '.';
+import {
+	closestThreatFacingInRange,
+	closestInRange,
+	closestKnockedDownInRange
+} from '.';
 import chai, { expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 
@@ -24,6 +28,7 @@ describe('utils/pick', () => {
 				player3: [0, 0],
 				player4: [0, 0]
 			},
+			knockedDownCharacters: [null, null, null, null],
 			threats: [true, true, true, true]
 		};
 	});
@@ -153,5 +158,39 @@ describe('utils/pick', () => {
 			});
 		});
 	});
-
+	describe('closestKnockedDownInRange', () => {
+		describe('knocked down', () => {
+			it('return null none has knocked down status', () => {
+				return expect(closestKnockedDownInRange(scenario, () => { })).to.eventually.equal(null);
+			});
+			it('finds those who are knocked down and in range', () => {
+				scenario.knockedDownCharacters[0] = 'KNOCKED_DOWN';
+				scenario.knockedDownCharacters[1] = 'STANDING';
+				scenario.positions.player1 = [10, 6];
+				scenario.positions.player2 = [11, 6];
+				return expect(closestKnockedDownInRange(scenario, () => { })).to.eventually.equal(0);
+			});
+			xit('finds all who are knocked down and in range', () => {
+				scenario.knockedDownCharacters[0] = 'KNOCKED_DOWN';
+				scenario.knockedDownCharacters[1] = 'KNOCKED_DOWN';
+				scenario.positions.player1 = [10, 6];
+				scenario.positions.player2 = [11, 6];
+				return expect(closestKnockedDownInRange(scenario, () => { })).to.eventually.equal("something");
+			});
+			it('does not find not knocked down and in range', () => {
+				scenario.knockedDownCharacters[0] = 'STANDING';
+				scenario.knockedDownCharacters[1] = 'STANDING';
+				scenario.positions.player1 = [10, 6];
+				scenario.positions.player2 = [11, 6];
+				return expect(closestKnockedDownInRange(scenario, () => { })).to.eventually.equal(null);
+			});
+			it('finds those who are knocked down and not in range', () => {
+				scenario.knockedDownCharacters[0] = 'KNOCKED_DOWN';
+				scenario.knockedDownCharacters[1] = 'STANDING';
+				scenario.positions.player1 = [0, 0];
+				scenario.positions.player2 = [11, 6];
+				return expect(closestKnockedDownInRange(scenario, () => { })).to.eventually.equal(null);
+			});
+		});
+	})
 });
