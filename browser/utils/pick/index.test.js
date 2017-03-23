@@ -185,5 +185,5 @@ describe('utils/pick', () => {
 				return expect(closestKnockedDownInRange(scenario, () => { })).to.eventually.equal(null);
 			});
 		});
-	})
+	});
 });
