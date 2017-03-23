@@ -87,7 +87,7 @@ export const catarium = {
 	},
 	'Cat Gut Bow': {
 		descriptors: ['weapon', 'ranged', 'bow', 'two-handed'],
-		traits: [],
+		traits: ['cumbersome'],
 		dice: 2,
 		accuracy: 7,
 		strength: 3,
