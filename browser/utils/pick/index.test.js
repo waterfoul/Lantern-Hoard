@@ -170,13 +170,6 @@ describe('utils/pick', () => {
 				scenario.positions.player2 = [11, 6];
 				return expect(closestKnockedDownInRange(scenario, () => { })).to.eventually.equal(0);
 			});
-			xit('finds all who are knocked down and in range', () => {
-				scenario.knockedDownCharacters[0] = 'KNOCKED_DOWN';
-				scenario.knockedDownCharacters[1] = 'KNOCKED_DOWN';
-				scenario.positions.player1 = [10, 6];
-				scenario.positions.player2 = [11, 6];
-				return expect(closestKnockedDownInRange(scenario, () => { })).to.eventually.equal("something");
-			});
 			it('does not find not knocked down and in range', () => {
 				scenario.knockedDownCharacters[0] = 'STANDING';
 				scenario.knockedDownCharacters[1] = 'STANDING';
