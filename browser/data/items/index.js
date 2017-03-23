@@ -35,7 +35,7 @@ export const items = Object.assign(
 			],
 			colorEdges: [null, null, null, null],
 			characterModifiers: {},
-			img: '/static/items/lion-beast-katar.jpg'
+			img: '/static/items/founding-stone.jpg'
 		}
 	},
 	boneSmith,
