@@ -63,15 +63,32 @@
 		margin: 10%;
 		cursor: pointer;
 	}
+	.knocked-down {
+		&:after {
+			content: '\21B7';
+		}
+	}
 	.white {
 		background-color: white;
 		border-radius: 50%;
-		margin: 25%
+		margin: 25%;
+
+		&.knocked-down {
+			&:after {
+				color: black;
+			}
+		}
 	}
 	.yellow {
 		background-color: yellow;
 		border-radius: 50%;
-		margin: 25%
+		margin: 25%;
+
+		&.knocked-down {
+			&:after {
+				color: black;
+			}
+		}
 	}
 	.green {
 		background-color: green;
@@ -86,7 +103,35 @@
 	.monster {
 		background-color: red;
 		border-radius: 50%;
-		margin: 15%
+		margin: 15%;
+
+		&:after {
+			font-size: 45px;
+		}
+
+		&.direction-N {
+			&:after {
+				content: '\2191';
+			}
+		}
+
+		&.direction-S {
+			&:after {
+				content: '\2193';
+			}
+		}
+
+		&.direction-E {
+			&:after {
+				content: '\2192';
+			}
+		}
+
+		&.direction-W {
+			&:after {
+				content: '\2190';
+			}
+		}
 	}
 
 	@for $x from 0 through 22 {

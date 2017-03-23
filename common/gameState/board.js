@@ -4,7 +4,7 @@ const BOARD_STATUSES = {
 	targetChoice: 'TARGET_CHOICE', // Used to allow the monster controller to choose a target
 	targetChosen: 'TARGET_CHOSEN', // Used to indicate that a target has been chosen
 	playerDamage: 'PLAYER_DAMAGE', // Used to show the dialog for player damage
-	playerDamageFinishe: 'PLAYER_DAMAGE_FINISH', // Triggers the finish of the player damage
+	playerDamageFinish: 'PLAYER_DAMAGE_FINISH', // Triggers the finish of the player damage
 	selectActingCharacter: 'SELECT_ACTING_CHARACTER', // Prompts the players to select a character to act
 	actingCharacterChosen: 'ACTING_CHARACTER_CHOSEN', // Begins the chosen character's turn
 	showAvailableMovement: 'SHOW_AVAILABLE_MOVEMENT', // Displays possible character movement on the board

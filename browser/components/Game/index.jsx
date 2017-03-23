@@ -54,7 +54,7 @@ class GameComponent extends Component {
 							<div id="game-board">
 								<Board />
 								<div id="game-board-status-overlay">
-									{this.props.boardError && (<div id="game-board-error"><div>{this.props.boardError}</div></div>)}
+									{this.props.boardError && (<div id="game-board-error" className="game-board-grey-over"><div>{this.props.boardError}</div></div>)}
 									{ this.getGameBoardOverlay() }
 								</div>
 							</div>

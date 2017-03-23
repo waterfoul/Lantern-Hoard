@@ -1,9 +1,11 @@
 import {monsters} from '../../data/monsters';
 import {drawAICard} from '../../../common/gameState/ai';
 import {changeBoardStatusAction, BOARD_STATUSES} from '../../../common/gameState/board';
+import {changeMonsterController} from '../../../common/gameState/monsterController';
 import {getDistance} from '../../utils/getDistance';
 import {moveMonster} from './positions';
 import {store} from '../../store';
+import {endMonster, beginMonster} from '../../../common/gameState/knockedDownCharacters';
 import {startPlayerTurn} from './playerTurn';
 
 function processPick(options, gameState, dispatch, i = 0) {
@@ -57,16 +59,24 @@ function attackPlayer(target, dispatch, speed, accuracy, damage) {
 
 	if (getDistance(gameState.monsterStats.size, gameState.positions.monster, gameState.positions['player' + (target + 1)]) === 1) {
 		return new Promise((resolve, reject) => {
-			dispatch(changeBoardStatusAction(BOARD_STATUSES.playerDamage, {speed, accuracy, damage, target}));
+			try {
+				dispatch(changeBoardStatusAction(BOARD_STATUSES.playerDamage, {speed, accuracy, damage, target}));
 
-			const unsub = store.subscribe(() => {
-				const {room: updated} = store.getState();
-				if (updated.gameState.board.status === BOARD_STATUSES.playerDamageFinish) {
-					resolve();
-					dispatch(changeBoardStatusAction(BOARD_STATUSES.generic));
-					unsub();
-				}
-			});
+				const unsub = store.subscribe(() => {
+					try {
+						const {room: updated} = store.getState();
+						if (updated.gameState.board.status === BOARD_STATUSES.playerDamageFinish) {
+							resolve();
+							dispatch(changeBoardStatusAction(BOARD_STATUSES.generic));
+							unsub();
+						}
+					} catch (err) {
+						reject(err);
+					}
+				});
+			} catch (err) {
+				reject(err);
+			}
 		});
 	} else {
 		return Promise.resolve();
@@ -102,6 +112,7 @@ export const startMonsterTurn = () => (
 		const {gameState} = room;
 
 		console.log('Begin Monster turn');
+		dispatch(beginMonster());
 
 		if (gameState.monsterController === user.id) {
 			dispatch(drawAICard());
@@ -111,8 +122,29 @@ export const startMonsterTurn = () => (
 			const actions = monsters[gameState.monsterName].ai.cards[nextCard].actions;
 
 			processActions(actions, gameState, dispatch).then(() => {
+				dispatch(passMonsterController());
+				dispatch(endMonster());
 				dispatch(startPlayerTurn());
-			});
+			}).catch(console.error.bind(console, 'Error while processing the monster turn'));
 		}
+	}
+);
+
+export const passMonsterController = () => (
+	(dispatch, getState) => {
+		const {room} = getState();
+		let playerIds = [
+			room.player1_id,
+			room.player2_id,
+			room.player3_id,
+			room.player4_id
+		];
+		playerIds = playerIds.filter((val, idx) => playerIds.indexOf(val) === idx);
+		let playerIdx = playerIds.indexOf(room.gameState.monsterController);
+		playerIdx++;
+		if (playerIdx >= playerIds.length) {
+			playerIdx = 0;
+		}
+		dispatch(changeMonsterController(playerIds[playerIdx]));
 	}
 );
