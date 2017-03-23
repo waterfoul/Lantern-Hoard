@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import {monsters} from '../../../data/monsters';
 import {rollForMonsterHits, rollForMonsterWounds, applyDamage} from '../../../reducers/gameState/board';
 
-// TODO: Only show buttons for monster controller
 export const PlayerDamage = connect(
 	({room, auth}) => {
 		const monsterName = room.gameState.monsterName;

@@ -5,6 +5,7 @@ const {positions} = require('./positions');
 const { monsterController } = require('./monsterController');
 const { armor } = require('./armor');
 const { ai } = require('./ai');
+const { hl } = require('./hl');
 const { knockedDownCharacters } = require('./knockedDownCharacters');
 const { playerResources } = require('./playerResources');
 
@@ -12,7 +13,7 @@ const noop = (state) => (state || null);
 
 const gameStateReducer = combineReducers({
 	board,
-	hl: noop,
+	hl,
 	ai,
 	effects: noop,
 	monsterName: noop,

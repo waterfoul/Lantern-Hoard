@@ -1,6 +1,7 @@
 @import './_MonsterInfo';
 @import './Character/_index';
 @import './gameBoardOverlay/_PlayerDamage';
+@import './gameBoardOverlay/_PlayerAttack';
 
 #game {
 	flex-direction: column;
