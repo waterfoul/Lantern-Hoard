@@ -6,7 +6,7 @@ import {getDistance} from '../../utils/getDistance';
 import {moveMonster} from './positions';
 import {store} from '../../store';
 import {endMonster, beginMonster} from '../../../common/gameState/knockedDownCharacters';
-
+import {startPlayerTurn} from './playerTurn';
 
 function processPick(options, gameState, dispatch, i = 0) {
 	if (i >= options.length) {
@@ -124,7 +124,7 @@ export const startMonsterTurn = () => (
 			processActions(actions, gameState, dispatch).then(() => {
 				dispatch(passMonsterController());
 				dispatch(endMonster());
-				console.log('Begin Player turn');
+				dispatch(startPlayerTurn());
 			}).catch(console.error.bind(console, 'Error while processing the monster turn'));
 		}
 	}

@@ -6,6 +6,7 @@ import {Board} from './Board';
 import {MonsterInfo} from './MonsterInfo';
 
 import {InitialPlacement} from './gameBoardOverlay/InitialPlacement';
+import {MoveCharacter} from './gameBoardOverlay/MoveCharacter';
 import {PlayerDamage} from './gameBoardOverlay/PlayerDamage';
 
 import {fetch} from '../../reducers/room';
@@ -29,8 +30,12 @@ class GameComponent extends Component {
 			switch (this.props.room.gameState.board.status) {
 			case BOARD_STATUSES.initialPlacement:
 				return <InitialPlacement />;
+			case BOARD_STATUSES.showAvailableMovement:
+				return <MoveCharacter />;
 			case BOARD_STATUSES.targetChoice:
 				return <div className="game-board-grey-over"><div>Please select a target</div></div>;
+			case BOARD_STATUSES.selectActingCharacter:
+				return <div className="game-board-grey-over"><div>Please select a character to act</div></div>;
 			case BOARD_STATUSES.playerDamage:
 				return <PlayerDamage />;
 			default:

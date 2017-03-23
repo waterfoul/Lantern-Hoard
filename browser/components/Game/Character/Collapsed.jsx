@@ -1,9 +1,11 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-import {takeControl} from '../../../reducers/room';
-import {changeBoardStatusAction, BOARD_STATUSES} from '../../../../common/gameState/board';
-import {getStats} from '../../../utils/getStats';
+import { takeControl } from '../../../reducers/room';
+import { changeBoardStatusAction, BOARD_STATUSES } from '../../../../common/gameState/board';
+import { getStats } from '../../../utils/getStats';
+import { PleaseWait } from './CollapsedActions/PleaseWait';
+import { PlayerTurn } from './CollapsedActions/PlayerTurn';
 
 const getPlacementText = (positions, room, slot, user) => {
 	const placingPlayer = (!positions.player1 ? 0 : (!positions.player2 ? 1 : (!positions.player3 ? 2 : 3)));
@@ -37,10 +39,20 @@ function getButtons({
 			return (
 				<div className="col-md-7 col-sm-12">
 					{room.gameState.board.data.indexOf(slot) !== -1 ? (
-							<div className="col-md-6 col-sm-12">
+						<div className="col-md-6 col-sm-12">
 								{ user.id === monsterController ? <button className="btn btn-primary" onClick={() => changeBoardStatusActionDisp(BOARD_STATUSES.targetChosen, slot)}>Select</button> : 'Please Wait...' }
-							</div>
-						) : ''}
+						</div>
+					) : ''}
+				</div>
+			);
+		case BOARD_STATUSES.selectActingCharacter:
+			return (
+				<div className="col-md-7 col-sm-12">
+					{room.gameState.board.data.indexOf(slot) !== -1 ? (
+						<div className="col-md-6 col-sm-12">
+							<button className="btn btn-primary" onClick={() => changeBoardStatusActionDisp(BOARD_STATUSES.actingCharacterChosen, slot)}>Begin Turn</button>
+						</div>
+					) : ''}
 				</div>
 			);
 		case BOARD_STATUSES.playerDamage:
@@ -49,28 +61,19 @@ function getButtons({
 					{room.gameState.board.data.target === slot ? 'Damage Me' : ''}
 				</div>
 			);
+		case BOARD_STATUSES.playerTurn:
+			return (
+				<PlayerTurn slot={slot} />
+			);
+		case BOARD_STATUSES.showAvailableMovement:
+			return (
+				<div className="col-md-7 col-sm-12">
+					{room.gameState.board.data.target === slot ? 'Move Me' : ''}
+				</div>
+			);
 		default:
 			return (
-				<div className="col-md-7 col-sm-12 attack-buttons container-fluid">
-					<div className="col-md-6 col-sm-12">
-						<button className="btn btn-primary btn-xs" disabled={boardError}>Fist & Tooth</button>
-					</div>
-					<div className="col-md-6 col-sm-12">
-						<button className="btn btn-primary btn-xs" disabled={boardError}>Founding Stone</button>
-					</div>
-					<div className="col-md-6 col-sm-12">
-						<button className="btn btn-primary btn-xs" disabled={boardError}>Leather Headband</button>
-					</div>
-					<div className="col-md-6 col-sm-12">
-						<button className="btn btn-primary btn-xs" disabled={boardError}>Acid-Tooth Dagger</button>
-					</div>
-					<div className="col-md-6 col-sm-12">
-						<button className="btn btn-primary btn-xs" disabled={boardError}>Blue Charm</button>
-					</div>
-					<div className="col-md-6 col-sm-12">
-						<button className="btn btn-primary btn-xs" disabled={boardError}>Bone Axe</button>
-					</div>
-				</div>
+				<PleaseWait />
 			);
 		}
 	} else {
@@ -92,7 +95,7 @@ export const Collapsed = connect(
 		user: auth,
 		boardError
 	}),
-	{takeControlEvt: takeControl, changeBoardStatusActionDisp: changeBoardStatusAction}
+	{ takeControlEvt: takeControl, changeBoardStatusActionDisp: changeBoardStatusAction }
 )(({ armor, slot, room, monsterController, board, positions, user, boardError, takeControlEvt, changeBoardStatusActionDisp }) => {
 	const character = room['Character' + (slot + 1)];
 	const stats = getStats(character, room.gameState, slot);
@@ -119,7 +122,7 @@ export const Collapsed = connect(
 							{stats.luck}
 							&nbsp;/&nbsp;
 							{stats.speed}
-					</span>
+						</span>
 					</div>
 					<div>
 						<i className="glyphicon glyphicon-heart" />&nbsp;
@@ -133,7 +136,7 @@ export const Collapsed = connect(
 							{armor[slot].hand}
 							&nbsp;/&nbsp;
 							{armor[slot].foot}
-					</span>
+						</span>
 					</div>
 				</div>
 				{ getButtons({positions, room, slot, user, board, boardError, monsterController, takeControlEvt, changeBoardStatusActionDisp}) }

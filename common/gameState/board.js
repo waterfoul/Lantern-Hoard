@@ -5,7 +5,12 @@ const BOARD_STATUSES = {
 	targetChosen: 'TARGET_CHOSEN', // Used to indicate that a target has been chosen
 	playerDamage: 'PLAYER_DAMAGE', // Used to show the dialog for player damage
 	playerDamageFinish: 'PLAYER_DAMAGE_FINISH', // Triggers the finish of the player damage
-	rollingToHit: 'ROLLING_TO_HIT'
+	selectActingCharacter: 'SELECT_ACTING_CHARACTER', // Prompts the players to select a character to act
+	actingCharacterChosen: 'ACTING_CHARACTER_CHOSEN', // Begins the chosen character's turn
+	showAvailableMovement: 'SHOW_AVAILABLE_MOVEMENT', // Displays possible character movement on the board
+	moveCharacter: 'MOVE_CHARACTER', // Positions the character on the chosen square
+	playerTurn: 'PLAYER_TURN', // Indicates that it is the player turn
+	characterTurnEnd: 'CHARACTER_TURN_END'
 };
 
 //actions
