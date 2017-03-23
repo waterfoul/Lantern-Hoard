@@ -46,6 +46,69 @@ describe('utils/pick/utils', () => {
 				expect(checkFieldOfView(gameState, [10, 6])).to.equal(false);
 				expect(checkFieldOfView(gameState, [11, 6])).to.equal(false);
 			});
+			describe('monsterFacingSouth', () => {
+				beforeEach(() => {
+					gameState.monsterDirection = 'S';
+				});
+				it('has players to the left', () => {
+					expect(checkFieldOfView(gameState, [9, 8])).to.equal(true);
+					expect(checkFieldOfView(gameState, [6, 8])).to.equal(true);
+				});
+				it('has players to the right', () => {
+					expect(checkFieldOfView(gameState, [12, 6])).to.equal(true);
+					expect(checkFieldOfView(gameState, [14, 11])).to.equal(true);
+				});
+				it('has players above and below', () => {
+					expect(checkFieldOfView(gameState, [10, 5])).to.equal(true);
+					expect(checkFieldOfView(gameState, [10, 14])).to.equal(true);
+				});
+				it('has players in its blind spot', () => {
+					expect(checkFieldOfView(gameState, [10, 9])).to.equal(false);
+					expect(checkFieldOfView(gameState, [11, 9])).to.equal(false);
+				});
+			});
+			describe('monsterFacingEast', () => {
+				beforeEach(() => {
+					gameState.monsterDirection = 'E';
+				});
+				it('has players to the left', () => {
+					expect(checkFieldOfView(gameState, [5, 8])).to.equal(true);
+					expect(checkFieldOfView(gameState, [6, 8])).to.equal(true);
+				});
+				it('has players to the right', () => {
+					expect(checkFieldOfView(gameState, [12, 6])).to.equal(true);
+					expect(checkFieldOfView(gameState, [14, 11])).to.equal(true);
+				});
+				it('has players above and below', () => {
+					expect(checkFieldOfView(gameState, [10, 5])).to.equal(true);
+					expect(checkFieldOfView(gameState, [10, 14])).to.equal(true);
+				});
+				it('has players in its blind spot', () => {
+					expect(checkFieldOfView(gameState, [9, 8])).to.equal(false);
+					expect(checkFieldOfView(gameState, [9, 7])).to.equal(false);
+				});
+			});
+			describe('monsterFacingWest', () => {
+				beforeEach(() => {
+					gameState.monsterDirection = 'W';
+				});
+				it('has players to the left', () => {
+					expect(checkFieldOfView(gameState, [5, 8])).to.equal(true);
+					expect(checkFieldOfView(gameState, [6, 8])).to.equal(true);
+				});
+				it('has players to the right', () => {
+					expect(checkFieldOfView(gameState, [12, 6])).to.equal(true);
+					expect(checkFieldOfView(gameState, [14, 11])).to.equal(true);
+				});
+				it('has players above and below', () => {
+					expect(checkFieldOfView(gameState, [10, 5])).to.equal(true);
+					expect(checkFieldOfView(gameState, [10, 14])).to.equal(true);
+				});
+				it('has players in its blind spot', () => {
+					expect(checkFieldOfView(gameState, [12, 8])).to.equal(false);
+					expect(checkFieldOfView(gameState, [12, 7])).to.equal(false);
+				});
+			});
 		});
 	});
 

@@ -66,15 +66,14 @@ export function checkFieldOfView(gameState, position ) {
 	}
 	else if (gameState.monsterDirection === 'N') {
 		const difference = position[0] - monsterPosition[0];
-		console.log(position, monsterPosition, difference, position[1] !== (monsterPosition[1] - monsterSize), difference < 0, difference >= monsterSize );
 		return position[1] !== (monsterPosition[1] - monsterSize) || difference < 0 || difference >= monsterSize;
 	}
 	else if (gameState.monsterDirection === 'E') {
-		const difference = position[1] - monsterPosition[1];
+		const difference = monsterPosition[1] - position[1];
 		return position[0] !== (monsterPosition[0] - 1) || difference < 0 || difference >= monsterSize;
 	}
 	else if (gameState.monsterDirection === 'W') {
-		const difference = position[1] - monsterPosition[1];
+		const difference =  monsterPosition[1] - position[1];
 		return position[0] !== (monsterPosition[0] + monsterSize) || difference < 0 || difference >= monsterSize;
 	}
 }
