@@ -10,6 +10,7 @@ import {MoveCharacter} from './gameBoardOverlay/MoveCharacter';
 import {PlayerDamage} from './gameBoardOverlay/PlayerDamage';
 import {PlayerAttack} from './gameBoardOverlay/PlayerAttack';
 import {SelectMonsterTarget} from './gameBoardOverlay/SelectMonsterTarget';
+import {MonsterPosition} from './gameBoardOverlay/MonsterPosition';
 
 import {fetch} from '../../reducers/room';
 import {changeFixState} from '../../reducers/flexBoxFix';
@@ -34,6 +35,8 @@ class GameComponent extends Component {
 				return <InitialPlacement />;
 			case BOARD_STATUSES.showAvailableMovement:
 				return <MoveCharacter />;
+			case BOARD_STATUSES.showMonsterPositions:
+				return <MonsterPosition />;
 			case BOARD_STATUSES.targetChoice:
 				return <SelectMonsterTarget />;
 			case BOARD_STATUSES.selectActingCharacter:
