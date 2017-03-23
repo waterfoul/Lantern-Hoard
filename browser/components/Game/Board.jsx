@@ -9,7 +9,7 @@ export const Board = connect(
 		monsterStats: room.gameState.monsterStats,
 		positions: room.gameState.positions,
 		monsterDirection: room.gameState.monsterDirection,
-		knockedDownCharacters: room.gameState.knockedDownCharacters,
+		knockedDownCharacters: room.gameState.knockedDownCharacters || [],
 		flexBoxFix
 	})
 )(

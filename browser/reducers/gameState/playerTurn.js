@@ -3,8 +3,10 @@ import { BOARD_STATUSES, changeBoardStatusAction } from '../../../common/gameSta
 import { store } from '../../store';
 import { moveToken } from '../../../common/gameState/positions';
 import { changePlayerResources, useMovement, useAction } from '../../../common/gameState/playerResources';
+import { drawHLCard } from '../../../common/gameState/hl';
+import { woundAI } from '../../../common/gameState/ai';
 import { items } from '../../data/items';
-import { getAccuracy } from '../../utils/getStats';
+import { getAccuracy, getStrength, getLuck } from '../../utils/getStats';
 
 // Gets player input for selecting character turn
 function selectActingCharacter(dispatch, characters) {
@@ -93,13 +95,15 @@ export const startPlayerTurn = () => (
 export const startAttack = (slot, weapon) => (
 	(dispatch, getState) => {
 		const item = items[weapon];
-		if (item.traits.indexOf('cumbersome')) {
+		const {room} = getState();
+		if (item.traits.indexOf('cumbersome') !== -1) {
 			dispatch(useMovement());
 		}
 		dispatch(useAction());
 		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerAttack, {
 			item,
-			slot
+			slot,
+			character: room.gameState.board.data
 		}));
 	}
 );
@@ -112,16 +116,56 @@ export const rollToHit = () => (
 		data.hitRolls = [];
 		data.hitCards = [];
 		data.woundRolls = [];
+		data.woundResults = [];
 		for (let i = 0; i < data.item.dice; i++) {
 			const result = Math.floor(Math.random() * 10) + 1;
 			data.hitRolls.push(result);
 			if (result !== 1 && (result === 10 || (result - data.item.accuracy + playerAcc) >= 0)) {
-				data.hitCards.push({});
+				dispatch(drawHLCard());
+				const {room: currentRoom} = getState();
+				data.hitCards.push(currentRoom.gameState.hl.discard[0]);
 			} else {
 				data.hitCards.push(null);
 			}
 			data.woundRolls.push(null);
+			data.woundResults.push(null);
 		}
 		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerAttack, data));
 	}
 );
+
+export const rollToWound = (location) => (
+	(dispatch, getState) => {
+		const {room} = getState();
+		const data = Object.assign({}, room.gameState.board.data);
+		const playerStr = getStrength(room[`Character${data.slot + 1}`], room.gameState, data.slot);
+		const playerLuck = getLuck(room[`Character${data.slot + 1}`], room.gameState, data.slot);
+		const result = Math.floor(Math.random() * 10) + 1;
+		data.woundRolls[location] = result;
+		if(result === 1) {
+			data.woundResults[location] = 'Fail';
+		} else if(result + playerLuck + (data.item.diceMods.luck || 0) >= 10) {
+			data.woundResults[location] = 'Crit';
+			dispatch(woundAI());
+		} else if(result === 10) {
+			data.woundResults[location] = 'Success';
+			dispatch(woundAI());
+		} else if((result + playerStr) > room.gameState.monsterStats.toughness) {
+			data.woundResults[location] = 'Success';
+			dispatch(woundAI());
+		} else {
+			data.woundResults[location] = 'Fail';
+		}
+		// TODO: Triggers
+		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerAttack, data));
+	}
+);
+
+export const closeAttack = () => (
+	(dispatch, getState) => {
+		const {room} = getState();
+		const data = room.gameState.board.data;
+		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, data.character));
+	}
+);
+
