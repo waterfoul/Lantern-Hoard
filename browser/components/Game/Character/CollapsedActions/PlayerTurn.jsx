@@ -20,7 +20,7 @@ export const PlayerTurn = connect(
 	}
 )(({ slot, room, board, user, playerResources, moveCharacterDispatch, changeBoardStatusActionDispatch, startAttackDispatch }) => {
 	if (slot === board.data && user.id === room[`Player${slot + 1}`].id) {
-		const gear = room.gameState.gear[slot].reduce((acc, ele) => [...acc, ...ele], []).filter((ele) => ele != "");
+		const gear = room.gameState.gear[slot].reduce((acc, ele) => [...acc, ...ele], []).filter((ele) => ele != '');
 		const actionList = gear.reduce((acc, ele) => {
 			const item = items[ele];
 			const result = [...acc, ...item.specialAbilities.map((abil) => Object.assign({}, abil, {

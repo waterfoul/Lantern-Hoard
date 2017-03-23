@@ -142,15 +142,15 @@ export const rollToWound = (location) => (
 		const playerLuck = getLuck(room[`Character${data.slot + 1}`], room.gameState, data.slot);
 		const result = Math.floor(Math.random() * 10) + 1;
 		data.woundRolls[location] = result;
-		if(result === 1) {
+		if (result === 1) {
 			data.woundResults[location] = 'Fail';
-		} else if(result + playerLuck + (data.item.diceMods.luck || 0) >= 10) {
+		} else if (result + playerLuck + (data.item.diceMods.luck || 0) >= 10) {
 			data.woundResults[location] = 'Crit';
 			dispatch(woundAI());
-		} else if(result === 10) {
+		} else if (result === 10) {
 			data.woundResults[location] = 'Success';
 			dispatch(woundAI());
-		} else if((result + playerStr) > room.gameState.monsterStats.toughness) {
+		} else if ((result + playerStr) > room.gameState.monsterStats.toughness) {
 			data.woundResults[location] = 'Success';
 			dispatch(woundAI());
 		} else {

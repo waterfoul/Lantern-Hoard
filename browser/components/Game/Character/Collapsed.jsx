@@ -65,12 +65,12 @@ function getButtons({
 			return (
 				<PlayerTurn slot={slot} />
 			);
-			case BOARD_STATUSES.showAvailableMovement:
-				return (
+		case BOARD_STATUSES.showAvailableMovement:
+			return (
 					<div className="col-md-7 col-sm-12">
 						{room.gameState.board.data.target === slot ? 'Move Me' : ''}
 					</div>
-				);
+			);
 		case BOARD_STATUSES.playerAttack:
 			return (
 				<div className="col-md-7 col-sm-12">
