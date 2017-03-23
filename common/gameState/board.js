@@ -10,8 +10,10 @@ const BOARD_STATUSES = {
 	showAvailableMovement: 'SHOW_AVAILABLE_MOVEMENT', // Displays possible character movement on the board
 	moveCharacter: 'MOVE_CHARACTER', // Positions the character on the chosen square
 	playerTurn: 'PLAYER_TURN', // Indicates that it is the player turn
-	characterTurnEnd: 'CHARACTER_TURN_END', // Ends the character turn, // Indicates that it is the player turn
-	playerAttack: 'PLAYER_ATTACK' // Shows the player attack dialog
+	characterTurnEnd: 'CHARACTER_TURN_END', // Ends the character turn
+	playerAttack: 'PLAYER_ATTACK', // Shows the player attack dialog
+	showMonsterPositions: 'SHOW_MONSTER_POSITIONS', // Prompts the monster controller to pick a monster position
+	showMonsterPositionsResult: 'SHOW_MONSTER_POSITIONS_RESULT' // Returns monster controller results
 };
 
 //actions

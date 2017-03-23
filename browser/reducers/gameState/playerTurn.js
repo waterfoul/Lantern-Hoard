@@ -74,7 +74,6 @@ function characterTurn(dispatch, availableCharacters = [0, 1, 2, 3]) {
 // Is a thunk that moves the character
 export const moveCharacter = (character) => (
 	(dispatch, getState) => {
-		console.log(character);
 		getCharacterMoveInput(dispatch, character)
 			.then((coordinates) => {
 				dispatch(moveToken(`player${character + 1}`, coordinates));
