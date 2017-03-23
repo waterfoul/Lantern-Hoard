@@ -56,3 +56,25 @@ export const findClosestAndChoose = (distances, dispatch) => {
 		return chooseBetween(resultArr, dispatch);
 	}
 };
+
+export function checkFieldOfView(gameState, position ) {
+	const monsterPosition = gameState.positions.monster;
+	const monsterSize = gameState.monsterStats.size;
+
+	if (gameState.monsterDirection === 'S') {
+		const difference = position[0] - monsterPosition[0];
+		return position[1] !== (monsterPosition[1] + 1) || difference < 0 || difference >= monsterSize;
+	}
+	else if (gameState.monsterDirection === 'N') {
+		const difference = position[0] - monsterPosition[0];
+		return position[1] !== (monsterPosition[1] - monsterSize) || difference < 0 || difference >= monsterSize;
+	}
+	else if (gameState.monsterDirection === 'E') {
+		const difference = monsterPosition[1] - position[1];
+		return position[0] !== (monsterPosition[0] - 1) || difference < 0 || difference >= monsterSize;
+	}
+	else if (gameState.monsterDirection === 'W') {
+		const difference =  monsterPosition[1] - position[1];
+		return position[0] !== (monsterPosition[0] + monsterSize) || difference < 0 || difference >= monsterSize;
+	}
+}
