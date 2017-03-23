@@ -73,11 +73,11 @@ export const MoveCharacter = connect(
 								].join(' ')}
 								onClick={() => placeCurrent(loc)}
 							/>
-							
+
 						);
 					})}
 				</div>
 			</div>
 		);
 	}
-	);
+);

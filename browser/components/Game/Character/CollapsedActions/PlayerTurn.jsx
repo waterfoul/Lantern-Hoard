@@ -36,7 +36,7 @@ export const PlayerTurn = connect(
 				{playerResources.movements > 0 ? (
 					<div className="col-md-6 col-sm-12">
 						<button className="btn btn-primary btn-xs" onClick={() => moveCharacterDispatch(slot)}>
-							<img src='/static/movement-resource.png' />
+							<img src="/static/movement-resource.png" />
 							Move
 						</button>
 					</div>
