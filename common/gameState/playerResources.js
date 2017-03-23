@@ -4,7 +4,7 @@ const USE_PLAYER_RESOURCE_MOVEMENT = 'USE_PLAYER_RESOURCE_MOVEMENT';
 const USE_PLAYER_RESOURCE_ACTION = 'USE_PLAYER_RESOURCE_ACTION';
 
 //reducer
-const positions = (state = {}, action) => {
+const playerResources = (state = {}, action) => {
 	switch (action.type) {
 	case CHANGE_PLAYER_RESOURCES:
 		return {
@@ -42,7 +42,7 @@ const useAction = () => ({
 });
 
 module.exports = {
-	positions,
+	playerResources,
 	changePlayerResources,
 	useMovement,
 	useAction

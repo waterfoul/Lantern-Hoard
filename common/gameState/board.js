@@ -9,7 +9,8 @@ const BOARD_STATUSES = {
 	actingCharacterChosen: 'ACTING_CHARACTER_CHOSEN', // Begins the chosen character's turn
 	showAvailableMovement: 'SHOW_AVAILABLE_MOVEMENT', // Displays possible character movement on the board
 	moveCharacter: 'MOVE_CHARACTER', // Positions the character on the chosen square
-	playerTurn: 'PLAYER_TURN' // Indicates that it is the player turn
+	playerTurn: 'PLAYER_TURN', // Indicates that it is the player turn
+	characterTurnEnd: 'CHARACTER_TURN_END'
 };
 
 //actions

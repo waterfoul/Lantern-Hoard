@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { PleaseWait } from './PleaseWait';
-import { moveCharacter } from '../../../../reducers/gameState/playerTurn.js';
+import { moveCharacter } from '../../../../reducers/gameState/playerTurn';
+import { changeBoardStatusAction, BOARD_STATUSES } from '../../../../../common/gameState/board';
 
 export const PlayerTurn = connect(
 	({ auth, room }) => ({
@@ -10,8 +11,8 @@ export const PlayerTurn = connect(
 		user: auth,
 		playerResources: room.gameState.playerResources
 	}),
-	{ moveCharacterDispatch: moveCharacter }
-)(({ slot, room, board, user, playerResources, moveCharacterDispatch }) => {
+	{ moveCharacterDispatch: moveCharacter, changeBoardStatusActionDispatch: changeBoardStatusAction}
+)(({ slot, room, board, user, playerResources, moveCharacterDispatch, changeBoardStatusActionDispatch }) => {
 	const character = room[`Character${slot + 1}`];
 	if (slot === board.data && user.id === room[`Player${slot + 1}`].id) {
 		return (
@@ -45,7 +46,9 @@ export const PlayerTurn = connect(
 						<button className="btn btn-primary btn-xs">Action</button>
 					</div>
 				) : null}
-
+				<div className="col-md-6 col-sm-12">
+					<button className="btn btn-primary btn-xs" onClick={() => changeBoardStatusActionDispatch(BOARD_STATUSES.characterTurnEnd)}>End Turn</button>
+				</div>
 			</div>
 		);
 	} else {
