@@ -51,6 +51,20 @@ export function closestThreatInFieldOfView(gameState, dispatch) {
 	return findClosestAndChoose(charactersInView, dispatch);
 }
 
+export function closestInFieldOfView(gameState, dispatch) {
+	const positions = [
+		gameState.positions.player1,
+		gameState.positions.player2,
+		gameState.positions.player3,
+		gameState.positions.player4
+	];
+	const charactersInView = positions
+		.map((position, i) => ((checkFieldOfView(gameState, position)) ? (
+				getDistance(gameState.monsterStats.size, gameState.positions.monster, position)
+			) : null));
+	return findClosestAndChoose(charactersInView, dispatch);
+}
+
 export function closestKnockedDownInRange(gameState, dispatch) {
 	const positions = [
 		gameState.positions.player1,

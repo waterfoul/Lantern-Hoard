@@ -5,8 +5,11 @@ export const drawAICard = () => (
 	(dispatch, getState) => {
 		const {room} = getState();
 		if (room.gameState.ai.deck.length === 0) {
-			dispatch(setAIDeckAction(shuffle(room.gameState.ai.discard)));
+			if (room.gameState.ai.discard.length !== 0) {
+				dispatch(setAIDeckAction(shuffle(room.gameState.ai.discard)));
+			}
 		}
+
 		dispatch(drawAICardAction());
 	}
 );

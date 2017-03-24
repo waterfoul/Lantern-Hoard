@@ -149,7 +149,7 @@ export const startMonsterTurn = () => (
 		if (gameState.monsterController === user.id) {
 			dispatch(drawAICard());
 			const {room: updatedRoom} = getState();
-			const nextCard = updatedRoom.gameState.ai.discard[0];
+			const nextCard = updatedRoom.gameState.ai.discard[0] || 'Basic Action';
 
 			const actions = monsters[gameState.monsterName].ai.cards[nextCard].actions;
 

@@ -7,7 +7,7 @@ import {rollForMonsterHits, rollForMonsterWounds, applyDamage} from '../../../re
 export const PlayerDamage = connect(
 	({room, auth}) => {
 		const monsterName = room.gameState.monsterName;
-		const card = room.gameState.ai.discard[0];
+		const card = room.gameState.ai.discard[0] || 'Basic Action';
 		return {
 			card: monsters[monsterName].ai.cards[card].img,
 			data: room.gameState.board.data,
