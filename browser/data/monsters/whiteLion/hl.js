@@ -19,24 +19,25 @@ function moveForward(dispatch, getState) {
 		dispatch(moveMonster([monsterPosition[0] - monsterMovement, monsterPosition[1]]));
 		break;
 	}
+	// TODO: Add Grab functionality
 }
 function jumpBack(dispatch, getState) {
 	console.log('JUMP BACK!');
 }
 
-function giveToken(dispatch, getState) {
+function giveToken(dispatch, getState, tokenType) {
 	console.log('GIVE TOKEN');
 	// Function for giving -1 tokens (accuracy, movement, or toughness) to White Lion
-}
-
-function moveAndGrab(dispatch, getState) {
-	console.log('MOVE AND GRAB');
-	// Full move forward, cancel hits out of range, survivors passed over suffer grab
 }
 
 function persisentInjury(dispatch, getState, card) {
 	console.log('THIS HL CARD BECOMES A PERSISTENT INJURY');
 	// Function for making a HL card a persistent injury
+}
+
+function counterAttack(dispatch, getState, attacker, attackType) {
+	console.log('WHITE LION ATTACKS THE ATTACKING PLAYER');
+	// WL attacks back in response to an attacking character
 }
 
 export const hl = {
@@ -49,7 +50,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(); // -1 Accuracy
 		}
 	},
 	'Beasts Brow': {
@@ -59,11 +60,13 @@ export const hl = {
 				type: 'wound',
 				action: (dispatch, getState) => {
 					console.log('WOUND!');
+					counterAttack();
+					// Attacker suffers 1 brain damage
 				}
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(); // -1 Accuracy
 		}
 	},
 	'Beasts Chest': {
@@ -76,6 +79,7 @@ export const hl = {
 		],
 		crit: (dispatch, getState) => {
 			console.log('CRIT!');
+			// Change of WL dying instantly
 		}
 	},
 	'Beasts Ear': {
@@ -87,7 +91,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(); // -1 Accuracy
 		}
 	},
 	'Beasts Elbow': {
@@ -105,7 +109,7 @@ export const hl = {
 	'Beasts Femur': {
 		img: '/static/white-lion/hl/beasts-femur.jpg',
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(); // -1 Movement
 		}
 	},
 	'Beasts Flank': {
@@ -125,13 +129,13 @@ export const hl = {
 	'Beasts Heel': {
 		img: '/static/white-lion/hl/beasts-heel.jpg',
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			persisentInjury();
 		}
 	},
 	'Beasts Knee': {
 		img: '/static/white-lion/hl/beasts-knee.jpg',
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(); // -1 Movement
 		}
 	},
 	'Beasts Maw': {
@@ -145,7 +149,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			persisentInjury();
 		}
 	},
 	'Beasts Paw': {
@@ -159,7 +163,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			persisentInjury();
 		}
 	},
 	'Beasts Ribs': {
@@ -173,7 +177,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(); // -1 Toughness
 		}
 	},
 	'Beasts Scapular Deltoid': {
@@ -185,7 +189,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(); // -1 Movement
 		}
 	},
 	'Beasts Tail': {
@@ -197,7 +201,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(); // -1 Accuracy
 		}
 	},
 	'Beasts Temple': {
@@ -211,7 +215,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			persisentInjury();
 		}
 	},
 	'Beasts Tricep': {
@@ -252,7 +256,7 @@ export const hl = {
 	'Fuzzy Groin': {
 		img: '/static/white-lion/hl/fuzzy-groin.jpg',
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			persisentInjury();
 		}
 	},
 	'Glorious Mane': {
@@ -271,7 +275,7 @@ export const hl = {
 	'Straining Neck': {
 		img: '/static/white-lion/hl/straining-neck.jpg',
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			persisentInjury();
 		}
 	},
 	'Strange Hand': {
@@ -285,7 +289,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			persisentInjury();
 		}
 	}
 };
