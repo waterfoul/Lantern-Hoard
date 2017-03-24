@@ -5,7 +5,7 @@ function moveForward(dispatch, getState) {
 	const monsterMovement = room.gameState.monsterStats.movement;
 	const monsterPosition = room.gameState.positions.monster;
 	const monsterDirection = room.gameState.monsterDirection;
-	switch(monsterDirection) {
+	switch (monsterDirection) {
 	case 'N':
 		dispatch(moveMonster([monsterPosition[0], monsterPosition[1] + monsterMovement]));
 		break;
