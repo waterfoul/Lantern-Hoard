@@ -5,16 +5,19 @@ export const drawAICard = () => (
 	(dispatch, getState) => {
 		const {room} = getState();
 		if (room.gameState.ai.deck.length === 0) {
-			dispatch(setAIDeckAction(shuffle(room.gameState.ai.discard)));
+			if (room.gameState.ai.discard.length !== 0) {
+				dispatch(setAIDeckAction(shuffle(room.gameState.ai.discard)));
+			}
 		}
+
 		dispatch(drawAICardAction());
 	}
 );
 export const woundAI = () => (
 	(dispatch, getState) => {
-		let {board} = getState();
-		if (board.gameState.ai.deck.length === 0) {
-			dispatch(setAIDeckAction(shuffle(board.gameState.ai.discard)));
+		let {room} = getState();
+		if (room.gameState.ai.deck.length === 0) {
+			dispatch(setAIDeckAction(shuffle(room.gameState.ai.discard)));
 		}
 		dispatch(woundAIAction());
 	}

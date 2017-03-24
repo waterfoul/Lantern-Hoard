@@ -49,6 +49,10 @@ function squishChar(room, location, pos, char, players, dispatch, distance = 1) 
 
 export const moveMonster = (location) => (
 	(dispatch, getState) => {
+		location = [
+			Math.max(Math.min(location[0], 20), 1),
+			Math.max(Math.min(location[1], 14), 1)
+		];
 		// TODO: Knock over any players that the monster would run over
 		const {room} = getState();
 		const players = [
@@ -61,8 +65,6 @@ export const moveMonster = (location) => (
 		players.forEach((pos, i) => {
 			const diffX = location[0] - pos[0];
 			const diffY = pos[1] - location[1];
-
-			console.log(pos, i, diffX, diffY);
 			if (
 				(diffX <= 0 && diffX > -1 * room.gameState.monsterStats.size) &&
 				(diffY <= 0 && diffY > -1 * room.gameState.monsterStats.size)

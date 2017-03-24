@@ -116,7 +116,6 @@ function processAttack(target, gameState, dispatch, {move, speed, accuracy, dama
 				} else {
 					dispatch(changeMonsterDirection('N'));
 				}
-				console.log(gameState.positions[`player${target + 1}`], newLocation, diffX, diffY, target);
 				return attackPlayer(target, dispatch, speed, accuracy, damage);
 			});
 		} else {
@@ -150,7 +149,7 @@ export const startMonsterTurn = () => (
 		if (gameState.monsterController === user.id) {
 			dispatch(drawAICard());
 			const {room: updatedRoom} = getState();
-			const nextCard = updatedRoom.gameState.ai.discard[0];
+			const nextCard = updatedRoom.gameState.ai.discard[0] || 'Basic Action';
 
 			const actions = monsters[gameState.monsterName].ai.cards[nextCard].actions;
 
