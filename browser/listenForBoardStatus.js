@@ -14,7 +14,6 @@ export const init = (store) => {
 		if (oldBoard.status !== newBoard.status || oldBoard.data !== newBoard.data) {
 			oldBoard = newBoard;
 			if (statusListeners[newBoard.status]) {
-				console.log(newBoard);
 				statusListeners[newBoard.status].forEach((thunk) => store.dispatch(thunk(newBoard)));
 			}
 		}
