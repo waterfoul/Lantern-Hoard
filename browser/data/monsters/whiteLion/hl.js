@@ -24,6 +24,21 @@ function jumpBack(dispatch, getState) {
 	console.log('JUMP BACK!');
 }
 
+function giveToken(dispatch, getState) {
+	console.log('GIVE TOKEN');
+	// Function for giving -1 tokens (accuracy, movement, or toughness) to White Lion
+}
+
+function moveAndGrab(dispatch, getState) {
+	console.log('MOVE AND GRAB');
+	// Full move forward, cancel hits out of range, survivors passed over suffer grab
+}
+
+function persisentInjury(dispatch, getState, card) {
+	console.log('THIS HL CARD BECOMES A PERSISTENT INJURY');
+	// Function for making a HL card a persistent injury
+}
+
 export const hl = {
 	'Beasts Back': {
 		img: '/static/white-lion/hl/beasts-back.jpg',
