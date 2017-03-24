@@ -1,3 +1,4 @@
+import * as test, {store, listenForBoardStatus} from '../../store';
 import {monsters} from '../../data/monsters';
 import {drawAICard} from '../../reducers/gameState/ai';
 import {changeBoardStatusAction, BOARD_STATUSES} from '../../../common/gameState/board';
@@ -5,7 +6,6 @@ import {changeMonsterController} from '../../../common/gameState/monsterControll
 import {changeMonsterDirection} from '../../../common/gameState/monsterDirection';
 import {getDistance} from '../../utils/getDistance';
 import {moveMonster} from './positions';
-import {store, listenForBoardStatus} from '../../store';
 import {endMonster, beginMonster} from '../../../common/gameState/knockedDownCharacters';
 import {startPlayerTurn} from './playerTurn';
 
@@ -173,6 +173,7 @@ export const processNextAction = (board) => (
 	}
 );
 
+console.log(test, listenForBoardStatus);
 listenForBoardStatus(BOARD_STATUSES.processMonsterAction, processNextAction);
 
 export const passMonsterController = () => (

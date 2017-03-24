@@ -32,11 +32,13 @@ const socketMiddleware = (store) => (next) => (action) => {
 };
 
 const statusListeners = {};
+
 // This allows things to listen for certain board statuses to happen
-export function listenForBoardStatus(status, thunk) {
+export const listenForBoardStatus = (status, thunk) => {
+	console.log(statusListeners);
 	statusListeners[status] = statusListeners[status] || [];
 	statusListeners[status].push(thunk);
-}
+};
 
 export const store = createStore(
 	reducers,
