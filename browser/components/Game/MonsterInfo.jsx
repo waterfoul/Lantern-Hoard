@@ -78,7 +78,7 @@ export const MonsterInfo = connect(
 							) : ''}
 					</div>
 					<div className="game-board-monster-card basic-action">
-						<img src={monsters[monsterName].basicAction} />
+						<img src={monsters[monsterName].ai.cards['Basic Action'].img} />
 					</div>
 				</div>
 			</div>

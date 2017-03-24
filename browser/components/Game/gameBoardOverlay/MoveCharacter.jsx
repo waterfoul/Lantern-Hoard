@@ -49,7 +49,7 @@ export const MoveCharacter = connect(
 			const monsterDiffY = coords[1] - positions.monster[1];
 			return (
 				coords[0] >= 0 && coords[1] >= 0 &&
-				coords[0] <= 22 && coords[1] <= 16 &&
+				coords[0] <= 21 && coords[1] <= 15 &&
 				(coords[0] !== positions.player1[0] || coords[1] !== positions.player1[1]) &&
 				(coords[0] !== positions.player2[0] || coords[1] !== positions.player2[1]) &&
 				(coords[0] !== positions.player3[0] || coords[1] !== positions.player3[1]) &&

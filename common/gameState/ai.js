@@ -1,18 +1,23 @@
 // actions
 const DRAW_AI_CARD = 'DRAW_AI_CARD';
 const WOUND_AI = 'WOUND_AI';
+const SET_AI = 'SET_AI';
 
 // reducer
 const ai = (state = null, action) => {
 	let next, deck, newState;
 	switch (action.type) {
 	case DRAW_AI_CARD:
-		[next, ...deck] = state.deck;
-		newState = Object.assign({}, state, {
-			deck: deck,
-			discard: [next, ...state.discard]
-		});
-		return newState;
+		if (state.deck.length) {
+			[next, ...deck] = state.deck;
+			newState = Object.assign({}, state, {
+				deck: deck,
+				discard: [next, ...state.discard]
+			});
+			return newState;
+		} else {
+			return state;
+		}
 	case WOUND_AI:
 		[next, ...deck] = state.deck;
 		newState = Object.assign({}, state, {
@@ -20,21 +25,31 @@ const ai = (state = null, action) => {
 			wound: [next, ...state.wound]
 		});
 		return newState;
+	case SET_AI:
+		return Object.assign({}, state, {
+			deck: action.deck,
+			discard: []
+		});
 	default:
 		return state;
 	}
 };
 
 // action creators
-const drawAICard = () => ({
+const drawAICardAction = () => ({
 	type: DRAW_AI_CARD
 });
-const woundAI = () => ({
+const woundAIAction = () => ({
 	type: WOUND_AI
+});
+const setAIDeckAction = (deck) => ({
+	type: SET_AI,
+	deck
 });
 
 module.exports = {
 	ai,
-	drawAICard,
-	woundAI
+	drawAICardAction,
+	woundAIAction,
+	setAIDeckAction
 };
