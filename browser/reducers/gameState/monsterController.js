@@ -116,7 +116,6 @@ function processAttack(target, gameState, dispatch, {move, speed, accuracy, dama
 				} else {
 					dispatch(changeMonsterDirection('N'));
 				}
-				console.log(gameState.positions[`player${target + 1}`], newLocation, diffX, diffY, target);
 				return attackPlayer(target, dispatch, speed, accuracy, damage);
 			});
 		} else {
