@@ -65,7 +65,7 @@ export function firstStory() {
 			{
 				head: 0,
 				body: 0,
-				waist: ,
+				waist: 0,
 				hand: 0,
 				foot: 0
 			}

@@ -84,7 +84,7 @@ function checkMaxRange(room, location) {
 		if (distance - 1 > monsterMovement) {
 			location[1] += diffY / Math.abs(diffY);
 		}
-	} while(distance - 2 > monsterMovement);
+	} while (distance - 2 > monsterMovement);
 
 	return location;
 }
