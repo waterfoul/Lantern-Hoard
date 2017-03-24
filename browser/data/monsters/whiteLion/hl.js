@@ -19,9 +19,25 @@ function moveForward(dispatch, getState) {
 		dispatch(moveMonster([monsterPosition[0] - monsterMovement, monsterPosition[1]]));
 		break;
 	}
+	// TODO: Add Grab functionality
 }
 function jumpBack(dispatch, getState) {
 	console.log('JUMP BACK!');
+}
+
+function giveToken(dispatch, getState, value, tokenType) {
+	console.log('GIVE TOKEN');
+	// Function for giving -1 tokens (accuracy, movement, or toughness) to White Lion
+}
+
+function persistentInjury(dispatch, getState, card) {
+	console.log('THIS HL CARD BECOMES A PERSISTENT INJURY');
+	// Function for making a HL card a persistent injury
+}
+
+function counterAttack(dispatch, getState, mods) {
+	console.log('WHITE LION ATTACKS THE ATTACKING PLAYER');
+	// WL attacks back in response to an attacking character
 }
 
 export const hl = {
@@ -34,7 +50,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(dispatch, getState, -1, 'accuracy');
 		}
 	},
 	'Beasts Brow': {
@@ -44,11 +60,13 @@ export const hl = {
 				type: 'wound',
 				action: (dispatch, getState) => {
 					console.log('WOUND!');
+					counterAttack(dispatch, getState, null);
+					// Attacker suffers 1 brain damage
 				}
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(dispatch, getState, -1, 'accuracy');
 		}
 	},
 	'Beasts Chest': {
@@ -61,6 +79,7 @@ export const hl = {
 		],
 		crit: (dispatch, getState) => {
 			console.log('CRIT!');
+			// Chance of WL dying instantly
 		}
 	},
 	'Beasts Ear': {
@@ -72,7 +91,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(dispatch, getState, -1, 'accuracy');
 		}
 	},
 	'Beasts Elbow': {
@@ -90,7 +109,7 @@ export const hl = {
 	'Beasts Femur': {
 		img: '/static/white-lion/hl/beasts-femur.jpg',
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(dispatch, getState, -1, 'movement');
 		}
 	},
 	'Beasts Flank': {
@@ -110,13 +129,13 @@ export const hl = {
 	'Beasts Heel': {
 		img: '/static/white-lion/hl/beasts-heel.jpg',
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			persistentInjury(dispatch, getState, 'Beasts Heel');
 		}
 	},
 	'Beasts Knee': {
 		img: '/static/white-lion/hl/beasts-knee.jpg',
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(dispatch, getState, -1, 'movement');
 		}
 	},
 	'Beasts Maw': {
@@ -130,7 +149,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			persistentInjury(dispatch, getState, 'Beasts Maw');
 		}
 	},
 	'Beasts Paw': {
@@ -139,12 +158,12 @@ export const hl = {
 			{
 				type: 'failure',
 				action: (dispatch, getState) => {
-					console.log('FAIL!');
+					counterAttack(dispatch, getState, +2);
 				}
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			persistentInjury(dispatch, getState, 'Beasts Paw');
 		}
 	},
 	'Beasts Ribs': {
@@ -158,7 +177,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(dispatch, getState, -1, 'toughness');
 		}
 	},
 	'Beasts Scapular Deltoid': {
@@ -170,7 +189,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(dispatch, getState, -1, 'movement');
 		}
 	},
 	'Beasts Tail': {
@@ -182,7 +201,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(dispatch, getState, -1, 'accuracy');
 		}
 	},
 	'Beasts Temple': {
@@ -191,12 +210,12 @@ export const hl = {
 			{
 				type: 'failure',
 				action: (dispatch, getState) => {
-					console.log('FAIL!');
+					counterAttack(dispatch, getState, null);
 				}
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			persistentInjury(dispatch, getState, 'Beasts Temple');
 		}
 	},
 	'Beasts Tricep': {
@@ -205,7 +224,7 @@ export const hl = {
 			{
 				type: 'failure',
 				action: (dispatch, getState) => {
-					console.log('FAIL!');
+					counterAttack(dispatch, getState, null);
 				}
 			}
 		],
@@ -226,7 +245,7 @@ export const hl = {
 			{
 				type: 'failure',
 				action: (dispatch, getState) => {
-					console.log('FAIL!');
+					counterAttack(dispatch, getState, null);
 				}
 			}
 		],
@@ -237,7 +256,7 @@ export const hl = {
 	'Fuzzy Groin': {
 		img: '/static/white-lion/hl/fuzzy-groin.jpg',
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			persistentInjury(dispatch, getState, 'Fuzzy Groin');
 		}
 	},
 	'Glorious Mane': {
@@ -256,7 +275,7 @@ export const hl = {
 	'Straining Neck': {
 		img: '/static/white-lion/hl/straining-neck.jpg',
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			persistentInjury(dispatch, getState, 'Straining Neck');
 		}
 	},
 	'Strange Hand': {
@@ -265,12 +284,12 @@ export const hl = {
 			{
 				type: 'failure',
 				action: (dispatch, getState) => {
-					console.log('FAIL!');
+					counterAttack(dispatch, getState, null);
 				}
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			persistentInjury(dispatch, getState, 'Strange Hand');
 		}
 	}
 };
