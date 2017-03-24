@@ -137,13 +137,13 @@ export const rollToHit = () => (
 );
 
 const woundTrigger = (card, dispatch, getState) => (
-	card.triggers
+	card.triggers && card.triggers
 		.filter((trg) => trg.type === 'wound')
 		.map((trg) => trg.action(dispatch, getState))
 );
 
 const failTrigger = (card, dispatch, getState) => (
-	card.triggers
+	card.triggers && card.triggers
 		.filter((trg) => trg.type === 'failure')
 		.map((trg) => trg.action(dispatch, getState))
 );

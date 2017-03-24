@@ -1,5 +1,25 @@
+import {moveMonster} from '../../../reducers/gameState/positions';
+
 function moveForward(dispatch, getState) {
-	console.log('MOVE FORWARD!');
+	const {room} = getState();
+	const monsterMovement = room.gameState.monsterStats.movement;
+	const monsterPosition = room.gameState.positions.monster;
+	const monsterDirection = room.gameState.monsterDirection;
+	switch(monsterDirection) {
+	case 'N':
+		dispatch(moveMonster([monsterPosition[0], monsterPosition[1] + monsterMovement]));
+		break;
+	case 'S':
+		dispatch(moveMonster([monsterPosition[0], monsterPosition[1] - monsterMovement]));
+		break;
+	case 'E':
+		dispatch(moveMonster([monsterPosition[0] + monsterMovement, monsterPosition[1]]));
+		break;
+	case 'W':
+		dispatch(moveMonster([monsterPosition[0] - monsterMovement, monsterPosition[1]]));
+		break;
+	}
+	//dispatch(moveMonster());
 }
 function jumpBack(dispatch, getState) {
 	console.log('JUMP BACK!');
@@ -15,7 +35,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!')
+			console.log('CRIT!');
 		}
 	},
 	'Beasts Brow': {
@@ -24,12 +44,12 @@ export const hl = {
 			{
 				type: 'wound',
 				action: (dispatch, getState) => {
-					console.log('WOUND!')
+					console.log('WOUND!');
 				}
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!')
+			console.log('CRIT!');
 		}
 	},
 	'Beasts Chest': {
@@ -41,7 +61,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!')
+			console.log('CRIT!');
 		}
 	},
 	'Beasts Ear': {
@@ -53,7 +73,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!')
+			console.log('CRIT!');
 		}
 	},
 	'Beasts Elbow': {
@@ -65,13 +85,13 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!')
+			console.log('CRIT!');
 		}
 	},
 	'Beasts Femur': {
 		img: '/static/white-lion/hl/beasts-femur.jpg',
 		crit: (dispatch, getState) => {
-			console.log('CRIT!')
+			console.log('CRIT!');
 		}
 	},
 	'Beasts Flank': {
@@ -85,19 +105,19 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!')
+			console.log('CRIT!');
 		}
 	},
 	'Beasts Heel': {
 		img: '/static/white-lion/hl/beasts-heel.jpg',
 		crit: (dispatch, getState) => {
-			console.log('CRIT!')
+			console.log('CRIT!');
 		}
 	},
 	'Beasts Knee': {
 		img: '/static/white-lion/hl/beasts-knee.jpg',
 		crit: (dispatch, getState) => {
-			console.log('CRIT!')
+			console.log('CRIT!');
 		}
 	},
 	'Beasts Maw': {
@@ -139,7 +159,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!')
+			console.log('CRIT!');
 		}
 	},
 	'Beasts Scapular Deltoid': {
@@ -163,7 +183,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!')
+			console.log('CRIT!');
 		}
 	},
 	'Beasts Temple': {
