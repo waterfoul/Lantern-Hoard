@@ -12,7 +12,6 @@ import {startPlayerTurn} from './playerTurn';
 
 function processPick(options, gameState, dispatch, nextStatus, i = 0) {
 	if (i >= options.length) {
-		console.log('dispatching', nextStatus);
 		dispatch(changeBoardStatusAction.apply(null, nextStatus));
 	}
 
@@ -21,7 +20,6 @@ function processPick(options, gameState, dispatch, nextStatus, i = 0) {
 			return processPick(options, gameState, dispatch, nextStatus, i + 1);
 		} else {
 			nextStatus[1].target = result;
-			console.log('dispatching', nextStatus);
 			dispatch(changeBoardStatusAction.apply(null, nextStatus));
 		}
 	});
@@ -45,7 +43,6 @@ function selectMonsterPosition(dispatch, positions) {
 function getNewMonsterLocation(target, gameState, dispatch) {
 	const playerPosition = gameState.positions['player' + (target + 1)];
 	const monsterSize = gameState.monsterStats.size;
-	console.log('getNewMonsterLocation', gameState, playerPosition, target);
 
 	const options = [];
 
@@ -76,12 +73,10 @@ function getNewMonsterLocation(target, gameState, dispatch) {
 }
 
 function attackPlayer(target, dispatch, speed, accuracy, damage) {
-	console.log('attackPlayer', arguments);
 	const {room} = store.getState();
 	const {gameState} = room;
 
 	if (getDistance(gameState.monsterStats.size, gameState.positions.monster, gameState.positions['player' + (target + 1)]) === 1) {
-		console.log('IN RANGE');
 		return new Promise((resolve, reject) => {
 			try {
 				dispatch(changeBoardStatusAction(BOARD_STATUSES.playerDamage, {speed, accuracy, damage, target}));
@@ -108,13 +103,10 @@ function attackPlayer(target, dispatch, speed, accuracy, damage) {
 }
 
 export function processAttack(target, gameState, dispatch, {move, speed, accuracy, damage}, nextStatus) {
-	console.log('attack', ...arguments);
 	let promise = Promise.resolve();
 	if (target !== null) {
 		if (move) {
-			console.log('moving');
 			promise = getNewMonsterLocation(target, gameState, dispatch).then((newLocation) => {
-				console.log('moving done', newLocation);
 				dispatch(moveMonster(newLocation));
 				const playerLoc = gameState.positions[`player${target + 1}`];
 				const diffX = playerLoc[0] - newLocation[0];
@@ -159,12 +151,10 @@ export const startMonsterTurn = () => (
 
 const processNextAction = (board = {data: {step: 0}}) => (
 	(dispatch, getState) => {
-		console.log('processing', board);
 		const {room, auth: user} = getState();
 		const {gameState} = room;
 		if (gameState.monsterController === user.id) {
 			const action = getAICard(room).actions[board.data.step];
-			console.log('action', action);
 			if (action) {
 				if (action.type === 'pick') {
 					processPick(action.options, gameState, dispatch, [BOARD_STATUSES.processMonsterAction, {

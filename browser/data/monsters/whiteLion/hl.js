@@ -45,7 +45,6 @@ function counterAttack(dispatch, getState, mods = {}, nextState = null) {
 		nextState = [room.gameState.board.status, room.gameState.board.data];
 	}
 
-	console.log(processAttack);
 	processAttack(room.gameState.board.data.slot, room.gameState, dispatch, Object.assign(
 		{},
 		ai.cards['Basic Action'].actions[1],
