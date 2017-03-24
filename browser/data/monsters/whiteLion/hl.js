@@ -19,7 +19,6 @@ function moveForward(dispatch, getState) {
 		dispatch(moveMonster([monsterPosition[0] - monsterMovement, monsterPosition[1]]));
 		break;
 	}
-	//dispatch(moveMonster());
 }
 function jumpBack(dispatch, getState) {
 	console.log('JUMP BACK!');
