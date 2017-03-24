@@ -47,6 +47,46 @@ function squishChar(room, location, pos, char, players, dispatch, distance = 1) 
 	}
 }
 
+function squishChars(room, location, dispatch) {
+	const players = [
+		room.gameState.positions.player1,
+		room.gameState.positions.player2,
+		room.gameState.positions.player3,
+		room.gameState.positions.player4
+	];
+	players.forEach((pos, i) => {
+		const diffX = location[0] - pos[0];
+		const diffY = pos[1] - location[1];
+		if (
+			(diffX <= 0 && diffX > -1 * room.gameState.monsterStats.size) &&
+			(diffY <= 0 && diffY > -1 * room.gameState.monsterStats.size)
+		) {
+			squishChar(room, location, pos, i, players, dispatch);
+		}
+	});
+
+	dispatch(moveToken('monster', location));
+}
+
+function checkMaxRange(room, location) {
+	const monsterLocation = room.gameState.positions.monster;
+	const monsterMovement = room.gameState.monsterStats.movement;
+	// TODO: Determine and Offer options
+	let distance = monsterMovement;
+
+	do {
+		distance = Math.abs(monsterLocation[0] - location[0]) + Math.abs(monsterLocation[1] - location[1]);
+		if (distance > monsterMovement) {
+			location[0]--;
+		}
+		if (distance - 1 > monsterMovement) {
+			location[1]--;
+		}
+	} while(distance - 2 > monsterMovement);
+
+	return location;
+}
+
 export const moveMonster = (location) => (
 	(dispatch, getState) => {
 		location = [
@@ -55,24 +95,9 @@ export const moveMonster = (location) => (
 		];
 		// TODO: Knock over any players that the monster would run over
 		const {room} = getState();
-		const players = [
-			room.gameState.positions.player1,
-			room.gameState.positions.player2,
-			room.gameState.positions.player3,
-			room.gameState.positions.player4
-		];
-		console.log(players, location);
-		players.forEach((pos, i) => {
-			const diffX = location[0] - pos[0];
-			const diffY = pos[1] - location[1];
-			if (
-				(diffX <= 0 && diffX > -1 * room.gameState.monsterStats.size) &&
-				(diffY <= 0 && diffY > -1 * room.gameState.monsterStats.size)
-			) {
-				squishChar(room, location, pos, i, players, dispatch);
-			}
-		});
+		location = checkMaxRange(room, location);
 
+		squishChars(room, location, dispatch);
 		dispatch(moveToken('monster', location));
 	}
 );
