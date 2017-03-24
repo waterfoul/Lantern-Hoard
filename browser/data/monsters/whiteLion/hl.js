@@ -222,9 +222,7 @@ export const hl = {
 		triggers: [
 			{
 				type: 'failure',
-				action: (dispatch, getState) => {
-					counterAttack(dispatch, getState);
-				}
+				action: counterAttack
 			}
 		],
 		crit: (dispatch, getState) => {
@@ -236,9 +234,7 @@ export const hl = {
 		triggers: [
 			{
 				type: 'failure',
-				action: (dispatch, getState) => {
-					counterAttack(dispatch, getState);
-				}
+				action: counterAttack
 			}
 		],
 		crit: (dispatch, getState) => {
@@ -260,9 +256,7 @@ export const hl = {
 		triggers: [
 			{
 				type: 'failure',
-				action: (dispatch, getState) => {
-					counterAttack(dispatch, getState);
-				}
+				action: counterAttack
 			}
 		],
 		crit: (dispatch, getState) => {
@@ -299,9 +293,7 @@ export const hl = {
 		triggers: [
 			{
 				type: 'failure',
-				action: (dispatch, getState) => {
-					counterAttack(dispatch, getState);
-				}
+				action: counterAttack
 			}
 		],
 		crit: (dispatch, getState) => {

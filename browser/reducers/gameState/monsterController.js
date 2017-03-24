@@ -76,10 +76,12 @@ function getNewMonsterLocation(target, gameState, dispatch) {
 }
 
 function attackPlayer(target, dispatch, speed, accuracy, damage) {
+	console.log('attackPlayer', arguments);
 	const {room} = store.getState();
 	const {gameState} = room;
 
 	if (getDistance(gameState.monsterStats.size, gameState.positions.monster, gameState.positions['player' + (target + 1)]) === 1) {
+		console.log('IN RANGE');
 		return new Promise((resolve, reject) => {
 			try {
 				dispatch(changeBoardStatusAction(BOARD_STATUSES.playerDamage, {speed, accuracy, damage, target}));
@@ -110,7 +112,9 @@ export function processAttack(target, gameState, dispatch, {move, speed, accurac
 	let promise = Promise.resolve();
 	if (target !== null) {
 		if (move) {
+			console.log('moving');
 			promise = getNewMonsterLocation(target, gameState, dispatch).then((newLocation) => {
+				console.log('moving done', newLocation);
 				dispatch(moveMonster(newLocation));
 				const playerLoc = gameState.positions[`player${target + 1}`];
 				const diffX = playerLoc[0] - newLocation[0];
