@@ -1,4 +1,5 @@
-import * as test, {store, listenForBoardStatus} from '../../store';
+import {store} from '../../store';
+import {listenForBoardStatus} from '../../listenForBoardStatus';
 import {monsters} from '../../data/monsters';
 import {drawAICard} from '../../reducers/gameState/ai';
 import {changeBoardStatusAction, BOARD_STATUSES} from '../../../common/gameState/board';
@@ -11,13 +12,16 @@ import {startPlayerTurn} from './playerTurn';
 
 function processPick(options, gameState, dispatch, nextStatus, i = 0) {
 	if (i >= options.length) {
-		return Promise.resolve(null);
+		console.log('dispatching', nextStatus);
+		dispatch(changeBoardStatusAction.apply(null, nextStatus));
 	}
 
 	return options[i](gameState, dispatch).then((result) => {
 		if (result === null) {
 			return processPick(options, gameState, dispatch, nextStatus, i + 1);
 		} else {
+			nextStatus[1].target = result;
+			console.log('dispatching', nextStatus);
 			dispatch(changeBoardStatusAction.apply(null, nextStatus));
 		}
 	});
@@ -41,6 +45,7 @@ function selectMonsterPosition(dispatch, positions) {
 function getNewMonsterLocation(target, gameState, dispatch) {
 	const playerPosition = gameState.positions['player' + (target + 1)];
 	const monsterSize = gameState.monsterStats.size;
+	console.log('getNewMonsterLocation', gameState, playerPosition, target);
 
 	const options = [];
 
@@ -101,6 +106,7 @@ function attackPlayer(target, dispatch, speed, accuracy, damage) {
 }
 
 function processAttack(target, gameState, dispatch, {move, speed, accuracy, damage}, nextStatus) {
+	console.log('attack', ...arguments);
 	let promise = Promise.resolve();
 	if (target !== null) {
 		if (move) {
@@ -142,27 +148,33 @@ export const startMonsterTurn = () => (
 		if (gameState.monsterController === user.id) {
 			dispatch(drawAICard());
 
-			dispatch(changeAIAction(0));
-
-			dispatch(processNextAction({data: 0}));
+			dispatch(processNextAction());
 		}
 	}
 );
 
-export const processNextAction = (board) => (
+const processNextAction = (board = {data: {step: 0}}) => (
 	(dispatch, getState) => {
+		console.log('processing', board);
 		const {room, auth: user} = getState();
 		const {gameState} = room;
 		if (gameState.monsterController === user.id) {
-			const action = getAICard(room).actions[board.data];
+			const action = getAICard(room).actions[board.data.step];
+			console.log('action', action);
 			if (action) {
 				if (action.type === 'pick') {
-					processPick(action.options, gameState, dispatch, [BOARD_STATUSES.processMonsterAction, board.data + 1]);
-				} if (action.type === 'attack') {
-					processAttack(gameState.target, gameState, dispatch, action, [BOARD_STATUSES.processMonsterAction, board.data + 1]);
+					processPick(action.options, gameState, dispatch, [BOARD_STATUSES.processMonsterAction, {
+						step: board.data.step + 1,
+						target: board.data.target
+					}]);
+				} else if (action.type === 'attack') {
+					processAttack(board.data.target, gameState, dispatch, action, [BOARD_STATUSES.processMonsterAction, {
+						step: board.data.step + 1,
+						target: board.data.target
+					}]);
 				} else {
-					dispatch(processNextAction({data: board.data + 1}));
-					return Promise.resolve();
+					console.log('Skipping Special', action);
+					dispatch(processNextAction({data: {step: board.data + 1}}));
 				}
 			} else {
 				dispatch(passMonsterController());
@@ -173,7 +185,6 @@ export const processNextAction = (board) => (
 	}
 );
 
-console.log(test, listenForBoardStatus);
 listenForBoardStatus(BOARD_STATUSES.processMonsterAction, processNextAction);
 
 export const passMonsterController = () => (

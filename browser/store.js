@@ -5,6 +5,7 @@ import thunkMiddleware from 'redux-thunk';
 
 import {changeFixState, CHANGE_FIX_STATE} from './reducers/flexBoxFix';
 import {ROOM_RESULT} from './reducers/room';
+import {init} from './listenForBoardStatus';
 import {send} from './socket';
 
 let timeout = -1;
@@ -31,15 +32,6 @@ const socketMiddleware = (store) => (next) => (action) => {
 	return nextAction;
 };
 
-const statusListeners = {};
-
-// This allows things to listen for certain board statuses to happen
-export const listenForBoardStatus = (status, thunk) => {
-	console.log(statusListeners);
-	statusListeners[status] = statusListeners[status] || [];
-	statusListeners[status].push(thunk);
-};
-
 export const store = createStore(
 	reducers,
 	composeWithDevTools(
@@ -51,15 +43,4 @@ export const store = createStore(
 	)
 );
 
-let oldBoard = {};
-
-store.subscribe(() => {
-	const { room } = store.getState();
-	const newBoard = room.gameState.board;
-	if (oldBoard.status !== newBoard.status || oldBoard.data !== newBoard.data) {
-		oldBoard = newBoard;
-		if (statusListeners[newBoard.status]) {
-			statusListeners[newBoard.status].forEach((thunk) => store.dispatch(thunk(newBoard)));
-		}
-	}
-});
+init(store);
