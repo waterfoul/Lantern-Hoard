@@ -1,6 +1,7 @@
 import {moveMonster} from '../../../reducers/gameState/positions';
 import {processAttack} from '../../../reducers/gameState/monsterController';
 import {BOARD_STATUSES} from '../../../../common/gameState/board';
+import { adjustMonsterStats } from '../../../../common/gameState/monsterStats';
 import {ai} from './ai';
 
 function moveForward(dispatch, getState) {
@@ -30,8 +31,7 @@ function jumpBack(dispatch, getState) {
 }
 
 function giveToken(dispatch, getState, value, tokenType) {
-	console.log('GIVE TOKEN');
-	// Function for giving -1 tokens (accuracy, movement, or toughness) to White Lion
+	dispatch(adjustMonsterStats({ [tokenType]: value} ));
 }
 
 function persistentInjury(dispatch, getState, card) {

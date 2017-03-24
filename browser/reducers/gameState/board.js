@@ -23,6 +23,7 @@ export const rollForMonsterHits = () => (
 		const data = Object.assign({}, room.gameState.board.data);
 		const target = room['Character' + (data.target + 1)];
 		const evasion = getEvasion(target, room.gameState, data.target);
+		const monsterAccuracy = room.gameState.monsterStats.accuracy;
 
 		data.rolls = [];
 		data.hits = [];
@@ -30,7 +31,7 @@ export const rollForMonsterHits = () => (
 		for (let i = 0; i < data.speed; i++) {
 			const val = Math.floor(Math.random() * 10) + 1;
 			data.rolls.push(val);
-			if (val >= (data.accuracy + evasion)) {
+			if (val !== 1 && (val === 10 || val >= (data.accuracy + evasion - monsterAccuracy))) {
 				data.hits.push(true);
 			} else {
 				data.hits.push(false);
