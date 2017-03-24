@@ -79,7 +79,7 @@ export const hl = {
 		],
 		crit: (dispatch, getState) => {
 			console.log('CRIT!');
-			// Change of WL dying instantly
+			// Chance of WL dying instantly
 		}
 	},
 	'Beasts Ear': {
@@ -158,7 +158,7 @@ export const hl = {
 			{
 				type: 'failure',
 				action: (dispatch, getState) => {
-					console.log('FAIL!');
+					counterAttack(); // +2 Damage
 				}
 			}
 		],
@@ -210,7 +210,7 @@ export const hl = {
 			{
 				type: 'failure',
 				action: (dispatch, getState) => {
-					console.log('FAIL!');
+					counterAttack();
 				}
 			}
 		],
@@ -224,7 +224,7 @@ export const hl = {
 			{
 				type: 'failure',
 				action: (dispatch, getState) => {
-					console.log('FAIL!');
+					counterAttack();
 				}
 			}
 		],
@@ -245,7 +245,7 @@ export const hl = {
 			{
 				type: 'failure',
 				action: (dispatch, getState) => {
-					console.log('FAIL!');
+					counterAttack();
 				}
 			}
 		],
@@ -284,7 +284,7 @@ export const hl = {
 			{
 				type: 'failure',
 				action: (dispatch, getState) => {
-					console.log('FAIL!');
+					counterAttack();
 				}
 			}
 		],
