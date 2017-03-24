@@ -24,7 +24,7 @@ const ai = (state = null, action) => {
 	case SET_AI:
 		return Object.assign({}, state, {
 			deck: action.deck,
-			wound: []
+			discard: []
 		});
 	default:
 		return state;
