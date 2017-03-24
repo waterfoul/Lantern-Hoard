@@ -143,7 +143,7 @@ export const rollToWound = (location) => (
 		data.woundRolls[location] = result;
 		if (result === 1) {
 			data.woundResults[location] = 'Fail';
-		} else if (result + playerLuck + (data.item.diceMods.luck || 0) >= 10) {
+		} else if (result + playerLuck + ((data.item.diceMods && data.item.diceMods.luck) || 0) >= 10) {
 			data.woundResults[location] = 'Crit';
 			dispatch(woundAI());
 		} else if (result === 10) {

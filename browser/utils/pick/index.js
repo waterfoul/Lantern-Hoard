@@ -96,9 +96,12 @@ export function closestInRange(gameState, dispatch) {
 	return findClosestAndChoose(distances, dispatch);
 }
 
-export function lastToWoundInRange(boardState) {
-	return Promise.resolve(null);
-}
+export function lastToWoundInRange(gameState, dispatch) {
+
+	console.log(gameState)
+
+	return Promise.resolve(null)
+};
 
 export function randomThreatInFieldOfView(gameState) {
 	// Board positions of all characters

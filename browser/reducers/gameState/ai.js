@@ -11,10 +11,11 @@ export const drawAICard = () => (
 	}
 );
 export const woundAI = () => (
-	(dispatch, getState) => {
-		let {board} = getState();
-		if (board.gameState.ai.deck.length === 0) {
-			dispatch(setAIDeckAction(shuffle(board.gameState.ai.discard)));
+	// changed getState to gamestate and board.gameState to gameState.
+	(gameState, dispatch) => {
+		// let {board} = getState();
+		if (gameState.ai.deck.length === 0) {
+			dispatch(setAIDeckAction(shuffle(gameState.ai.discard)));
 		}
 		dispatch(woundAIAction());
 	}
