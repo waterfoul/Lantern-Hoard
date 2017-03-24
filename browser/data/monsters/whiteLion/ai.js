@@ -3,6 +3,7 @@ import {
 	closestThreatInFieldOfView,
 	closestKnockedDownInRange,
 	closestInRange,
+	closestInFieldOfView,
 	lastToWoundInRange,
 	randomThreatInFieldOfView,
 	randomInRange,
@@ -375,3 +376,23 @@ export const ai = {
 };
 
 ai.cards = Object.assign({}, ai.basic, ai.advanced, ai.legendary, ai.traits);
+
+ai.cards['Basic Action'] = {
+	img: '/static/white-lion/basic-action.jpg',
+	actions: [
+		{
+			type: 'pick',
+			options: [
+				closestInFieldOfView,
+				sniff
+			]
+		},
+		{
+			type: 'attack',
+			move: true,
+			speed: 2,
+			accuracy: 2,
+			damage: 1
+		}
+	]
+};

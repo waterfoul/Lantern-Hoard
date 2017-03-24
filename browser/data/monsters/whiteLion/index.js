@@ -7,7 +7,6 @@ export const whiteLion = {
 	ai,
 	hlBack: '/static/white-lion/hl/back.jpg',
 	hl,
-	basicAction: '/static/white-lion/basic-action.jpg',
 	initialPlacements: []
 };
 

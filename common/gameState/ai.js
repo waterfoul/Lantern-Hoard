@@ -8,12 +8,16 @@ const ai = (state = null, action) => {
 	let next, deck, newState;
 	switch (action.type) {
 	case DRAW_AI_CARD:
-		[next, ...deck] = state.deck;
-		newState = Object.assign({}, state, {
-			deck: deck,
-			discard: [next, ...state.discard]
-		});
-		return newState;
+		if(state.deck.length) {
+			[next, ...deck] = state.deck;
+			newState = Object.assign({}, state, {
+				deck: deck,
+				discard: [next, ...state.discard]
+			});
+			return newState;
+		} else {
+			return state;
+		}
 	case WOUND_AI:
 		[next, ...deck] = state.deck;
 		newState = Object.assign({}, state, {
