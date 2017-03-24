@@ -13,7 +13,8 @@ const BOARD_STATUSES = {
 	characterTurnEnd: 'CHARACTER_TURN_END', // Ends the character turn
 	playerAttack: 'PLAYER_ATTACK', // Shows the player attack dialog
 	showMonsterPositions: 'SHOW_MONSTER_POSITIONS', // Prompts the monster controller to pick a monster position
-	showMonsterPositionsResult: 'SHOW_MONSTER_POSITIONS_RESULT' // Returns monster controller results
+	showMonsterPositionsResult: 'SHOW_MONSTER_POSITIONS_RESULT', // Returns monster controller results
+	processMonsterAction: 'PROCESS_MONSTER_ACTION' // triggers the processing of the next monster action
 };
 
 //actions

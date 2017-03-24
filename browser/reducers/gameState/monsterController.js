@@ -5,20 +5,21 @@ import {changeMonsterController} from '../../../common/gameState/monsterControll
 import {changeMonsterDirection} from '../../../common/gameState/monsterDirection';
 import {getDistance} from '../../utils/getDistance';
 import {moveMonster} from './positions';
-import {store} from '../../store';
+import {store, listenForBoardStatus} from '../../store';
 import {endMonster, beginMonster} from '../../../common/gameState/knockedDownCharacters';
 import {startPlayerTurn} from './playerTurn';
 
-function processPick(options, gameState, dispatch, i = 0) {
+function processPick(options, gameState, dispatch, nextStatus, i = 0) {
 	if (i >= options.length) {
 		return Promise.resolve(null);
 	}
 
 	return options[i](gameState, dispatch).then((result) => {
 		if (result === null) {
-			return processPick(options, gameState, dispatch, i + 1);
+			return processPick(options, gameState, dispatch, nextStatus, i + 1);
+		} else {
+			dispatch(changeBoardStatusAction.apply(null, nextStatus));
 		}
-		return result;
 	});
 }
 
@@ -99,10 +100,11 @@ function attackPlayer(target, dispatch, speed, accuracy, damage) {
 	}
 }
 
-function processAttack(target, gameState, dispatch, {move, speed, accuracy, damage}) {
+function processAttack(target, gameState, dispatch, {move, speed, accuracy, damage}, nextStatus) {
+	let promise = Promise.resolve();
 	if (target !== null) {
 		if (move) {
-			return getNewMonsterLocation(target, gameState, dispatch).then((newLocation) => {
+			promise = getNewMonsterLocation(target, gameState, dispatch).then((newLocation) => {
 				dispatch(moveMonster(newLocation));
 				const playerLoc = gameState.positions[`player${target + 1}`];
 				const diffX = playerLoc[0] - newLocation[0];
@@ -119,23 +121,15 @@ function processAttack(target, gameState, dispatch, {move, speed, accuracy, dama
 				return attackPlayer(target, dispatch, speed, accuracy, damage);
 			});
 		} else {
-			return attackPlayer(target, dispatch, speed, accuracy, damage);
+			promise = attackPlayer(target, dispatch, speed, accuracy, damage);
 		}
-	} else {
-		return Promise.resolve();
 	}
+	promise.catch(console.error.bind(console, 'Failed while monster was attacking')).then(() => dispatch(changeBoardStatusAction.apply(null, nextStatus)));
 }
 
-function processActions(actions, gameState, dispatch, target, i = 0) {
-	if (actions[i].type === 'pick') {
-		return processPick(actions[i].options, gameState, dispatch).then((result) => {
-			return processActions(actions, gameState, dispatch, result, i + 1);
-		});
-	} if (actions[i].type === 'attack') {
-		return processAttack(target, gameState, dispatch, actions[i]);
-	} else {
-		return Promise.resolve();
-	}
+function getAICard(room) {
+	const cardName = room.gameState.ai.discard[0] || 'Basic Action';
+	return monsters[room.gameState.monsterName].ai.cards[cardName];
 }
 
 export const startMonsterTurn = () => (
@@ -143,24 +137,43 @@ export const startMonsterTurn = () => (
 		const {room, auth: user} = getState();
 		const {gameState} = room;
 
-		console.log('Begin Monster turn');
 		dispatch(beginMonster());
 
 		if (gameState.monsterController === user.id) {
 			dispatch(drawAICard());
-			const {room: updatedRoom} = getState();
-			const nextCard = updatedRoom.gameState.ai.discard[0] || 'Basic Action';
 
-			const actions = monsters[gameState.monsterName].ai.cards[nextCard].actions;
+			dispatch(changeAIAction(0));
 
-			processActions(actions, gameState, dispatch).then(() => {
-				dispatch(passMonsterController());
-				dispatch(endMonster());
-				dispatch(startPlayerTurn());
-			}).catch(console.error.bind(console, 'Error while processing the monster turn'));
+			dispatch(processNextAction({data: 0}));
 		}
 	}
 );
+
+export const processNextAction = (board) => (
+	(dispatch, getState) => {
+		const {room, auth: user} = getState();
+		const {gameState} = room;
+		if (gameState.monsterController === user.id) {
+			const action = getAICard(room).actions[board.data];
+			if (action) {
+				if (action.type === 'pick') {
+					processPick(action.options, gameState, dispatch, [BOARD_STATUSES.processMonsterAction, board.data + 1]);
+				} if (action.type === 'attack') {
+					processAttack(gameState.target, gameState, dispatch, action, [BOARD_STATUSES.processMonsterAction, board.data + 1]);
+				} else {
+					dispatch(processNextAction({data: board.data + 1}));
+					return Promise.resolve();
+				}
+			} else {
+				dispatch(passMonsterController());
+				dispatch(endMonster());
+				dispatch(startPlayerTurn());
+			}
+		}
+	}
+);
+
+listenForBoardStatus(BOARD_STATUSES.processMonsterAction, processNextAction);
 
 export const passMonsterController = () => (
 	(dispatch, getState) => {

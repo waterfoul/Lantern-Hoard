@@ -31,6 +31,13 @@ const socketMiddleware = (store) => (next) => (action) => {
 	return nextAction;
 };
 
+const statusListeners = {};
+// This allows things to listen for certain board statuses to happen
+export function listenForBoardStatus(status, thunk) {
+	statusListeners[status] = statusListeners[status] || [];
+	statusListeners[status].push(thunk);
+}
+
 export const store = createStore(
 	reducers,
 	composeWithDevTools(
@@ -42,3 +49,15 @@ export const store = createStore(
 	)
 );
 
+let oldBoard = {};
+
+store.subscribe(() => {
+	const { room } = store.getState();
+	const newBoard = room.gameState.board;
+	if (oldBoard.status !== newBoard.status || oldBoard.data !== newBoard.data) {
+		oldBoard = newBoard;
+		if (statusListeners[newBoard.status]) {
+			statusListeners[newBoard.status].forEach((thunk) => store.dispatch(thunk(newBoard)));
+		}
+	}
+});
