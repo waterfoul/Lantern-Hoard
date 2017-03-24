@@ -1,5 +1,5 @@
 import {monsters} from '../../data/monsters';
-import {drawAICard} from '../../../common/gameState/ai';
+import {drawAICard} from '../../reducers/gameState/ai';
 import {changeBoardStatusAction, BOARD_STATUSES} from '../../../common/gameState/board';
 import {changeMonsterController} from '../../../common/gameState/monsterController';
 import {changeMonsterDirection} from '../../../common/gameState/monsterDirection';

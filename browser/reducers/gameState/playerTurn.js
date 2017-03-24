@@ -3,8 +3,8 @@ import { BOARD_STATUSES, changeBoardStatusAction } from '../../../common/gameSta
 import { store } from '../../store';
 import { moveToken } from '../../../common/gameState/positions';
 import { changePlayerResources, useMovement, useAction } from '../../../common/gameState/playerResources';
-import { drawHLCard } from '../../../common/gameState/hl';
-import { woundAI } from '../../../common/gameState/ai';
+import { drawHLCard } from '../../reducers/gameState/hl';
+import { woundAI } from '../../reducers/gameState/ai';
 import { items } from '../../data/items';
 import { getAccuracy, getStrength, getLuck } from '../../utils/getStats';
 
