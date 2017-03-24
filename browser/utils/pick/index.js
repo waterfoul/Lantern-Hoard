@@ -1,6 +1,7 @@
 import {isFront, chooseBetween, findClosestAndChoose, checkFieldOfView} from './utils';
-import {randomIndex} from '../randomIndex';
-import {getDistance} from '../getDistance';
+import { randomIndex } from '../randomIndex';
+import { getDistance } from '../getDistance';
+import { STATUSES } from '../../../common/gameState/knockedDownCharacters';
 
 export function closestThreatFacingInRange(gameState, dispatch) {
 	const positions = [
@@ -50,8 +51,29 @@ export function closestThreatInFieldOfView(gameState, dispatch) {
 	return findClosestAndChoose(charactersInView, dispatch);
 }
 
-export function closestKnockedDownInRange(boardState) {
-	return Promise.resolve(null);
+export function closestKnockedDownInRange(gameState, dispatch) {
+	const positions = [
+		gameState.positions.player1,
+		gameState.positions.player2,
+		gameState.positions.player3,
+		gameState.positions.player4
+	];
+
+	const distances = positions.map((val, i) => {
+		if (gameState.knockedDownCharacters[i] === STATUSES.standing) {
+			// Not a knocked down
+			return null;
+		}
+		const distance = getDistance(gameState.monsterStats.size, gameState.positions.monster, val); //size, monst type, player
+
+		if (distance > gameState.monsterStats.movement + gameState.monsterStats.range) {
+			// out of range
+			return null;
+		}
+		return distance;
+	});
+
+	return findClosestAndChoose(distances, dispatch);
 }
 
 export function closestInRange(gameState, dispatch) {

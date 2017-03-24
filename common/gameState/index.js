@@ -8,6 +8,7 @@ const { ai } = require('./ai');
 const { hl } = require('./hl');
 const { knockedDownCharacters } = require('./knockedDownCharacters');
 const { playerResources } = require('./playerResources');
+const { monsterDirection } = require('./monsterDirection');
 
 const noop = (state) => (state || null);
 
@@ -18,7 +19,7 @@ const gameStateReducer = combineReducers({
 	effects: noop,
 	monsterName: noop,
 	monsterStats: noop,
-	monsterDirection: () => 'S', //Adding a stub here, TODO: replace this with a reducer
+	monsterDirection,
 	positions,
 	gear: noop,
 	armor,
