@@ -75,12 +75,14 @@ function checkMaxRange(room, location) {
 	let distance = monsterMovement;
 
 	do {
-		distance = Math.abs(monsterLocation[0] - location[0]) + Math.abs(monsterLocation[1] - location[1]);
+		const diffX = monsterLocation[0] - location[0];
+		const diffY = monsterLocation[1] - location[1];
+		distance = Math.abs(diffX) + Math.abs(diffY);
 		if (distance > monsterMovement) {
-			location[0]--;
+			location[0] += diffX / Math.abs(diffX);
 		}
 		if (distance - 1 > monsterMovement) {
-			location[1]--;
+			location[1] += diffY / Math.abs(diffY);
 		}
 	} while(distance - 2 > monsterMovement);
 
