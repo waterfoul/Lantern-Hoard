@@ -5,7 +5,7 @@ export const damageArmor = (player, location, amount) => (
 	(dispatch, getState) => {
 		const { room } = getState();
 		const playerArmor = room.gameState.armor[player];
-		console.log('playerArmor values:', playerArmor, "\n knock down status:", room.gameState.knockedDownCharacters)
+		console.log('playerArmor values:', playerArmor, "\n knock down status:", room.gameState.knockedDownCharacters);
 
 // Head injury limited to -2 for now
 
