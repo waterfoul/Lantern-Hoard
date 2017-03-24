@@ -112,12 +112,14 @@ export const rollToHit = () => (
 	(dispatch, getState) => {
 		const {room} = getState();
 		const data = Object.assign({}, room.gameState.board.data);
+		const monsterName = room.gameState.monsterName;
 		const playerAcc = getAccuracy(room[`Character${data.slot + 1}`], room.gameState, data.slot);
 
 		data.hitRolls = [];
 		data.hitCards = [];
 		data.woundRolls = [];
 		data.woundResults = [];
+		data.trap = false;
 		for (let i = 0; i < data.item.dice; i++) {
 			const result = Math.floor(Math.random() * 10) + 1;
 			data.hitRolls.push(result);
@@ -125,6 +127,13 @@ export const rollToHit = () => (
 				dispatch(drawHLCard());
 				const {room: currentRoom} = getState();
 				const currentName = currentRoom.gameState.hl.discard[0];
+				const card = monsters[monsterName].hl[currentName];
+				// Trap Hit! Stop drawing/Rolling
+				if (card.trap) {
+					i = data.item.dice;
+					data.trap = true;
+				}
+
 				data.hitCards.push(currentName);
 			} else {
 				data.hitCards.push(null);
@@ -188,6 +197,9 @@ export const closeAttack = () => (
 	(dispatch, getState) => {
 		const {room} = getState();
 		const data = room.gameState.board.data;
+		if (data.trap) {
+			console.log('ITS A TRAP!');
+		}
 		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, data.character));
 	}
 );
