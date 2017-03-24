@@ -7,6 +7,7 @@ import { drawHLCard } from '../../reducers/gameState/hl';
 import { woundAI } from '../../reducers/gameState/ai';
 import { items } from '../../data/items';
 import { getAccuracy, getStrength, getLuck } from '../../utils/getStats';
+import { monsters } from '../../data/monsters';
 
 // Gets player input for selecting character turn
 function selectActingCharacter(dispatch, characters) {
@@ -112,6 +113,7 @@ export const rollToHit = () => (
 		const {room} = getState();
 		const data = Object.assign({}, room.gameState.board.data);
 		const playerAcc = getAccuracy(room[`Character${data.slot + 1}`], room.gameState, data.slot);
+
 		data.hitRolls = [];
 		data.hitCards = [];
 		data.woundRolls = [];
@@ -122,7 +124,8 @@ export const rollToHit = () => (
 			if (result !== 1 && (result === 10 || (result - data.item.accuracy + playerAcc) >= 0)) {
 				dispatch(drawHLCard());
 				const {room: currentRoom} = getState();
-				data.hitCards.push(currentRoom.gameState.hl.discard[0]);
+				const currentName = currentRoom.gameState.hl.discard[0];
+				data.hitCards.push(currentName);
 			} else {
 				data.hitCards.push(null);
 			}
@@ -133,6 +136,18 @@ export const rollToHit = () => (
 	}
 );
 
+const woundTrigger = (card, dispatch, getState) => (
+	card.triggers
+		.filter((trg) => trg.type === 'wound')
+		.map((trg) => trg.action(dispatch, getState))
+);
+
+const failTrigger = (card, dispatch, getState) => (
+	card.triggers
+		.filter((trg) => trg.type === 'failure')
+		.map((trg) => trg.action(dispatch, getState))
+);
+
 export const rollToWound = (location) => (
 	(dispatch, getState) => {
 		const {room} = getState();
@@ -140,22 +155,31 @@ export const rollToWound = (location) => (
 		const playerStr = getStrength(room[`Character${data.slot + 1}`], room.gameState, data.slot);
 		const playerLuck = getLuck(room[`Character${data.slot + 1}`], room.gameState, data.slot);
 		const result = Math.floor(Math.random() * 10) + 1;
+		const monsterName = room.gameState.monsterName;
+		const card = monsters[monsterName].hl[data.hitCards[location]];
+
 		data.woundRolls[location] = result;
 		if (result === 1) {
 			data.woundResults[location] = 'Fail';
-		} else if (result + playerLuck + (data.item.diceMods.luck || 0) >= 10) {
+			failTrigger(card, dispatch, getState);
+		} else if (card.crit && (
+			result + playerLuck + (data.item.diceMods && data.item.diceMods.luck || 0) >= 10
+		)) {
 			data.woundResults[location] = 'Crit';
+			card.crit(dispatch, getState);
 			dispatch(woundAI());
 		} else if (result === 10) {
 			data.woundResults[location] = 'Success';
+			woundTrigger(card, dispatch, getState);
 			dispatch(woundAI());
 		} else if ((result + playerStr) > room.gameState.monsterStats.toughness) {
 			data.woundResults[location] = 'Success';
+			woundTrigger(card, dispatch, getState);
 			dispatch(woundAI());
 		} else {
 			data.woundResults[location] = 'Fail';
+			failTrigger(card, dispatch, getState);
 		}
-		// TODO: Triggers
 		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerAttack, data));
 	}
 );

@@ -1,5 +1,9 @@
-function moveForward(boardState) {}
-function jumpBack(boardState) {}
+function moveForward(dispatch, getState) {
+	console.log('MOVE FORWARD!');
+}
+function jumpBack(dispatch, getState) {
+	console.log('JUMP BACK!');
+}
 
 export const hl = {
 	'Beasts Back': {
@@ -10,27 +14,35 @@ export const hl = {
 				action: moveForward
 			}
 		],
-		crit: (boardState) => {}
+		crit: (dispatch, getState) => {
+			console.log('CRIT!')
+		}
 	},
 	'Beasts Brow': {
 		img: '/static/white-lion/hl/beasts-brow.jpg',
 		triggers: [
 			{
 				type: 'wound',
-				action: (boardState) => {}
+				action: (dispatch, getState) => {
+					console.log('WOUND!')
+				}
 			}
 		],
-		crit: (boardState) => {}
+		crit: (dispatch, getState) => {
+			console.log('CRIT!')
+		}
 	},
 	'Beasts Chest': {
 		img: '/static/white-lion/hl/beasts-chest.jpg',
 		triggers: [
 			{
 				type: 'failure',
-				action: moveForward()
+				action: moveForward
 			}
 		],
-		crit: (boardState) => {}
+		crit: (dispatch, getState) => {
+			console.log('CRIT!')
+		}
 	},
 	'Beasts Ear': {
 		img: '/static/white-lion/hl/beasts-ear.jpg',
@@ -40,7 +52,9 @@ export const hl = {
 				action: jumpBack
 			}
 		],
-		crit: (boardState) => {}
+		crit: (dispatch, getState) => {
+			console.log('CRIT!')
+		}
 	},
 	'Beasts Elbow': {
 		img: '/static/white-lion/hl/beasts-elbow.jpg',
@@ -50,59 +64,83 @@ export const hl = {
 				action: moveForward
 			}
 		],
-		crit: (boardState) => {}
+		crit: (dispatch, getState) => {
+			console.log('CRIT!')
+		}
 	},
 	'Beasts Femur': {
 		img: '/static/white-lion/hl/beasts-femur.jpg',
-		crit: (boardState) => {}
+		crit: (dispatch, getState) => {
+			console.log('CRIT!')
+		}
 	},
 	'Beasts Flank': {
 		img: '/static/white-lion/hl/beasts-flank.jpg',
 		triggers: [
 			{
 				type: 'wound',
-				action: (boardState) => {}
+				action: (dispatch, getState) => {
+					console.log('WOUND!');
+				}
 			}
 		],
-		crit: (boardState) => {}
+		crit: (dispatch, getState) => {
+			console.log('CRIT!')
+		}
 	},
 	'Beasts Heel': {
 		img: '/static/white-lion/hl/beasts-heel.jpg',
-		crit: (boardState) => {}
+		crit: (dispatch, getState) => {
+			console.log('CRIT!')
+		}
 	},
 	'Beasts Knee': {
 		img: '/static/white-lion/hl/beasts-knee.jpg',
-		crit: (boardState) => {}
+		crit: (dispatch, getState) => {
+			console.log('CRIT!')
+		}
 	},
 	'Beasts Maw': {
 		img: '/static/white-lion/hl/beasts-maw.jpg',
 		triggers: [
 			{
 				type: 'failure',
-				action: (boardState) => {}
+				action: (dispatch, getState) => {
+					console.log('FAIL!');
+				}
 			}
 		],
-		crit: (boardState) => {}
+		crit: (dispatch, getState) => {
+			console.log('CRIT!');
+		}
 	},
 	'Beasts Paw': {
 		img: '/static/white-lion/hl/beasts-paw.jpg',
 		triggers: [
 			{
 				type: 'failure',
-				action: (boardState) => {}
+				action: (dispatch, getState) => {
+					console.log('FAIL!');
+				}
 			}
 		],
-		crit: (boardState) => {}
+		crit: (dispatch, getState) => {
+			console.log('CRIT!');
+		}
 	},
 	'Beasts Ribs': {
 		img: '/static/white-lion/hl/beasts-ribs.jpg',
 		triggers: [
 			{
 				type: 'wound',
-				action: (boardState) => {}
+				action: (dispatch, getState) => {
+					console.log('WOUND!');
+				}
 			}
 		],
-		crit: (boardState) => {}
+		crit: (dispatch, getState) => {
+			console.log('CRIT!')
+		}
 	},
 	'Beasts Scapular Deltoid': {
 		img: '/static/white-lion/hl/beasts-scapular-deltoid.jpg',
@@ -112,7 +150,9 @@ export const hl = {
 				action: moveForward
 			}
 		],
-		crit: (boardState) => {}
+		crit: (dispatch, getState) => {
+			console.log('CRIT!');
+		}
 	},
 	'Beasts Tail': {
 		img: '/static/white-lion/hl/beasts-tail.jpg',
@@ -122,68 +162,96 @@ export const hl = {
 				action: moveForward
 			}
 		],
-		crit: (boardState) => {}
+		crit: (dispatch, getState) => {
+			console.log('CRIT!')
+		}
 	},
 	'Beasts Temple': {
 		img: '/static/white-lion/hl/beasts-temple.jpg',
 		triggers: [
 			{
 				type: 'failure',
-				action: (boardState) => {}
+				action: (dispatch, getState) => {
+					console.log('FAIL!');
+				}
 			}
 		],
-		crit: (boardState) => {}
+		crit: (dispatch, getState) => {
+			console.log('CRIT!');
+		}
 	},
 	'Beasts Tricep': {
 		img: '/static/white-lion/hl/beasts-tricep.jpg',
 		triggers: [
 			{
 				type: 'failure',
-				action: (boardState) => {}
+				action: (dispatch, getState) => {
+					console.log('FAIL!');
+				}
 			}
 		],
-		crit: (boardState) => {}
+		crit: (dispatch, getState) => {
+			console.log('CRIT!');
+		}
 	},
 	'Clever Ploy': {
 		img: '/static/white-lion/hl/clever-ploy.jpg',
 		trap: true,
-		action: (boardState) => {}
+		action: (dispatch, getState) => {
+			console.log('Clever Ploy!');
+		}
 	},
 	'Fleshy Gut': {
 		img: '/static/white-lion/hl/fleshy-gut.jpg',
 		triggers: [
 			{
 				type: 'failure',
-				action: (boardState) => {}
+				action: (dispatch, getState) => {
+					console.log('FAIL!');
+				}
 			}
 		],
-		crit: (boardState) => {}
+		crit: (dispatch, getState) => {
+			console.log('CRIT!');
+		}
 	},
 	'Fuzzy Groin': {
 		img: '/static/white-lion/hl/fuzzy-groin.jpg',
-		crit: (boardState) => {}
+		crit: (dispatch, getState) => {
+			console.log('CRIT!');
+		}
 	},
 	'Glorious Mane': {
 		img: '/static/white-lion/hl/glorious-mane.jpg',
 		impervious: true,
-		crit: (boardState) => {}
+		crit: (dispatch, getState) => {
+			console.log('CRIT!');
+		}
 	},
 	'Soft Belly': {
 		img: '/static/white-lion/hl/soft-belly.jpg',
-		crit: (boardState) => {}
+		crit: (dispatch, getState) => {
+			console.log('CRIT!');
+		}
 	},
 	'Straining Neck': {
 		img: '/static/white-lion/hl/straining-neck.jpg',
-		crit: (boardState) => {}
+		crit: (dispatch, getState) => {
+			console.log('CRIT!');
+		}
 	},
 	'Strange Hand': {
 		img: '/static/white-lion/hl/strange-hand.jpg',
 		triggers: [
 			{
 				type: 'failure',
-				action: (boardState) => {}
+				action: (dispatch, getState) => {
+					console.log('FAIL!');
+				}
 			}
 		],
-		crit: (boardState) => {}
+		crit: (dispatch, getState) => {
+			console.log('CRIT!');
+		}
 	}
 };
