@@ -8,7 +8,7 @@ const ai = (state = null, action) => {
 	let next, deck, newState;
 	switch (action.type) {
 	case DRAW_AI_CARD:
-		if(state.deck.length) {
+		if (state.deck.length) {
 			[next, ...deck] = state.deck;
 			newState = Object.assign({}, state, {
 				deck: deck,
