@@ -13,6 +13,8 @@
     "no-trailing-spaces": ["error"],
     "eol-last": ["error"],
     "no-undef": ["error"],
-    "no-unused-expressions": ["warn"]
+    "no-unused-expressions": ["warn"],
+    "id-length": ["off"],
+    "react/prop-types": ["off"]
   }
 }
