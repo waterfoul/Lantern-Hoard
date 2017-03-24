@@ -10,3 +10,14 @@ export const drawHLCard = () => (
 		dispatch(drawHLCardAction());
 	}
 );
+
+export const shuffleHL = () => (
+	(dispatch, getState) => {
+		const {room} = getState();
+
+		dispatch(setHLDeckAction(shuffle([
+			...room.gameState.hl.discard,
+			...room.gameState.hl.deck
+		])));
+	}
+);

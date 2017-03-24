@@ -3,7 +3,7 @@ import { BOARD_STATUSES, changeBoardStatusAction } from '../../../common/gameSta
 import { store } from '../../store';
 import { moveToken } from '../../../common/gameState/positions';
 import { changePlayerResources, useMovement, useAction } from '../../../common/gameState/playerResources';
-import { drawHLCard } from '../../reducers/gameState/hl';
+import { drawHLCard, shuffleHL } from '../../reducers/gameState/hl';
 import { woundAI } from '../../reducers/gameState/ai';
 import { items } from '../../data/items';
 import { getAccuracy, getStrength, getLuck } from '../../utils/getStats';
@@ -131,7 +131,7 @@ export const rollToHit = () => (
 				// Trap Hit! Stop drawing/Rolling
 				if (card.trap) {
 					i = data.item.dice;
-					data.trap = true;
+					data.trap = currentName;
 				}
 
 				data.hitCards.push(currentName);
@@ -197,8 +197,12 @@ export const closeAttack = () => (
 	(dispatch, getState) => {
 		const {room} = getState();
 		const data = room.gameState.board.data;
+		const monsterName = room.gameState.monsterName;
 		if (data.trap) {
-			console.log('ITS A TRAP!');
+			const trapCard = monsters[monsterName].hl[data.trap];
+			trapCard.action(dispatch, getState);
+
+			dispatch(shuffleHL());
 		}
 		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, data.character));
 	}
