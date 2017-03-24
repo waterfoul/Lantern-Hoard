@@ -105,7 +105,7 @@ function attackPlayer(target, dispatch, speed, accuracy, damage) {
 	}
 }
 
-function processAttack(target, gameState, dispatch, {move, speed, accuracy, damage}, nextStatus) {
+export function processAttack(target, gameState, dispatch, {move, speed, accuracy, damage}, nextStatus) {
 	console.log('attack', ...arguments);
 	let promise = Promise.resolve();
 	if (target !== null) {

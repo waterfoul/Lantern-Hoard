@@ -1,4 +1,7 @@
 import {moveMonster} from '../../../reducers/gameState/positions';
+import {processAttack} from '../../../reducers/gameState/monsterController';
+import {BOARD_STATUSES} from '../../../../common/gameState/board';
+import {ai} from './ai';
 
 function moveForward(dispatch, getState) {
 	const {room} = getState();
@@ -22,6 +25,20 @@ function moveForward(dispatch, getState) {
 }
 function jumpBack(dispatch, getState) {
 	console.log('JUMP BACK!');
+}
+
+function counterAttack(dispatch, getState, mods = {}, nextState = null) {
+	const {room} = getState();
+	if (!nextState) {
+		nextState = [room.gameState.board.status, room.gameState.board.data];
+	}
+
+	console.log(processAttack);
+	processAttack(room.gameState.board.data.slot, room.gameState, dispatch, Object.assign(
+		{},
+		ai.cards['Basic Action'].actions[1],
+		mods
+	), nextState);
 }
 
 export const hl = {
@@ -217,7 +234,10 @@ export const hl = {
 		img: '/static/white-lion/hl/clever-ploy.jpg',
 		trap: true,
 		action: (dispatch, getState) => {
-			console.log('Clever Ploy!');
+			const {room} = getState();
+			const data = room.gameState.board.data;
+
+			counterAttack(dispatch, getState, {}, [BOARD_STATUSES.playerTurn, data.character]);
 		}
 	},
 	'Fleshy Gut': {
