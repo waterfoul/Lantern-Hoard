@@ -73,7 +73,7 @@ export const hl = {
 				type: 'wound',
 				action: (dispatch, getState) => {
 					console.log('WOUND!');
-					counterAttack(dispatch, getState, null);
+					counterAttack(dispatch, getState);
 					// Attacker suffers 1 brain damage
 				}
 			}
@@ -171,7 +171,7 @@ export const hl = {
 			{
 				type: 'failure',
 				action: (dispatch, getState) => {
-					counterAttack(dispatch, getState, +2);
+					counterAttack(dispatch, getState, {damage: 3});
 				}
 			}
 		],
@@ -223,7 +223,7 @@ export const hl = {
 			{
 				type: 'failure',
 				action: (dispatch, getState) => {
-					counterAttack(dispatch, getState, null);
+					counterAttack(dispatch, getState);
 				}
 			}
 		],
@@ -237,7 +237,7 @@ export const hl = {
 			{
 				type: 'failure',
 				action: (dispatch, getState) => {
-					counterAttack(dispatch, getState, null);
+					counterAttack(dispatch, getState);
 				}
 			}
 		],
@@ -261,7 +261,7 @@ export const hl = {
 			{
 				type: 'failure',
 				action: (dispatch, getState) => {
-					counterAttack(dispatch, getState, null);
+					counterAttack(dispatch, getState);
 				}
 			}
 		],
@@ -300,7 +300,7 @@ export const hl = {
 			{
 				type: 'failure',
 				action: (dispatch, getState) => {
-					counterAttack(dispatch, getState, null);
+					counterAttack(dispatch, getState);
 				}
 			}
 		],
