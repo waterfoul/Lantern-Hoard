@@ -13,7 +13,7 @@ export const init = (store) => {
 		const newBoard = room && room.gameState && room.gameState.board || {};
 		if (oldBoard.status !== newBoard.status || oldBoard.data !== newBoard.data) {
 			oldBoard = newBoard;
-			if (statusListeners[newBoard.status]) {
+			git if (statusListeners[newBoard.status]) {
 				statusListeners[newBoard.status].forEach((thunk) => store.dispatch(thunk(newBoard)));
 			}
 		}
