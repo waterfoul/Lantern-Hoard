@@ -203,8 +203,9 @@ export const closeAttack = () => (
 			trapCard.action(dispatch, getState);
 
 			dispatch(shuffleHL());
+		} else {
+			dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, data.character));
 		}
-		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, data.character));
 	}
 );
 

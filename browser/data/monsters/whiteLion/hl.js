@@ -1,4 +1,7 @@
 import {moveMonster} from '../../../reducers/gameState/positions';
+import {processAttack} from '../../../reducers/gameState/monsterController';
+import {BOARD_STATUSES} from '../../../../common/gameState/board';
+import {ai} from './ai';
 
 function moveForward(dispatch, getState) {
 	const {room} = getState();
@@ -21,6 +24,7 @@ function moveForward(dispatch, getState) {
 	}
 	// TODO: Add Grab functionality
 }
+
 function jumpBack(dispatch, getState) {
 	console.log('JUMP BACK!');
 }
@@ -35,9 +39,17 @@ function persistentInjury(dispatch, getState, card) {
 	// Function for making a HL card a persistent injury
 }
 
-function counterAttack(dispatch, getState, mods) {
-	console.log('WHITE LION ATTACKS THE ATTACKING PLAYER');
-	// WL attacks back in response to an attacking character
+function counterAttack(dispatch, getState, mods = {}, nextState = null) {
+	const {room} = getState();
+	if (!nextState) {
+		nextState = [room.gameState.board.status, room.gameState.board.data];
+	}
+
+	processAttack(room.gameState.board.data.slot, room.gameState, dispatch, Object.assign(
+		{},
+		ai.cards['Basic Action'].actions[1],
+		mods
+	), nextState);
 }
 
 export const hl = {
@@ -60,7 +72,7 @@ export const hl = {
 				type: 'wound',
 				action: (dispatch, getState) => {
 					console.log('WOUND!');
-					counterAttack(dispatch, getState, null);
+					counterAttack(dispatch, getState);
 					// Attacker suffers 1 brain damage
 				}
 			}
@@ -158,7 +170,7 @@ export const hl = {
 			{
 				type: 'failure',
 				action: (dispatch, getState) => {
-					counterAttack(dispatch, getState, +2);
+					counterAttack(dispatch, getState, {damage: 3});
 				}
 			}
 		],
@@ -209,9 +221,7 @@ export const hl = {
 		triggers: [
 			{
 				type: 'failure',
-				action: (dispatch, getState) => {
-					counterAttack(dispatch, getState, null);
-				}
+				action: counterAttack
 			}
 		],
 		crit: (dispatch, getState) => {
@@ -223,9 +233,7 @@ export const hl = {
 		triggers: [
 			{
 				type: 'failure',
-				action: (dispatch, getState) => {
-					counterAttack(dispatch, getState, null);
-				}
+				action: counterAttack
 			}
 		],
 		crit: (dispatch, getState) => {
@@ -236,7 +244,10 @@ export const hl = {
 		img: '/static/white-lion/hl/clever-ploy.jpg',
 		trap: true,
 		action: (dispatch, getState) => {
-			console.log('Clever Ploy!');
+			const {room} = getState();
+			const data = room.gameState.board.data;
+
+			counterAttack(dispatch, getState, {}, [BOARD_STATUSES.playerTurn, data.character]);
 		}
 	},
 	'Fleshy Gut': {
@@ -244,9 +255,7 @@ export const hl = {
 		triggers: [
 			{
 				type: 'failure',
-				action: (dispatch, getState) => {
-					counterAttack(dispatch, getState, null);
-				}
+				action: counterAttack
 			}
 		],
 		crit: (dispatch, getState) => {
@@ -283,9 +292,7 @@ export const hl = {
 		triggers: [
 			{
 				type: 'failure',
-				action: (dispatch, getState) => {
-					counterAttack(dispatch, getState, null);
-				}
+				action: counterAttack
 			}
 		],
 		crit: (dispatch, getState) => {
