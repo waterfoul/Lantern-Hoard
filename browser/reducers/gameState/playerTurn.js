@@ -10,7 +10,7 @@ import { getAccuracy, getStrength, getLuck } from '../../utils/getStats';
 import { monsters } from '../../data/monsters';
 
 // Gets player input for character movement
-function getCharacterMoveInput(dispatch, character) {
+function getCharacterMoveInput(dispatch, character, availableCharacters) {
 	return new Promise((resolve, reject) => {
 		dispatch(changeBoardStatusAction(BOARD_STATUSES.showAvailableMovement, character));
 
@@ -18,19 +18,7 @@ function getCharacterMoveInput(dispatch, character) {
 			const { room } = store.getState();
 			if (room.gameState.board.status === BOARD_STATUSES.moveCharacter) {
 				resolve(room.gameState.board.data);
-				dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, character));
-				unsub();
-			}
-		});
-	});
-}
-
-function waitForTurnEnd() {
-	return new Promise((resolve, reject) => {
-		const unsub = store.subscribe(() => {
-			const { room } = store.getState();
-			if (room.gameState.board.status === BOARD_STATUSES.characterTurnEnd) {
-				resolve();
+				dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, {character, availableCharacters}));
 				unsub();
 			}
 		});
@@ -45,18 +33,22 @@ export const startSingleTurn = (character, availableCharacters = null) => (
 			availableCharacters = room.gameState.board.data;
 		}
 
-		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, character));
+		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, {character, availableCharacters}));
 		dispatch(changePlayerResources(1, 1));
-		waitForTurnEnd().then(() => {
-			const nextChars = availableCharacters.filter((element) => element !== character);
-			if (nextChars.length === 0) {
-				dispatch(startMonsterTurn());
-			} else if (nextChars.length === 0) {
-				dispatch(startSingleTurn(nextChars[0], nextChars));
-			} else {
-				dispatch(changeBoardStatusAction(BOARD_STATUSES.selectActingCharacter, nextChars));
-			}
-		});
+	}
+);
+
+export const endSingleTurn = ({availableCharacters, character}) => (
+	(dispatch, getState) => {
+		console.log({availableCharacters, character});
+		const nextChars = availableCharacters.filter((element) => element !== character);
+		if (nextChars.length === 0) {
+			dispatch(startMonsterTurn());
+		} else if (nextChars.length === 0) {
+			dispatch(startSingleTurn(nextChars[0], nextChars));
+		} else {
+			dispatch(changeBoardStatusAction(BOARD_STATUSES.selectActingCharacter, nextChars));
+		}
 	}
 );
 
@@ -67,9 +59,9 @@ export const startPlayerTurn = () => (
 );
 
 // Is a thunk that moves the character
-export const moveCharacter = (character) => (
+export const moveCharacter = ({character, availableCharacters}) => (
 	(dispatch, getState) => {
-		getCharacterMoveInput(dispatch, character)
+		getCharacterMoveInput(dispatch, character, availableCharacters)
 			.then((coordinates) => {
 				dispatch(moveToken(`player${character + 1}`, coordinates));
 				dispatch(useMovement());
@@ -91,7 +83,8 @@ export const startAttack = (slot, weapon, automaticHits = 0, automaticWounds = 0
 			automaticHits,
 			automaticWounds,
 			automaticCrits,
-			character: room.gameState.board.data
+			character: room.gameState.board.data.character,
+			availableCharacters: room.gameState.board.data.availableCharacters
 		}));
 	}
 );
@@ -175,9 +168,9 @@ export const rollToWound = (location) => (
 			data.woundResults[location] = 'Fail';
 			failTrigger(card, dispatch, getState);
 		} else if (card.crit && (
-			result === 'auto-crit' ||
-			result + playerLuck + (data.item.diceMods && data.item.diceMods.luck || 0) >= 10
-		)) {
+				result === 'auto-crit' ||
+				result + playerLuck + (data.item.diceMods && data.item.diceMods.luck || 0) >= 10
+			)) {
 			data.woundResults[location] = 'Crit';
 			card.crit(dispatch, getState);
 			dispatch(woundAI());
@@ -208,7 +201,7 @@ export const closeAttack = () => (
 
 			dispatch(shuffleHL());
 		} else {
-			dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, data.character));
+			dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, {character: data.character, availableCharacters: data.availableCharacters}));
 		}
 	}
 );
