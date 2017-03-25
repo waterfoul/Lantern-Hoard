@@ -92,9 +92,9 @@ export const startPlayerTurn = () => (
 	}
 );
 
-export const startAttack = (slot, weapon) => (
+export const startAttack = (slot, weapon, automaticHits = 0, automaticWounds = 0, automaticCrits = 0, overrides = {}) => (
 	(dispatch, getState) => {
-		const item = items[weapon];
+		const item = Object.assign({}, items[weapon], overrides);
 		const {room} = getState();
 		if (item.traits.indexOf('cumbersome') !== -1) {
 			dispatch(useMovement());
@@ -103,6 +103,9 @@ export const startAttack = (slot, weapon) => (
 		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerAttack, {
 			item,
 			slot,
+			automaticHits,
+			automaticWounds,
+			automaticCrits,
 			character: room.gameState.board.data
 		}));
 	}
@@ -121,9 +124,15 @@ export const rollToHit = () => (
 		data.woundResults = [];
 		data.trap = false;
 		for (let i = 0; i < data.item.dice; i++) {
-			const result = Math.floor(Math.random() * 10) + 1;
+			let result = 0;
+			if (data.automaticHits) {
+				data.automaticHits--;
+				result = 'auto';
+			} else {
+				result = Math.floor(Math.random() * 10) + 1;
+			}
 			data.hitRolls.push(result);
-			if (result !== 1 && (result === 10 || (result - data.item.accuracy + playerAcc) >= 0)) {
+			if (result !== 1 && (result === 'auto' || result === 10 || (result - data.item.accuracy + playerAcc) >= 0)) {
 				dispatch(drawHLCard());
 				const {room: currentRoom} = getState();
 				const currentName = currentRoom.gameState.hl.discard[0];
@@ -163,21 +172,31 @@ export const rollToWound = (location) => (
 		const data = Object.assign({}, room.gameState.board.data);
 		const playerStr = getStrength(room[`Character${data.slot + 1}`], room.gameState, data.slot);
 		const playerLuck = getLuck(room[`Character${data.slot + 1}`], room.gameState, data.slot);
-		const result = Math.floor(Math.random() * 10) + 1;
 		const monsterName = room.gameState.monsterName;
 		const card = monsters[monsterName].hl[data.hitCards[location]];
+		let result = 0;
 
+		if (data.automaticCrits) {
+			result = 'auto-crit';
+			data.automaticCrits--;
+		} else if (data.automaticHits) {
+			result = 'auto';
+			data.automaticHits--;
+		} else {
+			result = Math.floor(Math.random() * 10) + 1;
+		}
 		data.woundRolls[location] = result;
 		if (result === 1) {
 			data.woundResults[location] = 'Fail';
 			failTrigger(card, dispatch, getState);
 		} else if (card.crit && (
+			result === 'auto-crit' ||
 			result + playerLuck + (data.item.diceMods && data.item.diceMods.luck || 0) >= 10
 		)) {
 			data.woundResults[location] = 'Crit';
 			card.crit(dispatch, getState);
 			dispatch(woundAI());
-		} else if (result === 10) {
+		} else if (result === 10 || result === 'auto-crit' || result === 'auto') {
 			data.woundResults[location] = 'Success';
 			woundTrigger(card, dispatch, getState);
 			dispatch(woundAI());

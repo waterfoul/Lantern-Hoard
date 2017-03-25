@@ -10,6 +10,7 @@ const { knockedDownCharacters } = require('./knockedDownCharacters');
 const { playerResources } = require('./playerResources');
 const { monsterDirection } = require('./monsterDirection');
 const { monsterStats } = require('./monsterStats');
+const { gear } = require('./gear');
 
 const noop = (state) => (state || null);
 
@@ -22,7 +23,7 @@ const gameStateReducer = combineReducers({
 	monsterStats,
 	monsterDirection,
 	positions,
-	gear: noop,
+	gear,
 	armor,
 	monsterController,
 	playerResources,

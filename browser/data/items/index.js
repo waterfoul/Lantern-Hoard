@@ -5,6 +5,8 @@ import {organGrinder} from './organGrinder';
 import {skinnery} from './skinnery';
 import {stoneCircle} from './stoneCircle';
 import {weaponCrafter} from './weaponCrafter';
+import {startAttack} from '../../reducers/gameState/playerTurn';
+import {archiveItem} from '../../../common/gameState/gear';
 
 export const items = Object.assign(
 	{
@@ -30,7 +32,13 @@ export const items = Object.assign(
 					name: 'Sling',
 					action: true,
 					movement: false,
-					cb: () => {}
+					thunk: (slot, row, column) => (dispatch, getState) => {
+						dispatch(startAttack(slot, 'Founding Stone', 1, 0, 1, {
+							dice: 1,
+							range: 999
+						}));
+						dispatch(archiveItem(slot, row, column));
+					}
 				}
 			],
 			colorEdges: [null, null, null, null],
