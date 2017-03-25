@@ -14,8 +14,8 @@ export function firstStory() {
 		},
 		ai: {
 			deck: [
-				'Claw',
-				...shuffle(['Chomp', 'Size Up', 'Power Swat', 'Grasp', 'Maul', 'Terrifying Roar', 'Enraged'])
+				//'Claw',
+				//...shuffle(['Chomp', 'Size Up', 'Power Swat', 'Grasp', 'Maul', 'Terrifying Roar', 'Enraged']) disabled for testing
 			],
 			discard: [],
 			wound: []

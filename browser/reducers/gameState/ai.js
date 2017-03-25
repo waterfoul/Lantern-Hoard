@@ -1,5 +1,6 @@
 import {drawAICardAction, woundAIAction, setAIDeckAction} from '../../../common/gameState/ai';
 import {shuffle} from '../../utils/shuffle';
+import {BOARD_STATUSES, changeBoardStatusAction} from '../../../common/gameState/board';
 
 export const drawAICard = () => (
 	(dispatch, getState) => {
@@ -19,6 +20,10 @@ export const woundAI = () => (
 		if (room.gameState.ai.deck.length === 0) {
 			dispatch(setAIDeckAction(shuffle(room.gameState.ai.discard)));
 		}
-		dispatch(woundAIAction());
+		if (room.gameState.ai.deck.length === 0 && room.gameState.ai.discard.length === 0){
+			dispatch(changeBoardStatusAction(BOARD_STATUSES.victory));
+		} else {
+			dispatch(woundAIAction());
+		}
 	}
 );

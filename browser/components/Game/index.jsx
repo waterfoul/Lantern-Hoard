@@ -11,6 +11,7 @@ import {PlayerDamage} from './gameBoardOverlay/PlayerDamage';
 import {PlayerAttack} from './gameBoardOverlay/PlayerAttack';
 import {SelectMonsterTarget} from './gameBoardOverlay/SelectMonsterTarget';
 import {MonsterPosition} from './gameBoardOverlay/MonsterPosition';
+import {Victory} from './gameBoardOverlay/Victory';
 
 import {fetch} from '../../reducers/room';
 import {changeFixState} from '../../reducers/flexBoxFix';
@@ -45,6 +46,8 @@ class GameComponent extends Component {
 				return <PlayerDamage />;
 			case BOARD_STATUSES.playerAttack:
 				return <PlayerAttack />;
+			case BOARD_STATUSES.victory:
+				return <Victory />;
 			default:
 				return null;
 			}
