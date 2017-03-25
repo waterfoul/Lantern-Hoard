@@ -38,7 +38,6 @@ export function closestThreatFacingInRange(gameState, dispatch) {
 }
 
 export function closestThreatInFieldOfView(gameState, dispatch) {
-	console.log('firing off closestThreatInFieldOfView');
 	const positions = [
 		gameState.positions.player1,
 		gameState.positions.player2,
@@ -112,8 +111,6 @@ export function closestInRange(gameState, dispatch) {
 }
 
 export function lastToWoundInRange(gameState, dispatch) {
-	console.log('Revenge!');
-
 	const lastToWoundOrder = gameState.woundOrder;
 	const positions = lastToWoundOrder.map((slot) => {
 		return gameState.positions[`player${slot + 1}`];
