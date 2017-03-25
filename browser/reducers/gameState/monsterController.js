@@ -25,22 +25,11 @@ function processPick(options, gameState, dispatch, nextStatus, i = 0) {
 	});
 }
 
-function selectMonsterPosition(dispatch, positions) {
-	return new Promise((resolve, reject) => {
-		dispatch(changeBoardStatusAction(BOARD_STATUSES.showMonsterPositions, positions));
-
-		const unsub = store.subscribe(() => {
-			const { room } = store.getState();
-			if (room.gameState.board.status === BOARD_STATUSES.showMonsterPositionsResult) {
-				resolve(room.gameState.board.data);
-				dispatch(changeBoardStatusAction(BOARD_STATUSES.generic));
-				unsub();
-			}
-		});
-	});
+function selectMonsterPosition(target, speed, accuracy, damage, positions, dispatch, nextStatus) {
+	dispatch(changeBoardStatusAction(BOARD_STATUSES.showMonsterPositions, {target, speed, accuracy, damage, positions, nextStatus}));
 }
 
-function getNewMonsterLocation(target, gameState, dispatch) {
+function getNewMonsterLocation(target, speed, accuracy, damage, gameState, dispatch, nextStatus) {
 	const playerPosition = gameState.positions['player' + (target + 1)];
 	const monsterSize = gameState.monsterStats.size;
 
@@ -64,11 +53,11 @@ function getNewMonsterLocation(target, gameState, dispatch) {
 	const results = options.filter((ele, i) => distances[i] === min);
 
 	if (results.length === 0) {
-		return Promise.reject('FAILURE! No valid spot for the monster! UNIMPLEMENTED!');
+		throw new Error('FAILURE! No valid spot for the monster! UNIMPLEMENTED!');
 	} else if (results.length === 1) {
-		return Promise.resolve(results[0]);
+		dispatch(attackAfterMove(target, speed, accuracy, damage, results[0], nextStatus));
 	} else {
-		return selectMonsterPosition(dispatch, results);
+		selectMonsterPosition(target, speed, accuracy, damage, results, dispatch, nextStatus);
 	}
 }
 
@@ -86,22 +75,7 @@ function attackPlayer(target, dispatch, speed, accuracy, damage, nextStatus) {
 export function processAttack(target, gameState, dispatch, {move, speed, accuracy, damage}, nextStatus) {
 	if (target !== null) {
 		if (move) {
-			getNewMonsterLocation(target, gameState, dispatch).then((newLocation) => {
-				dispatch(moveMonster(newLocation));
-				const playerLoc = gameState.positions[`player${target + 1}`];
-				const diffX = playerLoc[0] - newLocation[0];
-				const diffY = playerLoc[1] - newLocation[1];
-				if (diffY < -1) {
-					dispatch(changeMonsterDirection('S'));
-				} else if (diffX < 0) {
-					dispatch(changeMonsterDirection('W'));
-				} else if (diffX > 1) {
-					dispatch(changeMonsterDirection('E'));
-				} else {
-					dispatch(changeMonsterDirection('N'));
-				}
-				return attackPlayer(target, dispatch, speed, accuracy, damage, nextStatus);
-			});
+			getNewMonsterLocation(target, speed, accuracy, damage, gameState, dispatch, nextStatus);
 		} else {
 			attackPlayer(target, dispatch, speed, accuracy, damage, nextStatus);
 		}
@@ -128,6 +102,28 @@ export const startMonsterTurn = () => (
 	}
 );
 
+export const attackAfterMove = (target, speed, accuracy, damage, newLocation, nextStatus) => (
+	(dispatch, getState) => {
+		const {room} = getState();
+		const {gameState} = room;
+
+		dispatch(moveMonster(newLocation));
+		const playerLoc = gameState.positions[`player${target + 1}`];
+		const diffX = playerLoc[0] - newLocation[0];
+		const diffY = playerLoc[1] - newLocation[1];
+		if (diffY < -1) {
+			dispatch(changeMonsterDirection('S'));
+		} else if (diffX < 0) {
+			dispatch(changeMonsterDirection('W'));
+		} else if (diffX > 1) {
+			dispatch(changeMonsterDirection('E'));
+		} else {
+			dispatch(changeMonsterDirection('N'));
+		}
+		attackPlayer(target, dispatch, speed, accuracy, damage, nextStatus);
+	}
+);
+
 const processNextAction = (board = {data: {step: 0}}) => (
 	(dispatch, getState) => {
 		const {room, auth: user} = getState();
@@ -142,6 +138,9 @@ const processNextAction = (board = {data: {step: 0}}) => (
 					}]);
 				} else if (action.type === 'attack') {
 					processAttack(board.data.target, gameState, dispatch, action, [BOARD_STATUSES.processMonsterAction, {
+						step: board.data.step + 1,
+						target: board.data.target
+					}], [BOARD_STATUSES.processMonsterAction, {
 						step: board.data.step + 1,
 						target: board.data.target
 					}]);
