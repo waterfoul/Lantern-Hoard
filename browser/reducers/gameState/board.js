@@ -60,6 +60,7 @@ const locations = [
 	'foot',
 	'body'
 ];
+
 export const applyDamage = () => (
 	(dispatch, getState) => {
 		const {room} = getState();
@@ -67,6 +68,6 @@ export const applyDamage = () => (
 		data.wounds.forEach((roll) => {
 			dispatch(damageArmor(data.target, locations[roll], data.damage));
 		});
-		dispatch(changeBoardStatus(BOARD_STATUSES.playerDamageFinish));
+		dispatch(changeBoardStatus.apply(null, data.nextStatus));
 	}
 );

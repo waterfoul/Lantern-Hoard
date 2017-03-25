@@ -4,8 +4,11 @@ import { connect } from 'react-redux';
 import { takeControl } from '../../../reducers/room';
 import { changeBoardStatusAction, BOARD_STATUSES } from '../../../../common/gameState/board';
 import { getStats } from '../../../utils/getStats';
+
 import { PleaseWait } from './CollapsedActions/PleaseWait';
 import { PlayerTurn } from './CollapsedActions/PlayerTurn';
+import { SelectCharacter } from './CollapsedActions/SelectCharacter';
+import { SelectActingCharacter } from './CollapsedActions/SelectActingCharacter';
 
 const getPlacementText = (positions, room, slot, user) => {
 	const placingPlayer = (!positions.player1 ? 0 : (!positions.player2 ? 1 : (!positions.player3 ? 2 : 3)));
@@ -22,7 +25,6 @@ function getButtons({
 	slot,
 	user,
 	board,
-	boardError,
 	monsterController,
 	takeControlEvt,
 	changeBoardStatusActionDisp
@@ -42,25 +44,9 @@ function getButtons({
 				</div>
 			);
 		case BOARD_STATUSES.targetChoice:
-			return (
-				<div className="col-md-7 col-sm-12">
-					{room.gameState.board.data.indexOf(slot) !== -1 ? (
-						<div className="col-md-6 col-sm-12">
-								{ user.id === monsterController ? <button className="btn btn-primary" onClick={() => changeBoardStatusActionDisp(BOARD_STATUSES.targetChosen, slot)}>Select</button> : 'Please Wait...' }
-						</div>
-					) : ''}
-				</div>
-			);
+			return <SelectCharacter slot={slot} />;
 		case BOARD_STATUSES.selectActingCharacter:
-			return (
-				<div className="col-md-7 col-sm-12">
-					{room.gameState.board.data.indexOf(slot) !== -1 ? (
-						<div className="col-md-6 col-sm-12">
-							<button className="btn btn-primary" onClick={() => changeBoardStatusActionDisp(BOARD_STATUSES.actingCharacterChosen, slot)}>Begin Turn</button>
-						</div>
-					) : ''}
-				</div>
-			);
+			return <SelectActingCharacter slot={slot} />;
 		case BOARD_STATUSES.playerDamage:
 			return (
 				<div className="col-md-7 col-sm-12">
@@ -98,9 +84,9 @@ function getButtons({
 }
 
 function armorDisp(val) {
-	if(val === -2) {
+	if (val === -2) {
 		return 'H';
-	} else if(val === -1) {
+	} else if (val === -1) {
 		return 'L';
 	} else {
 		return val;

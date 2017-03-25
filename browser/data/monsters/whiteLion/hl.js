@@ -4,8 +4,9 @@ import {BOARD_STATUSES} from '../../../../common/gameState/board';
 import { adjustMonsterStats } from '../../../../common/gameState/monsterStats';
 import {ai} from './ai';
 
+
 function moveForward(dispatch, getState) {
-	const {room} = getState();
+	const { room } = getState();
 	const monsterMovement = room.gameState.monsterStats.movement;
 	const monsterPosition = room.gameState.positions.monster;
 	const monsterDirection = room.gameState.monsterDirection;
@@ -22,6 +23,9 @@ function moveForward(dispatch, getState) {
 	case 'W':
 		dispatch(moveMonster([monsterPosition[0] - monsterMovement, monsterPosition[1]]));
 		break;
+		// dafault makes linter happy
+	default:
+		return null;
 	}
 	// TODO: Add Grab functionality
 }
