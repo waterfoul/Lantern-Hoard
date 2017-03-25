@@ -13,32 +13,41 @@ export const PlayerTurn = connect(
 		user: auth,
 		playerResources: room.gameState.playerResources
 	}),
-	{
-		moveCharacterDispatch: moveCharacter,
-		changeBoardStatusActionDispatch: changeBoardStatusAction,
-		startAttackDispatch: startAttack
-	}
-)(({ slot, room, board, user, playerResources, moveCharacterDispatch, changeBoardStatusActionDispatch, startAttackDispatch }) => {
+	(dispatch) => ({
+		moveCharacterDispatch: (character) => dispatch(moveCharacter(character)),
+		changeBoardStatusActionDispatch:  (status, data) => dispatch(changeBoardStatusAction(status, data)),
+		startAttackDispatch:  (slot, weapon) => dispatch(startAttack(slot, weapon)),
+		dispatch
+	})
+)(({ slot, room, board, user, playerResources, moveCharacterDispatch, changeBoardStatusActionDispatch, startAttackDispatch, dispatch }) => {
 	if (slot === board.data && user.id === room[`Player${slot + 1}`].id) {
-		const gear = room.gameState.gear[slot].reduce((acc, ele) => [...acc, ...ele], []).filter((ele) => ele != '');
-		const actionList = gear.reduce((acc, ele) => {
-			const item = items[ele];
-			const result = [...acc, ...item.specialAbilities.map((abil) => Object.assign({}, abil, {
-				name: ele + ' (' + abil.name + ')'
-			}))];
-			if (item.descriptors.indexOf('weapon') !== -1) {
-				result.push({
-					name: ele + ' (Attack)',
-					movement: item.traits.indexOf('cumbersome') !== -1,
-					action: true,
-					cb: () => {
-						startAttackDispatch(slot, ele);
+		const actionList = room.gameState.gear[slot].reduce((acc, data, row) => {
+			const result = [...acc];
+			data.map((name, column) => {
+				const item = items[name];
+				if (item) {
+					item.specialAbilities.forEach((ability) => {
+						result.push(Object.assign({}, ability, {
+							name: name + ' (' + ability.name + ')',
+							cb: () => {
+								dispatch(ability.thunk(slot, row, column));
+							}
+						}));
+					});
+					if (item.descriptors.indexOf('weapon') !== -1) {
+						result.push({
+							name: name + ' (Attack)',
+							movement: item.traits.indexOf('cumbersome') !== -1,
+							action: true,
+							cb: () => {
+								startAttackDispatch(slot, name);
+							}
+						});
 					}
-				});
-			}
+				}
+			});
 			return result;
 		}, []);
-
 		return (
 			<div className="col-md-7 col-sm-12 attack-buttons container-fluid">
 				{playerResources.movements > 0 ? (
