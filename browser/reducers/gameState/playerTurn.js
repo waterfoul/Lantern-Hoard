@@ -9,25 +9,6 @@ import { items } from '../../data/items';
 import { getAccuracy, getStrength, getLuck } from '../../utils/getStats';
 import { monsters } from '../../data/monsters';
 
-// Gets player input for selecting character turn
-function selectActingCharacter(dispatch, characters) {
-	if (characters.length === 1) {
-		return Promise.resolve(characters[0]);
-	}
-	return new Promise((resolve, reject) => {
-		dispatch(changeBoardStatusAction(BOARD_STATUSES.selectActingCharacter, characters));
-
-		const unsub = store.subscribe(() => {
-			const { room } = store.getState();
-			if (room.gameState.board.status === BOARD_STATUSES.actingCharacterChosen) {
-				resolve(room.gameState.board.data);
-				dispatch(changeBoardStatusAction(BOARD_STATUSES.generic));
-				unsub();
-			}
-		});
-	});
-}
-
 // Gets player input for character movement
 function getCharacterMoveInput(dispatch, character) {
 	return new Promise((resolve, reject) => {
@@ -56,21 +37,34 @@ function waitForTurnEnd() {
 	});
 }
 
-function characterTurn(dispatch, availableCharacters = [0, 1, 2, 3]) {
-	return selectActingCharacter(dispatch, availableCharacters)
-		.then((player) => {
-			dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, player));
-			dispatch(changePlayerResources(1, 1));
-			return waitForTurnEnd().then(() => player);
-		})
-		.then((player) => {
-			if (availableCharacters.length > 1) {
-				return characterTurn(dispatch, availableCharacters.filter((element) => element !== player));
+// Thunks
+export const startSingleTurn = (character, availableCharacters = null) => (
+	(dispatch, getState) => {
+		const { room } = getState();
+		if (!availableCharacters) {
+			availableCharacters = room.gameState.board.data;
+		}
+
+		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, character));
+		dispatch(changePlayerResources(1, 1));
+		waitForTurnEnd().then(() => {
+			const nextChars = availableCharacters.filter((element) => element !== character);
+			if (nextChars.length === 0) {
+				dispatch(startMonsterTurn());
+			} else if (nextChars.length === 0) {
+				dispatch(startSingleTurn(nextChars[0], nextChars));
+			} else {
+				dispatch(changeBoardStatusAction(BOARD_STATUSES.selectActingCharacter, nextChars));
 			}
 		});
-}
+	}
+);
 
-// Thunks
+export const startPlayerTurn = () => (
+	(dispatch, getState) => {
+		dispatch(changeBoardStatusAction(BOARD_STATUSES.selectActingCharacter, [0, 1, 2, 3]));
+	}
+);
 
 // Is a thunk that moves the character
 export const moveCharacter = (character) => (
@@ -79,15 +73,6 @@ export const moveCharacter = (character) => (
 			.then((coordinates) => {
 				dispatch(moveToken(`player${character + 1}`, coordinates));
 				dispatch(useMovement());
-			});
-	}
-);
-
-export const startPlayerTurn = () => (
-	(dispatch, getState) => {
-		characterTurn(dispatch)
-			.then(() => {
-				dispatch(startMonsterTurn());
 			});
 	}
 );
