@@ -14,7 +14,8 @@ const BOARD_STATUSES = {
 	playerAttack: 'PLAYER_ATTACK', // Shows the player attack dialog
 	showMonsterPositions: 'SHOW_MONSTER_POSITIONS', // Prompts the monster controller to pick a monster position
 	showMonsterPositionsResult: 'SHOW_MONSTER_POSITIONS_RESULT', // Returns monster controller results
-	processMonsterAction: 'PROCESS_MONSTER_ACTION' // triggers the processing of the next monster action
+	processMonsterAction: 'PROCESS_MONSTER_ACTION', // triggers the processing of the next monster action
+	victory: 'VICTORY' // Displays when the monster is killed
 };
 
 //actions
@@ -29,10 +30,14 @@ const initialState = {
 const board = (state = initialState, action) => {
 	switch (action.type) {
 	case CHANGE_BOARD_STATUS:
-		return {
-			status: action.status,
-			data: action.data
-		};
+		if (state.status !== BOARD_STATUSES.victory) {
+			return {
+				status: action.status,
+				data: action.data
+			};
+		} else {
+			return state;
+		}
 	default:
 		return state;
 	}
