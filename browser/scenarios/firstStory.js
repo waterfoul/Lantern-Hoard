@@ -7,7 +7,7 @@ export function firstStory() {
 	return {
 		hl: {
 			deck: [
-				'Beasts Ear', 'Beasts Ear', 'Beasts Ear',
+				'Strange Hand',
 				...shuffle(Object.keys(whiteLion.hl).filter((ele) => (ele !== 'Strange Hand')))
 			],
 			discard: []
