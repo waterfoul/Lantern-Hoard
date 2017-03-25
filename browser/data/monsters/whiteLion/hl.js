@@ -27,7 +27,21 @@ function moveForward(dispatch, getState) {
 }
 
 function jumpBack(dispatch, getState) {
-	console.log('JUMP BACK!');
+	const {room} = getState();
+	const attacker = room.gameState.board.data.slot;
+	const attackerPosition = room.gameState.positions[`player${attacker + 1}`];
+	const monsterPosition = room.gameState.positions.monster;
+	const monsterSize = room.gameState.monsterStats.size;
+	let diffX = monsterPosition[0] - attackerPosition[0];
+	let diffY = monsterPosition[1] - attackerPosition[1];
+	console.log(attackerPosition, monsterPosition, diffY, diffX);
+	if (diffY < monsterSize && diffY > 0) diffY = 0;
+	if (diffX > (-1 * monsterSize) && diffX < 0) diffX = 0;
+	if (diffX === 0 || Math.abs(diffX) < Math.abs(diffY)) {
+		dispatch(moveMonster([monsterPosition[0], monsterPosition[1] + diffY / Math.abs(diffY)]));
+	} else {
+		dispatch(moveMonster([monsterPosition[0] + diffX / Math.abs(diffX), monsterPosition[1]]));
+	}
 }
 
 function giveToken(dispatch, getState, value, tokenType) {
