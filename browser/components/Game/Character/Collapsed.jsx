@@ -97,6 +97,16 @@ function getButtons({
 	}
 }
 
+function armorDisp(val) {
+	if(val === -2) {
+		return 'H';
+	} else if(val === -1) {
+		return 'L';
+	} else {
+		return val;
+	}
+}
+
 export const Collapsed = connect(
 	({ room, boardError, auth }) => ({
 		armor: room.gameState.armor,
@@ -139,15 +149,15 @@ export const Collapsed = connect(
 					<div>
 						<i className="glyphicon glyphicon-heart" />&nbsp;
 						<span>
-							{armor[slot].head}
+							{armorDisp(armor[slot].head)}
 							&nbsp;/&nbsp;
-							{armor[slot].body}
+							{armorDisp(armor[slot].body)}
 							&nbsp;/&nbsp;
-							{armor[slot].waist}
+							{armorDisp(armor[slot].waist)}
 							&nbsp;/&nbsp;
-							{armor[slot].hand}
+							{armorDisp(armor[slot].hand)}
 							&nbsp;/&nbsp;
-							{armor[slot].foot}
+							{armorDisp(armor[slot].foot)}
 						</span>
 					</div>
 				</div>
