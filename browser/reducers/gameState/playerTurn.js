@@ -9,7 +9,14 @@ import { getAccuracy, getStrength, getLuck } from '../../utils/getStats';
 import { monsters } from '../../data/monsters';
 import { playerHasWounded } from '../../../common/gameState/woundOrder';
 
-// Thunks
+// Internals
+const trigger = (card, type, dispatch, getState) => (
+	card.triggers && card.triggers
+		.filter((trg) => trg.type === type)
+		.map((trg) => trg.action(dispatch, getState))
+);
+
+// UI Thunks
 export const startSingleTurn = (character, availableCharacters = null) => (
 	(dispatch, getState) => {
 		const { room } = getState();
@@ -23,7 +30,7 @@ export const startSingleTurn = (character, availableCharacters = null) => (
 );
 
 export const endSingleTurn = ({availableCharacters, character}) => (
-	(dispatch, getState) => {
+	(dispatch) => {
 		console.log({availableCharacters, character});
 		const nextChars = availableCharacters.filter((element) => element !== character);
 		if (nextChars.length === 0) {
@@ -36,47 +43,11 @@ export const endSingleTurn = ({availableCharacters, character}) => (
 	}
 );
 
-export const startPlayerTurn = () => (
-	(dispatch, getState) => {
-		dispatch(changeBoardStatusAction(BOARD_STATUSES.selectActingCharacter, [0, 1, 2, 3]));
-	}
-);
-
-// Is a thunk that moves the character
-export const moveCharacter = ({character, availableCharacters}) => (
-	(dispatch, getState) => {
-		dispatch(changeBoardStatusAction(BOARD_STATUSES.showAvailableMovement, {
-			character,
-			availableCharacters
-		}));
-	}
-);
-
 export const finishMovement = (coordinates, {character, availableCharacters}) => (
-	(dispatch, getState) => {
+	(dispatch) => {
 		dispatch(moveToken(`player${character + 1}`, coordinates));
 		dispatch(useMovement());
 		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, {character, availableCharacters}));
-	}
-);
-
-export const startAttack = (slot, weapon, automaticHits = 0, automaticWounds = 0, automaticCrits = 0, overrides = {}) => (
-	(dispatch, getState) => {
-		const item = Object.assign({}, items[weapon], overrides);
-		const {room} = getState();
-		if (item.traits.indexOf('cumbersome') !== -1) {
-			dispatch(useMovement());
-		}
-		dispatch(useAction());
-		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerAttack, {
-			item,
-			slot,
-			automaticHits,
-			automaticWounds,
-			automaticCrits,
-			character: room.gameState.board.data.character,
-			availableCharacters: room.gameState.board.data.availableCharacters
-		}));
 	}
 );
 
@@ -123,16 +94,20 @@ export const rollToHit = () => (
 	}
 );
 
-const woundTrigger = (card, dispatch, getState) => (
-	card.triggers && card.triggers
-		.filter((trg) => trg.type === 'wound')
-		.map((trg) => trg.action(dispatch, getState))
-);
+export const closeAttack = () => (
+	(dispatch, getState) => {
+		const {room} = getState();
+		const data = room.gameState.board.data;
+		const monsterName = room.gameState.monsterName;
+		if (data.trap) {
+			const trapCard = monsters[monsterName].hl[data.trap];
+			trapCard.action(dispatch, getState);
 
-const failTrigger = (card, dispatch, getState) => (
-	card.triggers && card.triggers
-		.filter((trg) => trg.type === 'failure')
-		.map((trg) => trg.action(dispatch, getState))
+			dispatch(shuffleHL());
+		} else {
+			dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, {character: data.character, availableCharacters: data.availableCharacters}));
+		}
+	}
 );
 
 export const rollToWound = (location) => (
@@ -157,7 +132,8 @@ export const rollToWound = (location) => (
 		data.woundRolls[location] = result;
 		if (result === 1) {
 			data.woundResults[location] = 'Fail';
-			failTrigger(card, dispatch, getState);
+			trigger(card, 'failure', dispatch, getState);
+			trigger(card, 'reflex', dispatch, getState);
 		} else if (card.crit && (
 				result === 'auto-crit' ||
 				result + playerLuck + (data.item.diceMods && data.item.diceMods.luck || 0) >= 10
@@ -168,34 +144,57 @@ export const rollToWound = (location) => (
 			dispatch(woundAI());
 		} else if (result === 10 || result === 'auto-crit' || result === 'auto') {
 			data.woundResults[location] = 'Success';
-			woundTrigger(card, dispatch, getState);
+			trigger(card, 'wound', dispatch, getState);
+			trigger(card, 'reflex', dispatch, getState);
 			dispatch(playerHasWounded(room.gameState.board.data.slot));
 			dispatch(woundAI());
 		} else if ((result + playerStr) > room.gameState.monsterStats.toughness) {
 			data.woundResults[location] = 'Success';
-			woundTrigger(card, dispatch, getState);
+			trigger(card, 'wound', dispatch, getState);
+			trigger(card, 'reflex', dispatch, getState);
 			dispatch(playerHasWounded(room.gameState.board.data.slot));
 			dispatch(woundAI());
 		} else {
 			data.woundResults[location] = 'Fail';
-			failTrigger(card, dispatch, getState);
+			trigger(card, 'failure', dispatch, getState);
+			trigger(card, 'reflex', dispatch, getState);
 		}
 		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerAttack, data));
 	}
 );
 
-export const closeAttack = () => (
-	(dispatch, getState) => {
-		const {room} = getState();
-		const data = room.gameState.board.data;
-		const monsterName = room.gameState.monsterName;
-		if (data.trap) {
-			const trapCard = monsters[monsterName].hl[data.trap];
-			trapCard.action(dispatch, getState);
+// Externals
+export const startPlayerTurn = () => (
+	(dispatch) => {
+		dispatch(changeBoardStatusAction(BOARD_STATUSES.selectActingCharacter, [0, 1, 2, 3]));
+	}
+);
 
-			dispatch(shuffleHL());
-		} else {
-			dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, {character: data.character, availableCharacters: data.availableCharacters}));
+export const moveCharacter = ({character, availableCharacters}) => (
+	(dispatch) => {
+		dispatch(changeBoardStatusAction(BOARD_STATUSES.showAvailableMovement, {
+			character,
+			availableCharacters
+		}));
+	}
+);
+
+export const startAttack = (slot, weapon, automaticHits = 0, automaticWounds = 0, automaticCrits = 0, overrides = {}) => (
+	(dispatch, getState) => {
+		const item = Object.assign({}, items[weapon], overrides);
+		const {room} = getState();
+		if (item.traits.indexOf('cumbersome') !== -1) {
+			dispatch(useMovement());
 		}
+		dispatch(useAction());
+		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerAttack, {
+			item,
+			slot,
+			automaticHits,
+			automaticWounds,
+			automaticCrits,
+			character: room.gameState.board.data.character,
+			availableCharacters: room.gameState.board.data.availableCharacters
+		}));
 	}
 );
