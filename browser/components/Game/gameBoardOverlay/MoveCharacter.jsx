@@ -1,33 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { monsters } from '../../../data/monsters';
-import { move } from '../../../reducers/gameState/positions';
 import { BOARD_STATUSES, changeBoardStatusAction } from '../../../../common/gameState/board';
+import { finishMovement } from '../../../reducers/gameState/playerTurn';
 import { getMovement } from '../../../utils/getStats';
-
-function doesntOverlapMonster(monsterName, monsterPosition, coords) {
-
-}
 
 
 export const MoveCharacter = connect(
 	({ room, auth }) => ({
 		monsterName: room.gameState.monsterName,
 		positions: room.gameState.positions,
-		slot: room.gameState.board.data,
+		data: room.gameState.board.data,
 		room: room,
 		user: auth
 	}),
-	(dispatch) => ({
-		placeCurrent: (location) => {
-			dispatch(changeBoardStatusAction(BOARD_STATUSES.moveCharacter, location));
-		}
-	})
+	{placeCurrent: finishMovement}
 )(
-	({ monsterName, positions, room, user, placeCurrent, slot }) => {
-		const currentCharacterMovement = getMovement(room[`Character${slot + 1}`], room.gameState, slot);
-		const currentPlayerPosition = positions[`player${slot + 1}`];
+	({ positions, room, placeCurrent, data }) => {
+		const currentCharacterMovement = getMovement(room[`Character${data.character + 1}`], room.gameState, data.character);
+		const currentPlayerPosition = positions[`player${data.character + 1}`];
 		let options = [];
 
 		for (let i = currentCharacterMovement; i > 0; i--) {
@@ -71,7 +62,7 @@ export const MoveCharacter = connect(
 									'x-' + loc[0],
 									'y-' + loc[1]
 								].join(' ')}
-								onClick={() => placeCurrent(loc)}
+								onClick={() => placeCurrent(loc, data)}
 							/>
 
 						);
