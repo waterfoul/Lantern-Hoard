@@ -52,12 +52,14 @@ function getNewMonsterLocation(target, gameState, dispatch) {
 		// below
 		options.push([playerPosition[0] - i, playerPosition[1] - 1]);
 		// left
-		options.push([playerPosition[0] - monsterSize, playerPosition[1] - i]);
+		options.push([playerPosition[0] - monsterSize, playerPosition[1] + i]);
 		// right
-		options.push([playerPosition[0] + 1, playerPosition[1] - i]);
+		options.push([playerPosition[0] + 1, playerPosition[1] + i]);
 	}
 
-	const distances = options.map((ele) => getDistance(gameState.monsterStats.size, gameState.positions.monster, ele));
+	// When comparing distances to move ignore monster size since the movement is the same no matter what size the monster is
+	const distances = options.map((ele) => getDistance(1, gameState.positions.monster, ele));
+	console.log(distances, options);
 
 	const min = Math.min.apply(Math, distances);
 
