@@ -6,21 +6,21 @@ function moveForward(dispatch, getState) {
 	const monsterPosition = room.gameState.positions.monster;
 	const monsterDirection = room.gameState.monsterDirection;
 	switch (monsterDirection) {
-		case 'N':
-			dispatch(moveMonster([monsterPosition[0], monsterPosition[1] + monsterMovement]));
-			break;
-		case 'S':
-			dispatch(moveMonster([monsterPosition[0], monsterPosition[1] - monsterMovement]));
-			break;
-		case 'E':
-			dispatch(moveMonster([monsterPosition[0] + monsterMovement, monsterPosition[1]]));
-			break;
-		case 'W':
-			dispatch(moveMonster([monsterPosition[0] - monsterMovement, monsterPosition[1]]));
-			break;
+	case 'N':
+		dispatch(moveMonster([monsterPosition[0], monsterPosition[1] + monsterMovement]));
+		break;
+	case 'S':
+		dispatch(moveMonster([monsterPosition[0], monsterPosition[1] - monsterMovement]));
+		break;
+	case 'E':
+		dispatch(moveMonster([monsterPosition[0] + monsterMovement, monsterPosition[1]]));
+		break;
+	case 'W':
+		dispatch(moveMonster([monsterPosition[0] - monsterMovement, monsterPosition[1]]));
+		break;
 		// dafault makes linter happy
-		default:
-			return null;
+	default:
+		return null;
 	}
 }
 function jumpBack(dispatch, getState) {
