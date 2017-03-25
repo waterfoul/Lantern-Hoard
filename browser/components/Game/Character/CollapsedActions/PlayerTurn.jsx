@@ -5,6 +5,29 @@ import { moveCharacter, startAttack } from '../../../../reducers/gameState/playe
 import { changeBoardStatusAction, BOARD_STATUSES } from '../../../../../common/gameState/board';
 import { items } from '../../../../data/items';
 
+function buildButtonsForItem(name, result, slot, row, column, dispatch, startAttackDispatch) {
+	const item = items[name];
+	if (item) {
+		item.specialAbilities.forEach((ability) => {
+			result.push(Object.assign({}, ability, {
+				name: name + ' (' + ability.name + ')',
+				cb: () => {
+					dispatch(ability.thunk(slot, row, column));
+				}
+			}));
+		});
+		if (item.descriptors.indexOf('weapon') !== -1) {
+			result.push({
+				name: name + ' (Attack)',
+				movement: item.traits.indexOf('cumbersome') !== -1,
+				action: true,
+				cb: () => {
+					startAttackDispatch(slot, name);
+				}
+			});
+		}
+	}
+}
 
 export const PlayerTurn = connect(
 	({ auth, room }) => ({
@@ -24,30 +47,12 @@ export const PlayerTurn = connect(
 		const actionList = room.gameState.gear[slot].reduce((acc, data, row) => {
 			const result = [...acc];
 			data.map((name, column) => {
-				const item = items[name];
-				if (item) {
-					item.specialAbilities.forEach((ability) => {
-						result.push(Object.assign({}, ability, {
-							name: name + ' (' + ability.name + ')',
-							cb: () => {
-								dispatch(ability.thunk(slot, row, column));
-							}
-						}));
-					});
-					if (item.descriptors.indexOf('weapon') !== -1) {
-						result.push({
-							name: name + ' (Attack)',
-							movement: item.traits.indexOf('cumbersome') !== -1,
-							action: true,
-							cb: () => {
-								startAttackDispatch(slot, name);
-							}
-						});
-					}
-				}
+				buildButtonsForItem(name, result, slot, row, column, dispatch, startAttackDispatch);
 			});
 			return result;
 		}, []);
+
+		buildButtonsForItem('Fist & Tooth', actionList, slot, -1, -1, dispatch, startAttackDispatch);
 		return (
 			<div className="col-md-7 col-sm-12 attack-buttons container-fluid">
 				{playerResources.movements > 0 ? (

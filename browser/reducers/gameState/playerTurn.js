@@ -116,7 +116,7 @@ export const rollToHit = () => (
 		const {room} = getState();
 		const data = Object.assign({}, room.gameState.board.data);
 		const monsterName = room.gameState.monsterName;
-		const playerAcc = getAccuracy(room[`Character${data.slot + 1}`], room.gameState, data.slot);
+		const playerAcc = getAccuracy(room[`Character${data.slot + 1}`], room.gameState, data.slot, data.item.diceMods || {});
 
 		data.hitRolls = [];
 		data.hitCards = [];
@@ -170,8 +170,8 @@ export const rollToWound = (location) => (
 	(dispatch, getState) => {
 		const {room} = getState();
 		const data = Object.assign({}, room.gameState.board.data);
-		const playerStr = getStrength(room[`Character${data.slot + 1}`], room.gameState, data.slot);
-		const playerLuck = getLuck(room[`Character${data.slot + 1}`], room.gameState, data.slot);
+		const playerStr = getStrength(room[`Character${data.slot + 1}`], room.gameState, data.slot, data.item.diceMods || {});
+		const playerLuck = getLuck(room[`Character${data.slot + 1}`], room.gameState, data.slot, data.item.diceMods || {});
 		const monsterName = room.gameState.monsterName;
 		const card = monsters[monsterName].hl[data.hitCards[location]];
 		let result = 0;
