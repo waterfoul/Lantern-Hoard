@@ -5,9 +5,6 @@ export const damageArmor = (player, location, amount) => (
 	(dispatch, getState) => {
 		const { room } = getState();
 		const playerArmor = room.gameState.armor[player];
-		console.log('playerArmor values:', playerArmor, "\n knock down status:", room.gameState.knockedDownCharacters);
-
-// Head injury limited to -2 for now
 
 		if (location === 'head' && playerArmor[location] - amount === -1) {
 			amount++; // Head skips the light injury

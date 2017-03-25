@@ -26,7 +26,7 @@ export const items = Object.assign(
 			dice: 2,
 			accuracy: 7,
 			strength: 1,
-			np: {},
+			diceMods: {},
 			specialAbilities: [
 				{
 					name: 'Sling',
@@ -44,6 +44,20 @@ export const items = Object.assign(
 			colorEdges: [null, null, null, null],
 			characterModifiers: {},
 			img: '/static/items/founding-stone.jpg'
+		},
+		'Fist & Tooth': {
+			descriptors: ['weapon', 'melee'],
+			traits: [],
+			dice: 2,
+			accuracy: 8,
+			strength: 0,
+			diceMods: {
+				luck: 1
+			},
+			specialAbilities: [],
+			colorEdges: [null, null, null, null],
+			characterModifiers: {},
+			img: '/static/items/fist-and-tooth.jpg'
 		}
 	},
 	boneSmith,
