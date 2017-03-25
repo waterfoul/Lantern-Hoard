@@ -5,8 +5,6 @@ import { moveCharacter, startAttack, endSingleTurn } from '../../../../reducers/
 import { changeBoardStatusAction, BOARD_STATUSES } from '../../../../../common/gameState/board';
 import { items } from '../../../../data/items';
 
-let nextChars = null;
-
 function buildButtonsForItem(name, result, slot, row, column, dispatch, startAttackDispatch) {
 	const item = items[name];
 	if (item) {
@@ -56,7 +54,6 @@ export const PlayerTurn = connect(
 		}, []);
 
 		buildButtonsForItem('Fist & Tooth', actionList, slot, -1, -1, dispatch, startAttackDispatch);
-		console.log(board.data);
 		return (
 			<div className="col-md-7 col-sm-12 attack-buttons container-fluid">
 				{playerResources.movements > 0 ? (
@@ -68,7 +65,7 @@ export const PlayerTurn = connect(
 					</div>
 				) : null}
 				<div className="col-md-6 col-sm-12">
-					<button className="btn btn-primary btn-xs" onClick={() => {console.log('here');endSingleTurnDispatch(board.data);}}>End Turn</button>
+					<button className="btn btn-primary btn-xs" onClick={() => endSingleTurnDispatch(board.data)}>End Turn</button>
 				</div>
 				{actionList.map((action, i) => ((
 					(playerResources.actions > 0 || !action.action) &&
