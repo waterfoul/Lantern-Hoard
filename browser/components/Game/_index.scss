@@ -174,7 +174,9 @@
 			background-image: url("/static/dice/" + $i + ".png");
 		}
 	}
-
+	&.dice-auto, &.dice-auto-crit {
+		background-image: url("/static/dice/auto.png");
+	}
 	@for $i from 1 through 6 {
 		&.wound-#{$i} {
 			background-image: url("/static/wound-dice/" + $i + ".png");

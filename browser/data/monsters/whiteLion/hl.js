@@ -1,4 +1,9 @@
-import { moveMonster } from '../../../reducers/gameState/positions';
+import {moveMonster} from '../../../reducers/gameState/positions';
+import {processAttack} from '../../../reducers/gameState/monsterController';
+import {BOARD_STATUSES} from '../../../../common/gameState/board';
+import { adjustMonsterStats } from '../../../../common/gameState/monsterStats';
+import {ai} from './ai';
+
 
 function moveForward(dispatch, getState) {
 	const { room } = getState();
@@ -22,9 +27,47 @@ function moveForward(dispatch, getState) {
 		default:
 			return null;
 	}
+	// TODO: Add Grab functionality
 }
+
 function jumpBack(dispatch, getState) {
-	console.log('JUMP BACK!');
+	const {room} = getState();
+	const attacker = room.gameState.board.data.slot;
+	const attackerPosition = room.gameState.positions[`player${attacker + 1}`];
+	const monsterPosition = room.gameState.positions.monster;
+	const monsterSize = room.gameState.monsterStats.size;
+	let diffX = monsterPosition[0] - attackerPosition[0];
+	let diffY = monsterPosition[1] - attackerPosition[1];
+	console.log(attackerPosition, monsterPosition, diffY, diffX);
+	if (diffY < monsterSize && diffY > 0) diffY = 0;
+	if (diffX > (-1 * monsterSize) && diffX < 0) diffX = 0;
+	if (diffX === 0 || Math.abs(diffX) < Math.abs(diffY)) {
+		dispatch(moveMonster([monsterPosition[0], monsterPosition[1] + diffY / Math.abs(diffY)]));
+	} else {
+		dispatch(moveMonster([monsterPosition[0] + diffX / Math.abs(diffX), monsterPosition[1]]));
+	}
+}
+
+function giveToken(dispatch, getState, value, tokenType) {
+	dispatch(adjustMonsterStats({ [tokenType]: value} ));
+}
+
+function persistentInjury(dispatch, getState, card) {
+	console.log('THIS HL CARD BECOMES A PERSISTENT INJURY');
+	// Function for making a HL card a persistent injury
+}
+
+function counterAttack(dispatch, getState, mods = {}, nextState = null) {
+	const {room} = getState();
+	if (!nextState) {
+		nextState = [room.gameState.board.status, room.gameState.board.data];
+	}
+
+	processAttack(room.gameState.board.data.slot, room.gameState, dispatch, Object.assign(
+		{},
+		ai.cards['Basic Action'].actions[1],
+		mods
+	), nextState);
 }
 
 export const hl = {
@@ -37,7 +80,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(dispatch, getState, -1, 'accuracy');
 		}
 	},
 	'Beasts Brow': {
@@ -47,11 +90,13 @@ export const hl = {
 				type: 'wound',
 				action: (dispatch, getState) => {
 					console.log('WOUND!');
+					counterAttack(dispatch, getState);
+					// Attacker suffers 1 brain damage
 				}
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(dispatch, getState, -1, 'accuracy');
 		}
 	},
 	'Beasts Chest': {
@@ -64,6 +109,7 @@ export const hl = {
 		],
 		crit: (dispatch, getState) => {
 			console.log('CRIT!');
+			// Chance of WL dying instantly
 		}
 	},
 	'Beasts Ear': {
@@ -75,7 +121,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(dispatch, getState, -1, 'accuracy');
 		}
 	},
 	'Beasts Elbow': {
@@ -93,7 +139,7 @@ export const hl = {
 	'Beasts Femur': {
 		img: '/static/white-lion/hl/beasts-femur.jpg',
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(dispatch, getState, -1, 'movement');
 		}
 	},
 	'Beasts Flank': {
@@ -113,13 +159,13 @@ export const hl = {
 	'Beasts Heel': {
 		img: '/static/white-lion/hl/beasts-heel.jpg',
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			persistentInjury(dispatch, getState, 'Beasts Heel');
 		}
 	},
 	'Beasts Knee': {
 		img: '/static/white-lion/hl/beasts-knee.jpg',
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(dispatch, getState, -1, 'movement');
 		}
 	},
 	'Beasts Maw': {
@@ -133,7 +179,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			persistentInjury(dispatch, getState, 'Beasts Maw');
 		}
 	},
 	'Beasts Paw': {
@@ -142,12 +188,12 @@ export const hl = {
 			{
 				type: 'failure',
 				action: (dispatch, getState) => {
-					console.log('FAIL!');
+					counterAttack(dispatch, getState, {damage: 3});
 				}
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			persistentInjury(dispatch, getState, 'Beasts Paw');
 		}
 	},
 	'Beasts Ribs': {
@@ -161,7 +207,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(dispatch, getState, -1, 'toughness');
 		}
 	},
 	'Beasts Scapular Deltoid': {
@@ -173,7 +219,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(dispatch, getState, -1, 'movement');
 		}
 	},
 	'Beasts Tail': {
@@ -185,7 +231,7 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			giveToken(dispatch, getState, -1, 'accuracy');
 		}
 	},
 	'Beasts Temple': {
@@ -193,13 +239,11 @@ export const hl = {
 		triggers: [
 			{
 				type: 'failure',
-				action: (dispatch, getState) => {
-					console.log('FAIL!');
-				}
+				action: counterAttack
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			persistentInjury(dispatch, getState, 'Beasts Temple');
 		}
 	},
 	'Beasts Tricep': {
@@ -207,9 +251,7 @@ export const hl = {
 		triggers: [
 			{
 				type: 'failure',
-				action: (dispatch, getState) => {
-					console.log('FAIL!');
-				}
+				action: counterAttack
 			}
 		],
 		crit: (dispatch, getState) => {
@@ -220,7 +262,10 @@ export const hl = {
 		img: '/static/white-lion/hl/clever-ploy.jpg',
 		trap: true,
 		action: (dispatch, getState) => {
-			console.log('Clever Ploy!');
+			const {room} = getState();
+			const data = room.gameState.board.data;
+
+			counterAttack(dispatch, getState, {}, [BOARD_STATUSES.playerTurn, data.character]);
 		}
 	},
 	'Fleshy Gut': {
@@ -228,9 +273,7 @@ export const hl = {
 		triggers: [
 			{
 				type: 'failure',
-				action: (dispatch, getState) => {
-					console.log('FAIL!');
-				}
+				action: counterAttack
 			}
 		],
 		crit: (dispatch, getState) => {
@@ -240,7 +283,7 @@ export const hl = {
 	'Fuzzy Groin': {
 		img: '/static/white-lion/hl/fuzzy-groin.jpg',
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			persistentInjury(dispatch, getState, 'Fuzzy Groin');
 		}
 	},
 	'Glorious Mane': {
@@ -259,7 +302,7 @@ export const hl = {
 	'Straining Neck': {
 		img: '/static/white-lion/hl/straining-neck.jpg',
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			persistentInjury(dispatch, getState, 'Straining Neck');
 		}
 	},
 	'Strange Hand': {
@@ -267,13 +310,11 @@ export const hl = {
 		triggers: [
 			{
 				type: 'failure',
-				action: (dispatch, getState) => {
-					console.log('FAIL!');
-				}
+				action: counterAttack
 			}
 		],
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+			persistentInjury(dispatch, getState, 'Strange Hand');
 		}
 	}
 };

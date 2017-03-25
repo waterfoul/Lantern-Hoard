@@ -5,6 +5,7 @@ import thunkMiddleware from 'redux-thunk';
 
 import {changeFixState, CHANGE_FIX_STATE} from './reducers/flexBoxFix';
 import {ROOM_RESULT} from './reducers/room';
+import {init} from './listenForBoardStatus';
 import {send} from './socket';
 
 let timeout = -1;
@@ -42,3 +43,4 @@ export const store = createStore(
 	)
 );
 
+init(store);

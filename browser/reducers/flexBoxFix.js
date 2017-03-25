@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 //actions
 export const CHANGE_FIX_STATE = 'CHANGE_FIX_STATE';
 
