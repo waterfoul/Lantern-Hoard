@@ -1,6 +1,5 @@
 import { startMonsterTurn } from './monsterController';
 import { BOARD_STATUSES, changeBoardStatusAction } from '../../../common/gameState/board';
-import { store } from '../../store';
 import { moveToken } from '../../../common/gameState/positions';
 import { changePlayerResources, useMovement, useAction } from '../../../common/gameState/playerResources';
 import { drawHLCard, shuffleHL } from '../../reducers/gameState/hl';
@@ -8,22 +7,6 @@ import { woundAI } from '../../reducers/gameState/ai';
 import { items } from '../../data/items';
 import { getAccuracy, getStrength, getLuck } from '../../utils/getStats';
 import { monsters } from '../../data/monsters';
-
-// Gets player input for character movement
-function getCharacterMoveInput(dispatch, character, availableCharacters) {
-	return new Promise((resolve, reject) => {
-		dispatch(changeBoardStatusAction(BOARD_STATUSES.showAvailableMovement, character));
-
-		const unsub = store.subscribe(() => {
-			const { room } = store.getState();
-			if (room.gameState.board.status === BOARD_STATUSES.moveCharacter) {
-				resolve(room.gameState.board.data);
-				dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, {character, availableCharacters}));
-				unsub();
-			}
-		});
-	});
-}
 
 // Thunks
 export const startSingleTurn = (character, availableCharacters = null) => (
@@ -61,11 +44,18 @@ export const startPlayerTurn = () => (
 // Is a thunk that moves the character
 export const moveCharacter = ({character, availableCharacters}) => (
 	(dispatch, getState) => {
-		getCharacterMoveInput(dispatch, character, availableCharacters)
-			.then((coordinates) => {
-				dispatch(moveToken(`player${character + 1}`, coordinates));
-				dispatch(useMovement());
-			});
+		dispatch(changeBoardStatusAction(BOARD_STATUSES.showAvailableMovement, {
+			character,
+			availableCharacters
+		}));
+	}
+);
+
+export const finishMovement = (coordinates, {character, availableCharacters}) => (
+	(dispatch, getState) => {
+		dispatch(moveToken(`player${character + 1}`, coordinates));
+		dispatch(useMovement());
+		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, {character, availableCharacters}));
 	}
 );
 
