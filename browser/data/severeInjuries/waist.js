@@ -58,7 +58,7 @@ const brokenHip = {
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(addBleed(target, 1));
 	}
-}
+};
 
 const slashedBack = {
 	top: '79%',
