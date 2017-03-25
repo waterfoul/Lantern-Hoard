@@ -9,6 +9,7 @@ import {moveMonster} from './positions';
 import {endMonster, beginMonster} from '../../../common/gameState/knockedDownCharacters';
 import {startPlayerTurn} from './playerTurn';
 
+// Internals
 const processPick = (options, nextStatus) => (
 	(dispatch, getState) => {
 		const {room} = getState();
@@ -64,7 +65,7 @@ const getNewMonsterLocation = (target, {speed, accuracy, damage}, nextStatus) =>
 		if (results.length === 0) {
 			throw new Error('FAILURE! No valid spot for the monster! UNIMPLEMENTED!');
 		} else if (results.length === 1) {
-			dispatch(attackAfterMove(target, speed, accuracy, damage, results[0], nextStatus));
+			dispatch(attackAfterMove(target, {speed, accuracy, damage}, results[0], nextStatus));
 		} else {
 			dispatch(changeBoardStatusAction(BOARD_STATUSES.showMonsterPositions, {target, speed, accuracy, damage, results, nextStatus}));
 		}
@@ -96,45 +97,22 @@ const processAttack = (target, action, nextStatus) => (
 	}
 );
 
-function getAICard(room) {
-	const cardName = room.gameState.ai.discard[0] || 'Basic Action';
-	return monsters[room.gameState.monsterName].ai.cards[cardName];
-}
-
-export const startMonsterTurn = () => (
-	(dispatch, getState) => {
-		const {room, auth: user} = getState();
-		const {gameState} = room;
-
-		dispatch(beginMonster());
-
-		if (gameState.monsterController === user.id) {
-			dispatch(drawAICard());
-
-			dispatch(processNextAction());
-		}
-	}
-);
-
-export const attackAfterMove = (target, speed, accuracy, damage, newLocation, nextStatus) => (
+const passMonsterController = () => (
 	(dispatch, getState) => {
 		const {room} = getState();
-		const {gameState} = room;
-
-		dispatch(moveMonster(newLocation));
-		const playerLoc = gameState.positions[`player${target + 1}`];
-		const diffX = playerLoc[0] - newLocation[0];
-		const diffY = playerLoc[1] - newLocation[1];
-		if (diffY < -1) {
-			dispatch(changeMonsterDirection('S'));
-		} else if (diffX < 0) {
-			dispatch(changeMonsterDirection('W'));
-		} else if (diffX > 1) {
-			dispatch(changeMonsterDirection('E'));
-		} else {
-			dispatch(changeMonsterDirection('N'));
+		let playerIds = [
+			room.player1_id,
+			room.player2_id,
+			room.player3_id,
+			room.player4_id
+		];
+		playerIds = playerIds.filter((val, idx) => playerIds.indexOf(val) === idx);
+		let playerIdx = playerIds.indexOf(room.gameState.monsterController);
+		playerIdx++;
+		if (playerIdx >= playerIds.length) {
+			playerIdx = 0;
 		}
-		attackPlayer(target, dispatch, speed, accuracy, damage, nextStatus);
+		dispatch(changeMonsterController(playerIds[playerIdx]));
 	}
 );
 
@@ -166,23 +144,49 @@ const processNextAction = (board = {data: {step: 0}}) => (
 	}
 );
 
-listenForBoardStatus(BOARD_STATUSES.processMonsterAction, processNextAction);
+function getAICard(room) {
+	const cardName = room.gameState.ai.discard[0] || 'Basic Action';
+	return monsters[room.gameState.monsterName].ai.cards[cardName];
+}
 
-export const passMonsterController = () => (
+// Results from UI
+export const attackAfterMove = (target, action, newLocation, nextStatus) => (
 	(dispatch, getState) => {
 		const {room} = getState();
-		let playerIds = [
-			room.player1_id,
-			room.player2_id,
-			room.player3_id,
-			room.player4_id
-		];
-		playerIds = playerIds.filter((val, idx) => playerIds.indexOf(val) === idx);
-		let playerIdx = playerIds.indexOf(room.gameState.monsterController);
-		playerIdx++;
-		if (playerIdx >= playerIds.length) {
-			playerIdx = 0;
+		const {gameState} = room;
+
+		dispatch(moveMonster(newLocation));
+		const playerLoc = gameState.positions[`player${target + 1}`];
+		const diffX = playerLoc[0] - newLocation[0];
+		const diffY = playerLoc[1] - newLocation[1];
+		if (diffY < -1) {
+			dispatch(changeMonsterDirection('S'));
+		} else if (diffX < 0) {
+			dispatch(changeMonsterDirection('W'));
+		} else if (diffX > 1) {
+			dispatch(changeMonsterDirection('E'));
+		} else {
+			dispatch(changeMonsterDirection('N'));
 		}
-		dispatch(changeMonsterController(playerIds[playerIdx]));
+		dispatch(attackPlayer(target, action, nextStatus));
 	}
 );
+
+// Externals
+export const startMonsterTurn = () => (
+	(dispatch, getState) => {
+		const {room, auth: user} = getState();
+		const {gameState} = room;
+
+		dispatch(beginMonster());
+
+		if (gameState.monsterController === user.id) {
+			dispatch(drawAICard());
+
+			dispatch(processNextAction());
+		}
+	}
+);
+
+// Wrapup
+listenForBoardStatus(BOARD_STATUSES.processMonsterAction, processNextAction);
