@@ -7,14 +7,14 @@ export function firstStory() {
 	return {
 		hl: {
 			deck: [
-				'Strange Hand',
+				'Clever Ploy',
 				...shuffle(Object.keys(whiteLion.hl).filter((ele) => (ele !== 'Strange Hand')))
 			],
 			discard: []
 		},
 		ai: {
 			deck: [
-				'Claw',"Revenge" ,"Revenge" ,"Revenge" ,
+				'Claw', 'Revenge',
 				...shuffle(['Chomp', 'Size Up', 'Power Swat', 'Grasp', 'Maul', 'Terrifying Roar', 'Enraged'])
 			],
 			discard: [],

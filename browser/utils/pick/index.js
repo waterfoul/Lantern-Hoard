@@ -1,4 +1,4 @@
-import {isFront, chooseBetween, findClosestAndChoose, checkFieldOfView} from './utils';
+import {isFront, findClosestAndChoose, checkFieldOfView} from './utils';
 import { randomIndex } from '../randomIndex';
 import { getDistance } from '../getDistance';
 import { STATUSES } from '../../../common/gameState/knockedDownCharacters';
@@ -38,6 +38,7 @@ export function closestThreatFacingInRange(gameState, dispatch) {
 }
 
 export function closestThreatInFieldOfView(gameState, dispatch) {
+	console.log('firing off closestThreatInFieldOfView');
 	const positions = [
 		gameState.positions.player1,
 		gameState.positions.player2,
@@ -48,6 +49,20 @@ export function closestThreatInFieldOfView(gameState, dispatch) {
 		.map((position, i) => ((checkFieldOfView(gameState, position) && gameState.threats[i]) ? (
 			getDistance(gameState.monsterStats.size, gameState.positions.monster, position)
 		) : null));
+	return findClosestAndChoose(charactersInView, dispatch);
+}
+
+export function closestInFieldOfView(gameState, dispatch) {
+	const positions = [
+		gameState.positions.player1,
+		gameState.positions.player2,
+		gameState.positions.player3,
+		gameState.positions.player4
+	];
+	const charactersInView = positions
+		.map((position, i) => ((checkFieldOfView(gameState, position)) ? (
+				getDistance(gameState.monsterStats.size, gameState.positions.monster, position)
+			) : null));
 	return findClosestAndChoose(charactersInView, dispatch);
 }
 
@@ -97,11 +112,27 @@ export function closestInRange(gameState, dispatch) {
 }
 
 export function lastToWoundInRange(gameState, dispatch) {
+	console.log('Revenge!');
 
-	console.log(gameState)
+	const lastToWoundOrder = gameState.woundOrder;
+	const positions = lastToWoundOrder.map((slot) => {
+		return gameState.positions[`player${slot + 1}`];
+	});
 
-	return Promise.resolve(null)
-};
+	const distances = positions.map((val, i) => {
+		const distance = getDistance(gameState.monsterStats.size, gameState.positions.monster, val); //size, monst type, player
+		if (distance > gameState.monsterStats.movement + gameState.monsterStats.range) {
+			// Out of range
+			return null;
+		}
+		return lastToWoundOrder[i];
+	}).filter((val) => val !== null);
+
+	if (distances.length === 0) {
+		return Promise.resolve(null);
+	}
+	return Promise.resolve(distances[0]);
+}
 
 export function randomThreatInFieldOfView(gameState) {
 	// Board positions of all characters

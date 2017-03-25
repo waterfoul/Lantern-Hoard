@@ -9,6 +9,7 @@ const { hl } = require('./hl');
 const { knockedDownCharacters } = require('./knockedDownCharacters');
 const { playerResources } = require('./playerResources');
 const { monsterDirection } = require('./monsterDirection');
+const { woundOrder } = require('./woundOrder');
 
 const noop = (state) => (state || null);
 
@@ -24,6 +25,7 @@ const gameStateReducer = combineReducers({
 	gear: noop,
 	armor,
 	monsterController,
+	woundOrder,
 	playerResources,
 	knockedDownCharacters,
 	threats: () => [true, true, true, true] //Adding a stub here, TODO: replace this with a reducer
