@@ -7,6 +7,7 @@ import { woundAI } from '../../reducers/gameState/ai';
 import { items } from '../../data/items';
 import { getAccuracy, getStrength, getLuck } from '../../utils/getStats';
 import { monsters } from '../../data/monsters';
+import { playerHasWounded } from '../../../common/gameState/woundOrder';
 
 // Thunks
 export const startSingleTurn = (character, availableCharacters = null) => (
@@ -163,14 +164,17 @@ export const rollToWound = (location) => (
 			)) {
 			data.woundResults[location] = 'Crit';
 			card.crit(dispatch, getState);
+			dispatch(playerHasWounded(room.gameState.board.data.slot));
 			dispatch(woundAI());
 		} else if (result === 10 || result === 'auto-crit' || result === 'auto') {
 			data.woundResults[location] = 'Success';
 			woundTrigger(card, dispatch, getState);
+			dispatch(playerHasWounded(room.gameState.board.data.slot));
 			dispatch(woundAI());
 		} else if ((result + playerStr) > room.gameState.monsterStats.toughness) {
 			data.woundResults[location] = 'Success';
 			woundTrigger(card, dispatch, getState);
+			dispatch(playerHasWounded(room.gameState.board.data.slot));
 			dispatch(woundAI());
 		} else {
 			data.woundResults[location] = 'Fail';

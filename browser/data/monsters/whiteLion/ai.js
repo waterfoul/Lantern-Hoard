@@ -12,6 +12,7 @@ import {
 } from '../../../utils/pick';
 
 export function sniff(boardState) {
+	console.log('Sniff');
 	return Promise.resolve(null);
 }
 
