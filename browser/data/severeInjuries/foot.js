@@ -1,30 +1,30 @@
 import {killSurvivor, addBleed} from './helpers';
 
 const death = {
-	top: '50%',
+	top: '22.5%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '72.5%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(killSurvivor(target));
 	}
 };
 
 const bleeding = {
-	top: '50%',
+	top: '28.5%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '68.5%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(addBleed(target, 2));
 	}
 };
 
 const dismemberedLeg = {
-	top: '50%',
+	top: '32.5%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '52%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: IF not dismemberedLegx2
 			// TODO: record dismemberedLeg or dismemberedLegx2
@@ -37,10 +37,10 @@ const dismemberedLeg = {
 };
 
 const hamstrung = {
-	top: '50%',
+	top: '49.5%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '42%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: If not hamstrung
 			// TODO: record hanstrung
@@ -50,10 +50,10 @@ const hamstrung = {
 };
 
 const tornAchilles = {
-	top: '50%',
+	top: '59.5%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '29.5%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: until end of showdown, any light, heavy, or severe injury knocks you down
 		// TODO: Skip next hunt
@@ -62,10 +62,10 @@ const tornAchilles = {
 };
 
 const tornMuscle = {
-	top: '50%',
+	top: '72%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '21.5%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: Cannot dash till end of showdown
 		// TODO: mark skip next hunt
@@ -74,10 +74,10 @@ const tornMuscle = {
 };
 
 const brokenLeg = {
-	top: '50%',
+	top: '80%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '11%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: IF not brokenLegx2
 			// TODO: record brokenLeg or brokenLegx2
@@ -88,20 +88,20 @@ const brokenLeg = {
 };
 
 const bloodyThighs = {
-	top: '50%',
+	top: '90%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '6.5%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(addBleed(target, 2));
 	}
 };
 
 const knockedDown = {
-	top: '50%',
+	top: '94.5%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '0.5%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: Knocked down
 	}

@@ -1,90 +1,90 @@
 import {killSurvivor, addBleed} from './helpers';
 
 const death = {
-	top: '50%',
+	top: '22.5%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '72%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(killSurvivor(target));
 	}
 };
 
 const bleeding = {
-	top: '50%',
+	top: '29%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '68%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(addBleed(target, 2));
 	}
 };
 
 const dismemberedArm = {
-	top: '50%',
+	top: '33%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '55.5%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(addBleed(target, 1));
 	}
 };
 
 const rupturedMuscle = {
-	top: '50%',
+	top: '45.5%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '45%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(addBleed(target, 1));
 	}
 };
 
 const contrature = {
-	top: '50%',
+	top: '56%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '35%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(addBleed(target, 1));
 	}
 };
 
 const brokenArm = {
-	top: '50%',
+	top: '66%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '24.5%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(addBleed(target, 1));
 	}
 };
 
 const spiralFracture = {
-	top: '50%',
+	top: '77%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '16.5%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(addBleed(target, 1));
 	}
 };
 
 const dislocatedShoulder = {
-	top: '50%',
+	top: '85%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '8%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(addBleed(target, 1));
 	}
 };
 
 const knockedDown = {
-	top: '50%',
+	top: '93.5%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '1%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: Knocked down
 	}

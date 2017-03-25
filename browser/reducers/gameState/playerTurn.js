@@ -31,7 +31,6 @@ export const startSingleTurn = (character, availableCharacters = null) => (
 
 export const endSingleTurn = ({availableCharacters, character}) => (
 	(dispatch) => {
-		console.log({availableCharacters, character});
 		const nextChars = availableCharacters.filter((element) => element !== character);
 		if (nextChars.length === 0) {
 			dispatch(startMonsterTurn());

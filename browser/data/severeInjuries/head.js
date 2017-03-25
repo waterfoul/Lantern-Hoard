@@ -1,10 +1,10 @@
 import {killSurvivor, addBleed} from './helpers';
 
 const headExplosion = {
-	top: '50%',
-	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	top: '24%',
+	left: '49%',
+	bottom: '69%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(killSurvivor(target));
 		// TODO: Remove 1 survival from all survivors
@@ -12,20 +12,20 @@ const headExplosion = {
 };
 
 const decapitation = {
-	top: '50%',
-	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	top: '32.5%',
+	left: '49%',
+	bottom: '64.5%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(killSurvivor(target));
 	}
 };
 
 const hemorrage = {
-	top: '50%',
+	top: '36.5%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '55%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: Permant Can't use survival
 		dispatch(addBleed(target, 1));
@@ -33,10 +33,10 @@ const hemorrage = {
 };
 
 const deaf = {
-	top: '50%',
+	top: '45.5%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '47%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: IF not deaf
 			// TODO: record deaf
@@ -46,10 +46,10 @@ const deaf = {
 };
 
 const blind = {
-	top: '50%',
+	top: '54.5%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '32%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: IF not blind
 			// TODO: record blindx1
@@ -63,10 +63,10 @@ const blind = {
 };
 
 const concussion = {
-	top: '50%',
+	top: '69%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '25%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: gain a random disorder
 		dispatch(addBleed(target, 1));
@@ -74,10 +74,10 @@ const concussion = {
 };
 
 const shatteredJaw = {
-	top: '50%',
+	top: '76%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '12%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: if do not have shattered jaw
 			// TODO: record shattered jaw
@@ -88,10 +88,10 @@ const shatteredJaw = {
 };
 
 const destroyedTooth = {
-	top: '50%',
-	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	top: '89%',
+	left: '49%',
+	bottom: '1%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: if 3+ courage
 			// TODO: +2 insanity

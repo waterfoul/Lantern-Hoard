@@ -1,30 +1,30 @@
 import {killSurvivor, addBleed} from './helpers';
 
 const death = {
-	top: '50%',
+	top: '23.5%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '71%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(killSurvivor(target));
 	}
 };
 
 const bleeding = {
-	top: '50%',
+	top: '30%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '67%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(addBleed(target, 2));
 	}
 };
 
 const wound = {
-	top: '50%',
+	top: '34.5%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '58.5%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: Permant -1 strength
 		dispatch(addBleed(target, 1));
@@ -32,10 +32,10 @@ const wound = {
 };
 
 const destroyedBack = {
-	top: '50%',
+	top: '42.5%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '46%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: IF not destroyed back
 		// TODO: record destroyed back
@@ -46,10 +46,10 @@ const destroyedBack = {
 };
 
 const disemboweled = {
-	top: '50%',
+	top: '55.5%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '29%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: add - movement tokens till movement is 1
 		// TODO: mark dead if all other survivors die
@@ -59,10 +59,10 @@ const disemboweled = {
 };
 
 const spleen = {
-	top: '50%',
+	top: '72.5%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '22.5%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: mark skip next hunt
 		dispatch(addBleed(target, 2));
@@ -70,10 +70,10 @@ const spleen = {
 };
 
 const rib = {
-	top: '50%',
+	top: '78.5%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '14%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: permant -1 speed
 		dispatch(addBleed(target, 1));
@@ -81,10 +81,10 @@ const rib = {
 };
 
 const lung = {
-	top: '50%',
+	top: '87.5%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '7.5%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: -1 movment token
 		dispatch(addBleed(target, 1));
@@ -92,10 +92,10 @@ const lung = {
 };
 
 const bowled = {
-	top: '50%',
+	top: '93.5%',
 	left: '50%',
-	bottom: '51%',
-	right: '52%',
+	bottom: '1.5%',
+	right: '0%',
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: Knocked down
 	}
