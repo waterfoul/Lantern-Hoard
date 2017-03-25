@@ -72,41 +72,21 @@ function getNewMonsterLocation(target, gameState, dispatch) {
 	}
 }
 
-function attackPlayer(target, dispatch, speed, accuracy, damage) {
+function attackPlayer(target, dispatch, speed, accuracy, damage, nextStatus) {
 	const {room} = store.getState();
 	const {gameState} = room;
 
 	if (getDistance(gameState.monsterStats.size, gameState.positions.monster, gameState.positions['player' + (target + 1)]) === 1) {
-		return new Promise((resolve, reject) => {
-			try {
-				dispatch(changeBoardStatusAction(BOARD_STATUSES.playerDamage, {speed, accuracy, damage, target}));
-
-				const unsub = store.subscribe(() => {
-					try {
-						const {room: updated} = store.getState();
-						if (updated.gameState.board.status === BOARD_STATUSES.playerDamageFinish) {
-							resolve();
-							dispatch(changeBoardStatusAction(BOARD_STATUSES.generic));
-							unsub();
-						}
-					} catch (err) {
-						reject(err);
-					}
-				});
-			} catch (err) {
-				reject(err);
-			}
-		});
+		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerDamage, {speed, accuracy, damage, target, nextStatus}));
 	} else {
-		return Promise.resolve();
+		dispatch(changeBoardStatusAction.apply(null, nextStatus));
 	}
 }
 
 export function processAttack(target, gameState, dispatch, {move, speed, accuracy, damage}, nextStatus) {
-	let promise = Promise.resolve();
 	if (target !== null) {
 		if (move) {
-			promise = getNewMonsterLocation(target, gameState, dispatch).then((newLocation) => {
+			getNewMonsterLocation(target, gameState, dispatch).then((newLocation) => {
 				dispatch(moveMonster(newLocation));
 				const playerLoc = gameState.positions[`player${target + 1}`];
 				const diffX = playerLoc[0] - newLocation[0];
@@ -120,13 +100,12 @@ export function processAttack(target, gameState, dispatch, {move, speed, accurac
 				} else {
 					dispatch(changeMonsterDirection('N'));
 				}
-				return attackPlayer(target, dispatch, speed, accuracy, damage);
+				return attackPlayer(target, dispatch, speed, accuracy, damage, nextStatus);
 			});
 		} else {
-			promise = attackPlayer(target, dispatch, speed, accuracy, damage);
+			attackPlayer(target, dispatch, speed, accuracy, damage, nextStatus);
 		}
 	}
-	promise.catch(console.error.bind(console, 'Failed while monster was attacking')).then(() => dispatch(changeBoardStatusAction.apply(null, nextStatus)));
 }
 
 function getAICard(room) {
