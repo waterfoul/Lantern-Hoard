@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {changeBoardStatusAction, BOARD_STATUSES} from '../../../../common/gameState/board';
+import {attackAfterMove} from '../../../reducers/gameState/monsterController';
 
 export const MonsterPosition = connect(
 	({ room, auth }) => ({
@@ -10,13 +10,13 @@ export const MonsterPosition = connect(
 		data: room.gameState.board.data,
 		user: auth
 	}),
-	{changeBoardStatusActionDisp: changeBoardStatusAction}
+	{attackAfterMoveDisp: attackAfterMove}
 )(
-	({ monsterController, monsterStats, data, user, changeBoardStatusActionDisp }) => (
+	({ monsterController, monsterStats, data, user, attackAfterMoveDisp }) => (
 		<div>
 			<div className="game-board-grid">
 				{ user.id === monsterController ? (
-					data.map((loc, i) => (
+					data.positions.map((loc, i) => (
 						<div
 							key={i}
 							className={[
@@ -27,7 +27,7 @@ export const MonsterPosition = connect(
 								'x-' + loc[0],
 								'y-' + loc[1]
 							].join(' ')}
-						  onClick={() => changeBoardStatusActionDisp(BOARD_STATUSES.showMonsterPositionsResult, loc)}
+						  onClick={() => attackAfterMoveDisp(data.target, data.speed, data.accuracy, data.damage, loc, data.nextStatus)}
 						/>
 					))
 				) : null }
