@@ -18,16 +18,16 @@ const processPick = (options, nextStatus) => (
 		const recurse = (i) => {
 			if (i >= options.length) {
 				dispatch(changeBoardStatusAction.apply(null, nextStatus));
+			} else {
+				return options[i](gameState, dispatch).then((result) => {
+					if (result === null) {
+						return recurse(i + 1);
+					} else {
+						nextStatus[1].target = result;
+						dispatch(changeBoardStatusAction.apply(null, nextStatus));
+					}
+				});
 			}
-
-			return options[i](gameState, dispatch).then((result) => {
-				if (result === null) {
-					return recurse(i + 1);
-				} else {
-					nextStatus[1].target = result;
-					dispatch(changeBoardStatusAction.apply(null, nextStatus));
-				}
-			});
 		};
 
 		recurse(0);
@@ -178,12 +178,14 @@ export const startMonsterTurn = () => (
 
 export const processAttack = (target, action, nextStatus) => (
 	(dispatch) => {
-		if (target !== null) {
+		if (target || target === 0) {
 			if (action.move) {
 				dispatch(getNewMonsterLocation(target, action, nextStatus));
 			} else {
 				dispatch(attackPlayer(target, action, nextStatus));
 			}
+		} else {
+			dispatch(changeBoardStatusAction.apply(null, nextStatus));
 		}
 	}
 );
