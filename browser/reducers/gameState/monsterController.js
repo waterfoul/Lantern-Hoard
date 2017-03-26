@@ -34,7 +34,7 @@ const processPick = (options, nextStatus) => (
 	}
 );
 
-const getNewMonsterLocation = (target, {speed, accuracy, damage}, nextStatus) => (
+const getNewMonsterLocation = (target, action, nextStatus) => (
 	(dispatch, getState) => {
 		const {room} = getState();
 		const {gameState} = room;
@@ -65,9 +65,9 @@ const getNewMonsterLocation = (target, {speed, accuracy, damage}, nextStatus) =>
 		if (results.length === 0) {
 			throw new Error('FAILURE! No valid spot for the monster! UNIMPLEMENTED!');
 		} else if (results.length === 1) {
-			dispatch(attackAfterMove(target, {speed, accuracy, damage}, results[0], nextStatus));
+			dispatch(attackAfterMove(target, action, results[0], nextStatus));
 		} else {
-			dispatch(changeBoardStatusAction(BOARD_STATUSES.showMonsterPositions, {target, speed, accuracy, damage, results, nextStatus}));
+			dispatch(changeBoardStatusAction(BOARD_STATUSES.showMonsterPositions, {target, action, positions: results, nextStatus}));
 		}
 	}
 );
@@ -81,18 +81,6 @@ const attackPlayer = (target, {speed, accuracy, damage}, nextStatus) => (
 			dispatch(changeBoardStatusAction(BOARD_STATUSES.playerDamage, {speed, accuracy, damage, target, nextStatus}));
 		} else {
 			dispatch(changeBoardStatusAction.apply(null, nextStatus));
-		}
-	}
-);
-
-const processAttack = (target, action, nextStatus) => (
-	(dispatch) => {
-		if (target !== null) {
-			if (action.move) {
-				dispatch(getNewMonsterLocation(target, action, nextStatus));
-			} else {
-				dispatch(attackPlayer(target, action, nextStatus));
-			}
 		}
 	}
 );
@@ -184,6 +172,18 @@ export const startMonsterTurn = () => (
 			dispatch(drawAICard());
 
 			dispatch(processNextAction());
+		}
+	}
+);
+
+export const processAttack = (target, action, nextStatus) => (
+	(dispatch) => {
+		if (target !== null) {
+			if (action.move) {
+				dispatch(getNewMonsterLocation(target, action, nextStatus));
+			} else {
+				dispatch(attackPlayer(target, action, nextStatus));
+			}
 		}
 	}
 );

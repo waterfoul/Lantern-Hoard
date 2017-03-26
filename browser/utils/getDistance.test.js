@@ -7,27 +7,6 @@ import chaiAsPromised from 'chai-as-promised';
 chai.use(chaiAsPromised);
 
 describe('utils/getDistance', () => {
-	let scenario = null;
-
-	beforeEach(() => {
-		scenario = {
-			monsterStats: {
-				size: 2,
-				range: 1,
-				movement: 6
-			},
-			monsterDirection: 'S',
-			positions: {
-				monster: [10, 8],
-				player1: [0, 0],
-				player2: [0, 0],
-				player3: [0, 0],
-				player4: [0, 0]
-			},
-			threats: [true, true, true, true]
-		};
-	});
-
 	describe('getDistance', () => {
 		describe('size 1', () => {
 			it('calculates when above', () => {
