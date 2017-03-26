@@ -72,11 +72,11 @@ function counterAttack(dispatch, getState, mods = {}, nextState = null) {
 		nextState = [room.gameState.board.status, room.gameState.board.data];
 	}
 
-	processAttack(room.gameState.board.data.slot, room.gameState, dispatch, Object.assign(
+	dispatch(processAttack(room.gameState.board.data.slot, Object.assign(
 		{},
 		ai.cards['Basic Action'].actions[1],
 		mods
-	), nextState);
+	), nextState));
 }
 
 export const hl = {
