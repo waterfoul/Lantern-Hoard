@@ -7,6 +7,7 @@ import {
 } from '.';
 import chai, { expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
+import {STATUSES} from '../../../common/gameState/knockedDownCharacters';
 
 chai.use(chaiAsPromised);
 
@@ -28,7 +29,7 @@ describe('utils/pick', () => {
 				player3: [0, 0],
 				player4: [0, 0]
 			},
-			knockedDownCharacters: [null, null, null, null],
+			knockedDownCharacters: [STATUSES.standing, STATUSES.standing, STATUSES.standing, STATUSES.standing],
 			threats: [true, true, true, true]
 		};
 	});
