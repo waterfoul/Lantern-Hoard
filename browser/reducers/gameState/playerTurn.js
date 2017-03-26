@@ -2,6 +2,7 @@ import { startMonsterTurn } from './monsterController';
 import { BOARD_STATUSES, changeBoardStatusAction } from '../../../common/gameState/board';
 import { moveToken } from '../../../common/gameState/positions';
 import { changePlayerResources, useMovement, useAction } from '../../../common/gameState/playerResources';
+import {STATUSES} from '../../../common/gameState/knockedDownCharacters';
 import { drawHLCard, shuffleHL } from '../../reducers/gameState/hl';
 import { woundAI } from '../../reducers/gameState/ai';
 import { items } from '../../data/items';
@@ -30,12 +31,14 @@ export const startSingleTurn = (character, availableCharacters = null) => (
 );
 
 export const endSingleTurn = ({availableCharacters, character}) => (
-	(dispatch) => {
+	(dispatch, getState) => {
+		const { room } = getState();
 		const nextChars = availableCharacters.filter((element) => element !== character);
-		if (nextChars.length === 0) {
+		const validTurns = nextChars.filter((slot) => room.gameState.knockedDownCharacters[slot] === STATUSES.standing);
+		if (validTurns.length === 0) {
 			dispatch(startMonsterTurn());
-		} else if (nextChars.length === 0) {
-			dispatch(startSingleTurn(nextChars[0], nextChars));
+		} else if (validTurns.length === 1) {
+			dispatch(startSingleTurn(validTurns[0], nextChars));
 		} else {
 			dispatch(changeBoardStatusAction(BOARD_STATUSES.selectActingCharacter, nextChars));
 		}
