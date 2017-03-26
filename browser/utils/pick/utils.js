@@ -1,9 +1,10 @@
 import {changeBoardStatusAction, BOARD_STATUSES} from '../../../common/gameState/board';
+import {STATUSES} from '../../../common/gameState/knockedDownCharacters';
 import {store} from '../../store';
 import {getXYDistance} from '../getDistance';
 
 export function isThreat(gameState, i) {
-	return gameState.threats[i] && gameState.knockedDownCharacters[i] !== STATUSES.standing
+	return gameState.threats[i] && gameState.knockedDownCharacters[i] !== STATUSES.standing;
 }
 
 export function chooseBetween(characters, dispatch) {
