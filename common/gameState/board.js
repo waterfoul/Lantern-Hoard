@@ -15,6 +15,7 @@ const BOARD_STATUSES = {
 	showMonsterPositions: 'SHOW_MONSTER_POSITIONS', // Prompts the monster controller to pick a monster position
 	showMonsterPositionsResult: 'SHOW_MONSTER_POSITIONS_RESULT', // Returns monster controller results
 	processMonsterAction: 'PROCESS_MONSTER_ACTION', // triggers the processing of the next monster action
+	criticalInjury: 'CRITICAL_INJURY', // triggers the processing of the next monster action
 	victory: 'VICTORY' // Displays when the monster is killed
 };
 
