@@ -7,7 +7,6 @@ import { TRIGGERS } from '../../../utils/effects';
 import { ai } from './ai';
 
 
-
 function moveForward(dispatch, getState) {
 	const { room } = getState();
 	const monsterMovement = room.gameState.monsterStats.movement;
@@ -328,14 +327,14 @@ export const hl = {
 	},
 	'Soft Belly': {
 		img: '/static/white-lion/hl/soft-belly.jpg',
-		crit: (dispatch, getState) => {
+		crit: (dispatch) => {
 			dispatch(gainWhiteLionResource());
 			dispatch(persistentInjury('Soft Belly', 'Organ Trail', {triggers: [{
 				trigger: TRIGGERS.monsterTurnStart,
-				thunk: () => (dispatch, getState) => {
+				thunk: () => (dispatchInner, getState) => {
 					// TODO
 				}
-			}]}))
+			}]}));
 			console.log('CRIT!');
 		}
 	},
