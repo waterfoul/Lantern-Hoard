@@ -85,18 +85,6 @@ const attackPlayer = (target, {speed, accuracy, damage}, nextStatus) => (
 	}
 );
 
-const processAttack = (target, action, nextStatus) => (
-	(dispatch) => {
-		if (target !== null) {
-			if (action.move) {
-				dispatch(getNewMonsterLocation(target, action, nextStatus));
-			} else {
-				dispatch(attackPlayer(target, action, nextStatus));
-			}
-		}
-	}
-);
-
 const passMonsterController = () => (
 	(dispatch, getState) => {
 		const {room} = getState();
@@ -184,6 +172,18 @@ export const startMonsterTurn = () => (
 			dispatch(drawAICard());
 
 			dispatch(processNextAction());
+		}
+	}
+);
+
+export const processAttack = (target, action, nextStatus) => (
+	(dispatch) => {
+		if (target !== null) {
+			if (action.move) {
+				dispatch(getNewMonsterLocation(target, action, nextStatus));
+			} else {
+				dispatch(attackPlayer(target, action, nextStatus));
+			}
 		}
 	}
 );
