@@ -1,8 +1,10 @@
-import {moveMonster} from '../../../reducers/gameState/positions';
-import {processAttack} from '../../../reducers/gameState/monsterController';
-import {BOARD_STATUSES} from '../../../../common/gameState/board';
+import { moveMonster } from '../../../reducers/gameState/positions';
+import { processAttack } from '../../../reducers/gameState/monsterController';
+import { BOARD_STATUSES } from '../../../../common/gameState/board';
 import { adjustMonsterStats } from '../../../../common/gameState/monsterStats';
-import {ai} from './ai';
+import { addPersistantInjury } from '../../../../common/gameState/effects';
+import { TRIGGERS } from '../../../utils/effects';
+import { ai } from './ai';
 
 
 function moveForward(dispatch, getState) {
@@ -38,7 +40,7 @@ function jumpBack(dispatch, getState) {
 	const monsterSize = room.gameState.monsterStats.size;
 	let diffX = monsterPosition[0] - attackerPosition[0];
 	let diffY = monsterPosition[1] - attackerPosition[1];
-	console.log(attackerPosition, monsterPosition, diffY, diffX);
+
 	if (diffY < monsterSize && diffY > 0) diffY = 0;
 	if (diffX > (-1 * monsterSize) && diffX < 0) diffX = 0;
 	if (diffX === 0 || Math.abs(diffX) < Math.abs(diffY)) {
@@ -52,10 +54,17 @@ function giveToken(dispatch, getState, value, tokenType) {
 	dispatch(adjustMonsterStats({ [tokenType]: value} ));
 }
 
-function persistentInjury(dispatch, getState, card) {
-	console.log('THIS HL CARD BECOMES A PERSISTENT INJURY');
-	// Function for making a HL card a persistent injury
-}
+const persistentInjury = (card, name, other = {}) => (dispatch) => {
+	dispatch(addPersistantInjury(name, hl[card].img, other));
+};
+
+const knockDownLion = () => (dispatch, getState) => {
+	console.log('Knock down lion');
+};
+
+const gainWhiteLionResource = (name = null) => (dispatch, getState) => {
+	console.log('Gain White Lion Resource!', name);
+};
 
 function counterAttack(dispatch, getState, mods = {}, nextState = null) {
 	const {room} = getState();
@@ -89,7 +98,6 @@ export const hl = {
 			{
 				type: 'wound',
 				action: (dispatch, getState) => {
-					console.log('WOUND!');
 					counterAttack(dispatch, getState);
 					// Attacker suffers 1 brain damage
 				}
@@ -152,14 +160,23 @@ export const hl = {
 				}
 			}
 		],
-		crit: (dispatch, getState) => {
-			console.log('CRIT!');
+		crit: (dispatch) => {
+			dispatch(knockDownLion());
 		}
 	},
 	'Beasts Heel': {
 		img: '/static/white-lion/hl/beasts-heel.jpg',
-		crit: (dispatch, getState) => {
-			persistentInjury(dispatch, getState, 'Beasts Heel');
+		crit: (dispatch) => {
+			dispatch(persistentInjury(
+				'Beasts Heel',
+				'Ruptured Tendon',
+				{triggers: [{
+					trigger: TRIGGERS.monsterMovementStart,
+					thunk: () => (dispatchInner, getState) => {
+						// TODO: roll a d10, on a 1 knock down lion
+					}
+				}]}
+			));
 		}
 	},
 	'Beasts Knee': {
@@ -178,8 +195,9 @@ export const hl = {
 				}
 			}
 		],
-		crit: (dispatch, getState) => {
-			persistentInjury(dispatch, getState, 'Beasts Maw');
+		crit: (dispatch) => {
+			dispatch(persistentInjury('Beasts Maw', 'No Jaw'));
+			// TODO: Roll 1d10, 5+ attacker get +1 courage +1 survival
 		}
 	},
 	'Beasts Paw': {
@@ -193,7 +211,12 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			persistentInjury(dispatch, getState, 'Beasts Paw');
+			dispatch(persistentInjury('Beasts Paw', 'Broken Foot', {triggers: [{
+				trigger: TRIGGERS.grab,
+				fn: () => false
+			}]}));
+			giveToken(dispatch, getState, -1, 'movement');
+			dispatch(gainWhiteLionResource());
 		}
 	},
 	'Beasts Ribs': {
@@ -243,7 +266,13 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			persistentInjury(dispatch, getState, 'Beasts Temple');
+			dispatch(persistentInjury('Beasts Temple', 'Beasts Temple', {triggers: [{
+				trigger: TRIGGERS.AIDraw,
+				fn: () => {
+					// TODO: roll die, on 1/2 end lion turn and return true
+					return false;
+				}
+			}]}));
 		}
 	},
 	'Beasts Tricep': {
@@ -283,7 +312,10 @@ export const hl = {
 	'Fuzzy Groin': {
 		img: '/static/white-lion/hl/fuzzy-groin.jpg',
 		crit: (dispatch, getState) => {
-			persistentInjury(dispatch, getState, 'Fuzzy Groin');
+			giveToken(dispatch, getState, 1, 'damage');
+			// TODO: Give priority Target
+			// TODO: Add trigger which doesn't allow prioity target to move around
+			dispatch(persistentInjury('Fuzzy Groin', 'Lost Ding Dong'));
 		}
 	},
 	'Glorious Mane': {
@@ -295,14 +327,21 @@ export const hl = {
 	},
 	'Soft Belly': {
 		img: '/static/white-lion/hl/soft-belly.jpg',
-		crit: (dispatch, getState) => {
+		crit: (dispatch) => {
+			dispatch(gainWhiteLionResource());
+			dispatch(persistentInjury('Soft Belly', 'Organ Trail', {triggers: [{
+				trigger: TRIGGERS.monsterTurnStart,
+				thunk: () => (dispatchInner, getState) => {
+					// TODO
+				}
+			}]}));
 			console.log('CRIT!');
 		}
 	},
 	'Straining Neck': {
 		img: '/static/white-lion/hl/straining-neck.jpg',
 		crit: (dispatch, getState) => {
-			persistentInjury(dispatch, getState, 'Straining Neck');
+			// TODO
 		}
 	},
 	'Strange Hand': {
@@ -314,7 +353,8 @@ export const hl = {
 			}
 		],
 		crit: (dispatch, getState) => {
-			persistentInjury(dispatch, getState, 'Strange Hand');
+			// TODO: Spend 1 survival to gain 1 permant strength
+			dispatch(persistentInjury('Strange Hand', 'Lost Hand'));
 		}
 	}
 };
