@@ -27,7 +27,7 @@ export const MonsterPosition = connect(
 								'x-' + loc[0],
 								'y-' + loc[1]
 							].join(' ')}
-						  onClick={() => attackAfterMoveDisp(data.target, data.speed, data.accuracy, data.damage, loc, data.nextStatus)}
+						  onClick={() => attackAfterMoveDisp(data.target, data.action, loc, data.nextStatus)}
 						/>
 					))
 				) : null }
