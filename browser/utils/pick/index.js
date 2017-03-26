@@ -1,4 +1,4 @@
-import {isFront, findClosestAndChoose, checkFieldOfView} from './utils';
+import {isFront, findClosestAndChoose, checkFieldOfView, isThreat} from './utils';
 import { randomIndex } from '../randomIndex';
 import { getDistance } from '../getDistance';
 import { STATUSES } from '../../../common/gameState/knockedDownCharacters';
@@ -13,7 +13,7 @@ export function closestThreatFacingInRange(gameState, dispatch) {
 
 	// Build the distance array, changing all invalid targets to null
 	const distances = positions.map((val, i) => {
-		if (!gameState.threats[i]) {
+		if (!isThreat(gameState, i)) {
 			// Not a threat
 			return null;
 		}
@@ -45,7 +45,7 @@ export function closestThreatInFieldOfView(gameState, dispatch) {
 		gameState.positions.player4
 	];
 	const charactersInView = positions
-		.map((position, i) => ((checkFieldOfView(gameState, position) && gameState.threats[i]) ? (
+		.map((position, i) => ((checkFieldOfView(gameState, position) && isThreat(gameState, i)) ? (
 			getDistance(gameState.monsterStats.size, gameState.positions.monster, position)
 		) : null));
 	return findClosestAndChoose(charactersInView, dispatch);
@@ -141,7 +141,7 @@ export function randomThreatInFieldOfView(gameState) {
 	];
 	// Check which characters are within the monster's field of view
 	const charactersInView = positions
-		.map((position, i) => ((checkFieldOfView(gameState, position) && gameState.threats[i]) ? i : null))
+		.map((position, i) => ((checkFieldOfView(gameState, position) && isThreat(gameState, i)) ? i : null))
 		.filter((idx) => idx !== null);
 
 	return Promise.resolve(randomIndex(charactersInView));
