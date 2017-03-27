@@ -12,6 +12,7 @@ const { monsterDirection } = require('./monsterDirection');
 const { woundOrder } = require('./woundOrder');
 const { monsterStats } = require('./monsterStats');
 const { gear } = require('./gear');
+const { effects } = require('./effects');
 
 
 const noop = (state) => (state || null);
@@ -20,7 +21,7 @@ const gameStateReducer = combineReducers({
 	board,
 	hl,
 	ai,
-	effects: noop,
+	effects,
 	monsterName: noop,
 	monsterStats,
 	monsterDirection,

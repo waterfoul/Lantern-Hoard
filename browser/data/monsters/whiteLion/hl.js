@@ -3,6 +3,7 @@ import { processAttack } from '../../../reducers/gameState/monsterController';
 import { BOARD_STATUSES } from '../../../../common/gameState/board';
 import { adjustMonsterStats } from '../../../../common/gameState/monsterStats';
 import { addPersistantInjury } from '../../../../common/gameState/effects';
+import { removeFromDiscard } from '../../../../common/gameState/hl';
 import { TRIGGERS } from '../../../utils/effects';
 import { ai } from './ai';
 
@@ -56,6 +57,7 @@ function giveToken(dispatch, getState, value, tokenType) {
 
 const persistentInjury = (card, name, other = {}) => (dispatch) => {
 	dispatch(addPersistantInjury(name, hl[card].img, other));
+	dispatch(removeFromDiscard(card));
 };
 
 const knockDownLion = () => (dispatch, getState) => {
