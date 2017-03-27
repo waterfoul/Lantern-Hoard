@@ -28,18 +28,10 @@ export const MonsterInfo = connect(
 					<div className="game-board-monster-stats damage"><div>{monsterStats.damage}</div></div>
 					<div className="game-board-monster-stats toughness"><div>{monsterStats.toughness}</div></div>
 					<div className="game-board-monster-stats movement"><div>{monsterStats.movement}</div></div>
-					{effects.map((eff, i) => {
-						let typeArr = monsters[monsterName][eff.type];
-						if (eff.type === 'ai') {
-							typeArr = typeArr.cards;
-						}
+					{console.log(effects)}{effects.map((eff, i) => {
 						return (
 							<div className={`game-board-monster-card effect-${i}`} key={i} >
-								<img src={
-									typeArr[eff.card] ?
-										typeArr[eff.card].img :
-										monsters[monsterName][eff.type + 'Back']
-								} />
+								<img src={eff.image} />
 							</div>
 						);
 					})}
