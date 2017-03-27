@@ -34,17 +34,26 @@ export const MoveCharacter = connect(
 			}
 		}
 		const monsterSize = room.gameState.monsterStats.size;
-
+		const playerPositions = [];
+		if (!room.Character1.dead) {
+			playerPositions.push(positions.player1);
+		}
+		if (!room.Character2.dead) {
+			playerPositions.push(positions.player2);
+		}
+		if (!room.Character3.dead) {
+			playerPositions.push(positions.player3);
+		}
+		if (!room.Character4.dead) {
+			playerPositions.push(positions.player4);
+		}
 		options = options.filter((coords) => {
 			const monsterDiffX = coords[0] - positions.monster[0];
 			const monsterDiffY = coords[1] - positions.monster[1];
 			return (
 				coords[0] >= 0 && coords[1] >= 0 &&
 				coords[0] <= 21 && coords[1] <= 15 &&
-				(coords[0] !== positions.player1[0] || coords[1] !== positions.player1[1]) &&
-				(coords[0] !== positions.player2[0] || coords[1] !== positions.player2[1]) &&
-				(coords[0] !== positions.player3[0] || coords[1] !== positions.player3[1]) &&
-				(coords[0] !== positions.player4[0] || coords[1] !== positions.player4[1]) &&
+				playerPositions.filter((pos) => pos[0] === coords[0] && pos[1] === coords[1]).length === 0 &&
 				(monsterDiffX < 0 || monsterDiffX >= monsterSize || monsterDiffY > 0 || monsterDiffY <= (monsterSize * -1))
 			);
 		});
