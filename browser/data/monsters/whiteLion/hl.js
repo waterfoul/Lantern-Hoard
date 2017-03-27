@@ -296,7 +296,7 @@ export const hl = {
 			const {room} = getState();
 			const data = room.gameState.board.data;
 
-			counterAttack(dispatch, getState, {}, [BOARD_STATUSES.playerTurn, data.character]);
+			counterAttack(dispatch, getState, {}, [data.turnStatus.status, data.turnStatus.data]);
 		}
 	},
 	'Fleshy Gut': {

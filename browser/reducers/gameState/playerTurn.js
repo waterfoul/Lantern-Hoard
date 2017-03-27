@@ -132,36 +132,39 @@ export const rollToWound = (location) => (
 			result = Math.floor(Math.random() * 10) + 1;
 		}
 		data.woundRolls[location] = result;
+		// Update the data
 		if (result === 1) {
 			data.woundResults[location] = 'Fail';
-			trigger(card, 'failure', dispatch, getState);
-			trigger(card, 'reflex', dispatch, getState);
 		} else if (card.crit && (
 				result === 'auto-crit' ||
 				result + playerLuck + (data.item.diceMods && data.item.diceMods.luck || 0) >= 10
 			)) {
 			data.woundResults[location] = 'Crit';
+		} else if (result === 10 || result === 'auto-crit' || result === 'auto') {
+			data.woundResults[location] = 'Success';
+		} else if ((result + playerStr) > room.gameState.monsterStats.toughness) {
+			data.woundResults[location] = 'Success';
+		} else {
+			data.woundResults[location] = 'Fail';
+		}
+
+		// Change Status
+		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerAttack, data));
+
+		// Dispatch actions, this might change the status again
+		if (data.woundResults[location] === 'Fail') {
+			trigger(card, 'failure', dispatch, getState);
+			trigger(card, 'reflex', dispatch, getState);
+		} else if (data.woundResults[location] === 'Crit') {
 			card.crit(dispatch, getState);
 			dispatch(playerHasWounded(room.gameState.board.data.slot));
 			dispatch(woundAI());
-		} else if (result === 10 || result === 'auto-crit' || result === 'auto') {
-			data.woundResults[location] = 'Success';
+		} else if (data.woundResults[location] === 'Success') {
 			trigger(card, 'wound', dispatch, getState);
 			trigger(card, 'reflex', dispatch, getState);
 			dispatch(playerHasWounded(room.gameState.board.data.slot));
 			dispatch(woundAI());
-		} else if ((result + playerStr) > room.gameState.monsterStats.toughness) {
-			data.woundResults[location] = 'Success';
-			trigger(card, 'wound', dispatch, getState);
-			trigger(card, 'reflex', dispatch, getState);
-			dispatch(playerHasWounded(room.gameState.board.data.slot));
-			dispatch(woundAI());
-		} else {
-			data.woundResults[location] = 'Fail';
-			trigger(card, 'failure', dispatch, getState);
-			trigger(card, 'reflex', dispatch, getState);
 		}
-		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerAttack, data));
 	}
 );
 
@@ -185,6 +188,7 @@ export const startAttack = (slot, weapon, automaticHits = 0, automaticWounds = 0
 	(dispatch, getState) => {
 		const item = Object.assign({}, items[weapon], overrides);
 		const {room} = getState();
+		const turnStatus = room.gameState.board;
 		if (item.traits.indexOf('cumbersome') !== -1) {
 			dispatch(useMovement());
 		}
@@ -195,6 +199,7 @@ export const startAttack = (slot, weapon, automaticHits = 0, automaticWounds = 0
 			automaticHits,
 			automaticWounds,
 			automaticCrits,
+			turnStatus,
 			character: room.gameState.board.data.character,
 			availableCharacters: room.gameState.board.data.availableCharacters
 		}));
