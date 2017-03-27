@@ -9,6 +9,7 @@ import { PleaseWait } from './CollapsedActions/PleaseWait';
 import { PlayerTurn } from './CollapsedActions/PlayerTurn';
 import { SelectCharacter } from './CollapsedActions/SelectCharacter';
 import { SelectActingCharacter } from './CollapsedActions/SelectActingCharacter';
+import { TOKEN_TYPES } from '../../../../common/gameState/tokens';
 
 const getPlacementText = (positions, room, slot, user) => {
 	const placingPlayer = (!positions.player1 ? 0 : (!positions.player2 ? 1 : (!positions.player3 ? 2 : 3)));
@@ -95,6 +96,7 @@ function armorDisp(val) {
 
 export const Collapsed = connect(
 	({ room, boardError, auth }) => ({
+		tokens: room.gameState.tokens || [[], [], [], []],
 		armor: room.gameState.armor,
 		board: room.gameState.board || {},
 		room: room,
@@ -104,7 +106,7 @@ export const Collapsed = connect(
 		boardError
 	}),
 	{ takeControlEvt: takeControl, changeBoardStatusActionDisp: changeBoardStatusAction }
-)(({ armor, slot, room, monsterController, board, positions, user, boardError, takeControlEvt, changeBoardStatusActionDisp }) => {
+)(({ tokens, armor, slot, room, monsterController, board, positions, user, boardError, takeControlEvt, changeBoardStatusActionDisp }) => {
 	const character = room['Character' + (slot + 1)];
 	const stats = getStats(character, room.gameState, slot);
 	const player = room[`Player${slot + 1}`] || {};
@@ -145,6 +147,12 @@ export const Collapsed = connect(
 							&nbsp;/&nbsp;
 							{armorDisp(armor[slot].foot)}
 						</span>
+					</div>
+					<div>
+						<i className="glyphicon glyphicon-tint" />&nbsp;
+							<span>
+								{tokens[slot].filter((token) => token.tokenType === TOKEN_TYPES.bleeding).length} / 5
+							</span>
 					</div>
 				</div>
 				{ getButtons({positions, room, slot, user, board, boardError, monsterController, takeControlEvt, changeBoardStatusActionDisp}) }
