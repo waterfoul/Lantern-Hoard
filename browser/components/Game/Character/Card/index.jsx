@@ -56,7 +56,7 @@ export const Card = connect(
 )(
 	({ playerTokenState, playerArmorState, playerInjuryState, playerGearState }) => (
 		<div>
-			<div className="container-fluid character-card-wrapper">
+			<div className="container-fluid character-card-wrapper slide-top">
 
 				<div className="col-md-4">
 					<TempTokens />

@@ -1,9 +1,11 @@
 const EFFECT_TYPES = {
-	persistantInjury: 'PERSISTANT_INJURY'
+	persistantInjury: 'PERSISTANT_INJURY',
+	addMood: 'ADD_MOOD'
 };
 
 //actions
 const ADD_PERSISTANT_INJURY = 'ADD_PERSISTANT_INJURY';
+const ADD_MOOD = 'ADD_MOOD';
 
 //reducer
 const effects = (state = [], action) => {
@@ -14,6 +16,12 @@ const effects = (state = [], action) => {
 			name: action.name,
 			image: action.image
 		}, action.other), ...state];
+	case ADD_MOOD:
+		return [{
+			type: EFFECT_TYPES.addMood,
+			triggers: action.triggers,
+			image: action.image
+		}];
 	default:
 		return state;
 	}
@@ -27,7 +35,15 @@ const addPersistantInjury = (name, image, other = {}) => ({
 	other
 });
 
+const addMood = (image, triggers) => ({
+	type: ADD_MOOD,
+	image,
+	triggers
+
+});
+
 module.exports = {
 	effects,
-	addPersistantInjury
+	addPersistantInjury,
+	addMood
 };

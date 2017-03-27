@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'react-redux';
 
 import { Collapsed } from './Collapsed';
@@ -25,8 +26,8 @@ export class Character extends Component {
 		return (
 			<div>
 				<input type="checkbox" checked={this.state.fullCard} onChange={this.changeFullCard} />
-				<Collapsed slot={this.props.slot} />
-				{this.state.fullCard ? <Card slot={this.props.slot} /> : null}
+				<Collapsed className="slide-top slide-bottom" slot={this.props.slot} />
+				{this.state.fullCard ? <Card className="slide-top slide-bottom" slot={this.props.slot} /> : null}
 			</div>
 		);
 	}

@@ -1,6 +1,6 @@
 import {listenForBoardStatus} from '../../listenForBoardStatus';
 import {monsters} from '../../data/monsters';
-import {drawAICard} from '../../reducers/gameState/ai';
+import {drawAICard, removeFromDiscard} from '../../reducers/gameState/ai';
 import {changeBoardStatusAction, BOARD_STATUSES} from '../../../common/gameState/board';
 import {changeMonsterController} from '../../../common/gameState/monsterController';
 import {changeMonsterDirection} from '../../../common/gameState/monsterDirection';
@@ -8,6 +8,7 @@ import {getDistance} from '../../utils/getDistance';
 import {moveMonster} from './positions';
 import {endMonster, beginMonster} from '../../../common/gameState/knockedDownCharacters';
 import {startPlayerTurn} from './playerTurn';
+import {addMood} from '../../../common/gameState/effects';
 
 // Internals
 const processPick = (options, nextStatus) => (
@@ -104,12 +105,13 @@ const passMonsterController = () => (
 	}
 );
 
-const processNextAction = (board = {data: {step: 0}}) => (
+export const processNextAction = (board = {data: {step: 0}}) => (
 	(dispatch, getState) => {
 		const {room, auth: user} = getState();
 		const {gameState} = room;
 		if (gameState.monsterController === user.id) {
-			const action = getAICard(room).actions[board.data.step];
+			const AICard = getAICard(room);
+			const action = AICard.actions[board.data.step];
 			const nextState = [BOARD_STATUSES.processMonsterAction, {
 				step: board.data.step + 1,
 				target: board.data.target
@@ -119,8 +121,13 @@ const processNextAction = (board = {data: {step: 0}}) => (
 					dispatch(processPick(action.options, nextState));
 				} else if (action.type === 'attack') {
 					dispatch(processAttack(board.data.target, action, nextState));
+				} else if (action.type === 'mood') {
+					dispatch(addMood(AICard.img, action.triggers));
+					dispatch(removeFromDiscard)	;
+				} else if (action.type === 'special') {
+					dispatch(action.thunk());
 				} else {
-					console.log('Skipping Special', action);
+					console.log('Skipping Action', action);
 					dispatch(processNextAction({data: {step: board.data + 1}}));
 				}
 			} else {
