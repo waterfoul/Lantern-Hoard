@@ -32,10 +32,10 @@ export const items = Object.assign(
 					name: 'Sling',
 					action: true,
 					movement: false,
+					range: 999,
 					thunk: (slot, row, column) => (dispatch, getState) => {
 						dispatch(startAttack(slot, 'Founding Stone', 1, 0, 1, {
-							dice: 1,
-							range: 999
+							dice: 1
 						}));
 						dispatch(archiveItem(slot, row, column));
 					}

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { PleaseWait } from './PleaseWait';
 import { moveCharacter, startAttack, endSingleTurn } from '../../../../reducers/gameState/playerTurn';
-import { changeBoardStatusAction } from '../../../../../common/gameState/board';
+import { getDistance } from '../../../../utils/getDistance';
 import { STATUSES } from '../../../../../common/gameState/knockedDownCharacters';
 import { items } from '../../../../data/items';
 
@@ -12,6 +12,7 @@ function buildButtonsForItem(name, result, slot, row, column, dispatch, startAtt
 		item.specialAbilities.forEach((ability) => {
 			result.push(Object.assign({}, ability, {
 				name: name + ' (' + ability.name + ')',
+				range: ability.range || item.range || 1,
 				cb: () => {
 					dispatch(ability.thunk(slot, row, column));
 				}
@@ -20,6 +21,7 @@ function buildButtonsForItem(name, result, slot, row, column, dispatch, startAtt
 		if (item.descriptors.indexOf('weapon') !== -1) {
 			result.push({
 				name: name + ' (Attack)',
+				range: item.range || 1,
 				movement: item.traits.indexOf('cumbersome') !== -1,
 				action: true,
 				cb: () => {
@@ -36,18 +38,21 @@ export const PlayerTurn = connect(
 		board: room.gameState.board,
 		user: auth,
 		playerResources: room.gameState.playerResources,
-		knockedDownCharacters: room.gameState.knockedDownCharacters
+		knockedDownCharacters: room.gameState.knockedDownCharacters,
+		positions: room.gameState.positions,
+		monsterSize: room.gameState.monsterStats.size
 	}),
 	(dispatch) => ({
 		moveCharacterDispatch: (character) => dispatch(moveCharacter(character)),
-		changeBoardStatusActionDispatch:  (status, data) => dispatch(changeBoardStatusAction(status, data)),
 		startAttackDispatch:  (slot, weapon) => dispatch(startAttack(slot, weapon)),
 		endSingleTurnDispatch: (data) => dispatch(endSingleTurn(data)),
 		dispatch
 	})
-)(({ slot, room, board, user, playerResources, knockedDownCharacters, endSingleTurnDispatch, moveCharacterDispatch, changeBoardStatusActionDispatch, startAttackDispatch, dispatch }) => {
+)(({ slot, room, board, user, playerResources, knockedDownCharacters, positions, monsterSize, endSingleTurnDispatch, moveCharacterDispatch, startAttackDispatch, dispatch }) => {
 	if (slot === board.data.character && user.id === room[`Player${slot + 1}`].id) {
 		const knockedDown = knockedDownCharacters[slot] !== STATUSES.standing;
+
+		const rangeToMonster = getDistance(monsterSize, positions.monster, positions[`player${slot + 1}`]);
 
 		let actionList = [];
 		if (!knockedDown) {
@@ -79,7 +84,7 @@ export const PlayerTurn = connect(
 					(playerResources.movements > 0 || !action.movement)
 				) ? (
 						<div key={i} className="col-md-12 col-sm-12">
-							<button className="btn btn-primary btn-xs" onClick={() => action.cb(slot)}>
+							<button disabled={action.range < rangeToMonster} title={action.range < rangeToMonster ? 'Out of range' : null} className="btn btn-primary btn-xs" onClick={() => action.cb(slot)}>
 								{action.movement ? <img src="/static/movement-resource.png" /> : null}
 								{action.action ? <img src="/static/action-resource.png" /> : null}
 								{action.name}
