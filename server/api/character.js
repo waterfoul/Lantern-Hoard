@@ -31,7 +31,6 @@ module.exports = (new express.Router('api/character'))
 					}
 				})
 					.then((rooms) => {
-						console.log('found', rooms, 'for', req.params.id)
 						rooms.forEach((room) => {
 							sendTo(room.id, JSON.stringify({
 								room: room.id,
