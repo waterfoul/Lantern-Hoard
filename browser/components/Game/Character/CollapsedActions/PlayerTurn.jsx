@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { PleaseWait } from './PleaseWait';
 import { moveCharacter, startAttack, endSingleTurn } from '../../../../reducers/gameState/playerTurn';
-import { changeBoardStatusAction, BOARD_STATUSES } from '../../../../../common/gameState/board';
+import { changeBoardStatusAction } from '../../../../../common/gameState/board';
+import { STATUSES } from '../../../../../common/gameState/knockedDownCharacters';
 import { items } from '../../../../data/items';
 
 function buildButtonsForItem(name, result, slot, row, column, dispatch, startAttackDispatch) {
@@ -34,7 +35,8 @@ export const PlayerTurn = connect(
 		room,
 		board: room.gameState.board,
 		user: auth,
-		playerResources: room.gameState.playerResources
+		playerResources: room.gameState.playerResources,
+		knockedDownCharacters: room.gameState.knockedDownCharacters
 	}),
 	(dispatch) => ({
 		moveCharacterDispatch: (character) => dispatch(moveCharacter(character)),
@@ -43,27 +45,32 @@ export const PlayerTurn = connect(
 		endSingleTurnDispatch: (data) => dispatch(endSingleTurn(data)),
 		dispatch
 	})
-)(({ slot, room, board, user, playerResources, endSingleTurnDispatch, moveCharacterDispatch, changeBoardStatusActionDispatch, startAttackDispatch, dispatch }) => {
+)(({ slot, room, board, user, playerResources, knockedDownCharacters, endSingleTurnDispatch, moveCharacterDispatch, changeBoardStatusActionDispatch, startAttackDispatch, dispatch }) => {
 	if (slot === board.data.character && user.id === room[`Player${slot + 1}`].id) {
-		const actionList = room.gameState.gear[slot].reduce((acc, data, row) => {
-			const result = [...acc];
-			data.map((name, column) => {
-				buildButtonsForItem(name, result, slot, row, column, dispatch, startAttackDispatch);
-			});
-			return result;
-		}, []);
+		const knockedDown = knockedDownCharacters[slot] !== STATUSES.standing;
+
+		let actionList = [];
+		if (!knockedDown) {
+			actionList = room.gameState.gear[slot].reduce((acc, data, row) => {
+				const result = [...acc];
+				data.map((name, column) => {
+					buildButtonsForItem(name, result, slot, row, column, dispatch, startAttackDispatch);
+				});
+				return result;
+			}, []);
+		}
 
 		buildButtonsForItem('Fist & Tooth', actionList, slot, -1, -1, dispatch, startAttackDispatch);
 		return (
 			<div className="col-md-7 col-sm-12 attack-buttons container-fluid">
-				{playerResources.movements > 0 ? (
+				{ !knockedDown && playerResources.movements > 0 ? (
 					<div className="col-md-6 col-sm-12">
 						<button className="btn btn-primary btn-xs" onClick={() => moveCharacterDispatch(board.data)}>
 							<img src="/static/movement-resource.png" />
 							Move
 						</button>
 					</div>
-				) : null}
+				) : null }
 				<div className="col-md-6 col-sm-12">
 					<button className="btn btn-primary btn-xs" onClick={() => endSingleTurnDispatch(board.data)}>End Turn</button>
 				</div>
