@@ -1,8 +1,9 @@
 import {addTokenToCharacter, TOKEN_TYPES} from '../../../common/gameState/tokens';
+import {killCharacter} from '../../reducers/character';
 
 export const killSurvivor = (target) => (dispatch, getState) => {
-	console.log('Survivor', target, 'is dead');
-	// TODO: Kill survivor
+	const { room } = getState();
+	dispatch(killCharacter(room[`character${target + 1}_id`]));
 };
 
 export const addBleed = (target, count) => (dispatch, getState) => {

@@ -115,6 +115,11 @@ const Character = db.define('character', {
 		type: Sequelize.INTEGER,
 		allowNull: false,
 		defaultValue: 0
+	},
+	dead: {
+		type: Sequelize.BOOLEAN,
+		allowNull: false,
+		defaultValue: false
 	}
 });
 
