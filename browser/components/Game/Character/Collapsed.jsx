@@ -10,6 +10,7 @@ import { PlayerTurn } from './CollapsedActions/PlayerTurn';
 import { SelectCharacter } from './CollapsedActions/SelectCharacter';
 import { SelectActingCharacter } from './CollapsedActions/SelectActingCharacter';
 import { TOKEN_TYPES } from '../../../../common/gameState/tokens';
+import { Dead } from './dead';
 
 const getPlacementText = (positions, room, slot, user) => {
 	const placingPlayer = (!positions.player1 ? 0 : (!positions.player2 ? 1 : (!positions.player3 ? 2 : 3)));
@@ -111,7 +112,7 @@ export const Collapsed = connect(
 	const stats = getStats(character, room.gameState, slot);
 	const player = room[`Player${slot + 1}`] || {};
 	const isMonsterController = monsterController === player.id;
-	return (
+	return (character.dead ? (<Dead />) : (
 		<div>
 			{ isMonsterController ? <img className="game-character-monster-controller" src="/static/monster-controller.jpg" /> : '' }
 			<div className="game-character-collapsed container-fluid">
@@ -158,5 +159,5 @@ export const Collapsed = connect(
 				{ getButtons({positions, room, slot, user, board, boardError, monsterController, takeControlEvt, changeBoardStatusActionDisp}) }
 			</div>
 		</div>
-	);
+	));
 });
