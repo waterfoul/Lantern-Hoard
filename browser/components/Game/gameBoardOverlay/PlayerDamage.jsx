@@ -42,6 +42,6 @@ export const PlayerDamage = connect(
 					) }
 
 			</div></div>
-		)
+		);
 	}
 );
