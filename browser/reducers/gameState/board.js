@@ -65,6 +65,7 @@ export const applyDamage = () => (
 	(dispatch, getState) => {
 		const {room} = getState();
 		const data = room.gameState.board.data;
+		console.log('applyDamage', data.nextStatus);
 		dispatch(damageArmor(data.target, data.wounds.map((roll) => locations[roll]), data.damage, data.nextStatus));
 	}
 );
