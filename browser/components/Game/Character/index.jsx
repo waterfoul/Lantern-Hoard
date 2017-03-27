@@ -26,8 +26,8 @@ export class Character extends Component {
 		return (
 			<div>
 				<input type="checkbox" checked={this.state.fullCard} onChange={this.changeFullCard} />
-				<Collapsed className="slide-top slide-bottom" slot={this.props.slot} />
-				{this.state.fullCard ? <Card className="slide-top slide-bottom" slot={this.props.slot} /> : null}
+				<Collapsed slot={this.props.slot} />
+				{this.state.fullCard ? <Card slot={this.props.slot} /> : null}
 			</div>
 		);
 	}
