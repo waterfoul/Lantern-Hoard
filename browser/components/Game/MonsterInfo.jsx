@@ -28,7 +28,7 @@ export const MonsterInfo = connect(
 					<div className="game-board-monster-stats damage"><div>{monsterStats.damage}</div></div>
 					<div className="game-board-monster-stats toughness"><div>{monsterStats.toughness}</div></div>
 					<div className="game-board-monster-stats movement"><div>{monsterStats.movement}</div></div>
-					{console.log(effects)}{effects.map((eff, i) => {
+					{effects.map((eff, i) => {
 						return (
 							<div className={`game-board-monster-card effect-${i}`} key={i} >
 								<img src={eff.image} />
