@@ -35,7 +35,8 @@ export const items = Object.assign(
 					range: 999,
 					thunk: (slot, row, column) => (dispatch, getState) => {
 						dispatch(startAttack(slot, 'Founding Stone', 1, 0, 1, {
-							dice: 1
+							dice: 1,
+							range: 999
 						}));
 						dispatch(archiveItem(slot, row, column));
 					}

@@ -84,7 +84,12 @@ export const PlayerTurn = connect(
 					(playerResources.movements > 0 || !action.movement)
 				) ? (
 						<div key={i} className="col-md-12 col-sm-12">
-							<button disabled={action.range < rangeToMonster} title={action.range < rangeToMonster ? 'Out of range' : null} className="btn btn-primary btn-xs" onClick={() => action.cb(slot)}>
+							<button
+								disabled={action.range < rangeToMonster}
+								title={action.range < rangeToMonster ? 'Out of range' : null}
+								className="btn btn-primary btn-xs"
+								onClick={() => action.cb(slot)}
+							>
 								{action.movement ? <img src="/static/movement-resource.png" /> : null}
 								{action.action ? <img src="/static/action-resource.png" /> : null}
 								{action.name}
