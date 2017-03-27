@@ -19,13 +19,19 @@ module.exports = (new express.Router('api/character'))
 			.then((character) => {
 				return Room.findAll({
 					where: {
-						character1_id: character.id,
-						character2_id: character.id,
-						character3_id: character.id,
-						character4_id: character.id,
+						$or: [{
+							character1_id: req.params.id
+						}, {
+							character2_id: req.params.id
+						}, {
+							character3_id: req.params.id
+						}, {
+							character4_id: req.params.id
+						}]
 					}
 				})
 					.then((rooms) => {
+						console.log('found', rooms, 'for', req.params.id)
 						rooms.forEach((room) => {
 							sendTo(room.id, JSON.stringify({
 								room: room.id,

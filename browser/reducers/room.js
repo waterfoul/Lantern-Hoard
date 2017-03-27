@@ -5,6 +5,7 @@ import {BOARD_STATUSES} from '../../common/gameState/board';
 import {changeBoardStatus} from './gameState/board';
 import {changeMonsterController} from '../../common/gameState/monsterController';
 import {startMonsterTurn} from './gameState/monsterController.js';
+import {send} from '../socket';
 
 //actions
 export const ROOM_RESULT = 'ROOM_RESULT';
@@ -36,6 +37,7 @@ export const fetch = (id) => (
 			.then((response) => {
 				dispatch(result(response.data));
 				dispatch(checkGameState());
+				send('connect');
 			})
 			.catch((e) => {
 				console.error('Error while loading rooms', e);

@@ -10,7 +10,7 @@ import { PlayerTurn } from './CollapsedActions/PlayerTurn';
 import { SelectCharacter } from './CollapsedActions/SelectCharacter';
 import { SelectActingCharacter } from './CollapsedActions/SelectActingCharacter';
 import { TOKEN_TYPES } from '../../../../common/gameState/tokens';
-import { Dead } from './dead';
+import { Dead } from './Dead';
 
 const getPlacementText = (positions, room, slot, user) => {
 	const placingPlayer = (!positions.player1 ? 0 : (!positions.player2 ? 1 : (!positions.player3 ? 2 : 3)));
