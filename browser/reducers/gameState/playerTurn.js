@@ -2,7 +2,7 @@ import { startMonsterTurn } from './monsterController';
 import { BOARD_STATUSES, changeBoardStatusAction } from '../../../common/gameState/board';
 import { moveToken } from '../../../common/gameState/positions';
 import { changePlayerResources, useMovement, useAction } from '../../../common/gameState/playerResources';
-import {STATUSES} from '../../../common/gameState/knockedDownCharacters';
+import { STATUSES } from '../../../common/gameState/knockedDownCharacters';
 import { drawHLCard, shuffleHL } from '../../reducers/gameState/hl';
 import { woundAI } from '../../reducers/gameState/ai';
 import { items } from '../../data/items';
@@ -25,12 +25,12 @@ export const startSingleTurn = (character, availableCharacters = null) => (
 			availableCharacters = room.gameState.board.data;
 		}
 
-		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, {character, availableCharacters}));
+		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, { character, availableCharacters }));
 		dispatch(changePlayerResources(1, 1));
 	}
 );
 
-export const endSingleTurn = ({availableCharacters, character}) => (
+export const endSingleTurn = ({ availableCharacters, character }) => (
 	(dispatch) => {
 		const nextChars = availableCharacters.filter((element) => element !== character);
 		dispatch(promptForCharacters(nextChars));
@@ -39,32 +39,35 @@ export const endSingleTurn = ({availableCharacters, character}) => (
 
 export const promptForCharacters = (nextChars) => (
 	(dispatch, getState) => {
-		const {room} = getState();
-
-		const validTurns = nextChars.filter((slot) => (
-			room.gameState.knockedDownCharacters[slot] === STATUSES.standing && !room[`Character${slot + 1}`].dead
-		));
-		if (validTurns.length === 0) {
-			dispatch(startMonsterTurn());
-		} else if (validTurns.length === 1) {
-			dispatch(startSingleTurn(validTurns[0], nextChars));
+		const { room } = getState();
+		if (room.Character1.dead && room.Character2.dead && room.Character3.dead && room.Character4.dead) {
+			dispatch(changeBoardStatusAction(BOARD_STATUSES.gameOver));
 		} else {
-			dispatch(changeBoardStatusAction(BOARD_STATUSES.selectActingCharacter, nextChars));
+			const validTurns = nextChars.filter((slot) => (
+				room.gameState.knockedDownCharacters[slot] === STATUSES.standing && !room[`Character${slot + 1}`].dead
+			));
+			if (validTurns.length === 0) {
+				dispatch(startMonsterTurn());
+			} else if (validTurns.length === 1) {
+				dispatch(startSingleTurn(validTurns[0], nextChars));
+			} else {
+				dispatch(changeBoardStatusAction(BOARD_STATUSES.selectActingCharacter, nextChars));
+			}
 		}
 	}
 );
 
-export const finishMovement = (coordinates, {character, availableCharacters}) => (
+export const finishMovement = (coordinates, { character, availableCharacters }) => (
 	(dispatch) => {
 		dispatch(moveToken(`player${character + 1}`, coordinates));
 		dispatch(useMovement());
-		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, {character, availableCharacters}));
+		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, { character, availableCharacters }));
 	}
 );
 
 export const rollToHit = () => (
 	(dispatch, getState) => {
-		const {room} = getState();
+		const { room } = getState();
 		const data = Object.assign({}, room.gameState.board.data);
 		const monsterName = room.gameState.monsterName;
 		const playerAcc = getAccuracy(room[`Character${data.slot + 1}`], room.gameState, data.slot, data.item.diceMods || {});
@@ -85,7 +88,7 @@ export const rollToHit = () => (
 			data.hitRolls.push(result);
 			if (result !== 1 && (result === 'auto' || result === 10 || (result - data.item.accuracy + playerAcc) >= 0)) {
 				dispatch(drawHLCard());
-				const {room: currentRoom} = getState();
+				const { room: currentRoom } = getState();
 				const currentName = currentRoom.gameState.hl.discard[0];
 				const card = monsters[monsterName].hl[currentName];
 				// Trap Hit! Stop drawing/Rolling
@@ -107,7 +110,7 @@ export const rollToHit = () => (
 
 export const closeAttack = () => (
 	(dispatch, getState) => {
-		const {room} = getState();
+		const { room } = getState();
 		const data = room.gameState.board.data;
 		const monsterName = room.gameState.monsterName;
 		if (data.trap) {
@@ -116,14 +119,14 @@ export const closeAttack = () => (
 
 			dispatch(shuffleHL());
 		} else {
-			dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, {character: data.character, availableCharacters: data.availableCharacters}));
+			dispatch(changeBoardStatusAction(BOARD_STATUSES.playerTurn, { character: data.character, availableCharacters: data.availableCharacters }));
 		}
 	}
 );
 
 export const rollToWound = (location) => (
 	(dispatch, getState) => {
-		const {room} = getState();
+		const { room } = getState();
 		const data = Object.assign({}, room.gameState.board.data);
 		const playerStr = getStrength(room[`Character${data.slot + 1}`], room.gameState, data.slot, data.item.diceMods || {});
 		const playerLuck = getLuck(room[`Character${data.slot + 1}`], room.gameState, data.slot, data.item.diceMods || {});
@@ -145,9 +148,9 @@ export const rollToWound = (location) => (
 		if (result === 1) {
 			data.woundResults[location] = 'Fail';
 		} else if (card.crit && (
-				result === 'auto-crit' ||
-				result + playerLuck + (data.item.diceMods && data.item.diceMods.luck || 0) >= 10
-			)) {
+			result === 'auto-crit' ||
+			result + playerLuck + (data.item.diceMods && data.item.diceMods.luck || 0) >= 10
+		)) {
 			data.woundResults[location] = 'Crit';
 		} else if (result === 10 || result === 'auto-crit' || result === 'auto') {
 			data.woundResults[location] = 'Success';
@@ -184,7 +187,7 @@ export const startPlayerTurn = () => (
 	}
 );
 
-export const moveCharacter = ({character, availableCharacters}) => (
+export const moveCharacter = ({ character, availableCharacters }) => (
 	(dispatch) => {
 		dispatch(changeBoardStatusAction(BOARD_STATUSES.showAvailableMovement, {
 			character,
@@ -196,7 +199,7 @@ export const moveCharacter = ({character, availableCharacters}) => (
 export const startAttack = (slot, weapon, automaticHits = 0, automaticWounds = 0, automaticCrits = 0, overrides = {}) => (
 	(dispatch, getState) => {
 		const item = Object.assign({}, items[weapon], overrides);
-		const {room} = getState();
+		const { room } = getState();
 		const turnStatus = room.gameState.board;
 		if (item.traits.indexOf('cumbersome') !== -1) {
 			dispatch(useMovement());
