@@ -5,7 +5,7 @@ import {monsters} from '../data/monsters';
 export const triggerEffectThunks = (trigger, nextState) => (dispatch, getState) => {
 	const {room: {gameState: {effects}}} = getState();
 	const triggers = effects.reduce((res, ele) => {
-		ele.triggers.forEach((trg) => {
+		(ele.triggers || []).forEach((trg) => {
 			if (trg.trigger === trigger) {
 				res.push(trg);
 			}
