@@ -17,7 +17,8 @@ const BOARD_STATUSES = {
 	processMonsterAction: 'PROCESS_MONSTER_ACTION', // triggers the processing of the next monster action
 	criticalInjury: 'CRITICAL_INJURY', // triggers the processing of the next monster action
 	victory: 'VICTORY', // Displays when the monster is killed
-	gameOver: 'GAME_OVER' // Displays when the monster is killed
+	gameOver: 'GAME_OVER', // Displays when the monster is killed
+	nextTrigger: 'NEXT_TRIGGER'
 };
 
 //actions

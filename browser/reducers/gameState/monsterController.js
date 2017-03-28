@@ -10,6 +10,8 @@ import {moveMonster} from './positions';
 import {endMonster, beginMonster} from '../../../common/gameState/knockedDownCharacters';
 import {startPlayerTurn} from './playerTurn';
 import {addMood} from '../../../common/gameState/effects';
+import {triggerEffectThunks} from '../../utils/triggerEffectThunks';
+import {TRIGGERS} from '../../utils/effects';
 
 // Internals
 const processPick = (options, nextStatus) => (
@@ -104,7 +106,7 @@ const passMonsterController = () => (
 	}
 );
 
-export const processNextAction = (board = {data: {step: 0}}) => (
+export const processNextAction = (board) => (
 	(dispatch, getState) => {
 		const {room, auth: user} = getState();
 		const {gameState} = room;
@@ -181,7 +183,7 @@ export const startMonsterTurn = () => (
 		if (gameState.monsterController === user.id) {
 			dispatch(drawAICard());
 
-			dispatch(processNextAction());
+			dispatch(triggerEffectThunks(TRIGGERS.monsterTurnStart, [BOARD_STATUSES.processMonsterAction, {step: 0}]));
 		}
 	}
 );

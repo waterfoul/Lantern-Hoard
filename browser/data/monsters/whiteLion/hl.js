@@ -1,6 +1,6 @@
 import { moveMonster } from '../../../reducers/gameState/positions';
 import { processAttack } from '../../../reducers/gameState/monsterController';
-import { BOARD_STATUSES } from '../../../../common/gameState/board';
+import { changeBoardStatusAction } from '../../../../common/gameState/board';
 import { adjustMonsterStats } from '../../../../common/gameState/monsterStats';
 import { addPersistentInjury } from '../../../../common/gameState/effects';
 import { removeFromDiscard } from '../../../../common/gameState/hl';
@@ -26,7 +26,7 @@ function moveForward(dispatch, getState) {
 	case 'W':
 		dispatch(moveMonster([monsterPosition[0] - monsterMovement, monsterPosition[1]]));
 		break;
-		// dafault makes linter happy
+		// default makes linter happy
 	default:
 		return null;
 	}
@@ -333,12 +333,18 @@ export const hl = {
 			dispatch(gainWhiteLionResource());
 			dispatch(persistentInjury('Soft Belly', 'Organ Trail', {triggers: [{
 				trigger: TRIGGERS.monsterTurnStart,
-				thunk: () => (dispatchInner, getState) => {
-					// TODO
-				}
+				type: 'hl',
+				card: 'Soft Belly',
+				thunk: 0
 			}]}));
 			console.log('CRIT!');
-		}
+		},
+		triggers: [
+			(nextState) => (dispatch, getState) => {
+				console.log('SOFT BELLY TRIGGER');
+				dispatch(changeBoardStatusAction.apply(null, nextState));
+			}
+		]
 	},
 	'Straining Neck': {
 		img: '/static/white-lion/hl/straining-neck.jpg',
