@@ -128,7 +128,7 @@ const processNextAction = (board) => (
 					dispatch(removeFromDiscard(getAICardName(room)));
 					dispatch(changeBoardStatusAction.apply(null, nextState));
 				} else if (action.type === 'special') {
-					dispatch(action.thunk(nextState));
+					dispatch(action.thunk(changeBoardStatusAction.apply(null, nextState)));
 				} else {
 					console.log('Skipping Action', action);
 					dispatch(changeBoardStatusAction.apply(null, nextState));
