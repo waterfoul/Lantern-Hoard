@@ -4,7 +4,8 @@ import {setError} from './boardError';
 import {BOARD_STATUSES} from '../../common/gameState/board';
 import {changeBoardStatus} from './gameState/board';
 import {changeMonsterController} from '../../common/gameState/monsterController';
-import {startMonsterTurn} from './gameState/monsterController.js';
+import {startMonsterTurn} from './gameState/monsterController';
+import {promptForCharacters} from './gameState/playerTurn';
 import {send} from '../socket';
 
 //actions
@@ -91,6 +92,21 @@ export const checkGameState = () => (
 			) {
 				dispatch(changeBoardStatus(BOARD_STATUSES.generic));
 				dispatch(startMonsterTurn());
+			}
+
+			if (
+				state.gameState.board.status === BOARD_STATUSES.playerTurn &&
+				state[`Character${state.gameState.board.data.character + 1}`].dead
+			) {
+				// The player who's turn it is has died, re-select a char
+				promptForCharacters(state.gameState.board.data.availableCharacters);
+			}
+
+			if (
+				state.gameState.board.status === BOARD_STATUSES.selectActingCharacter
+			) {
+				// We're waiting for a selection, re-start the selection just in case
+				promptForCharacters(state.gameState.board.data);
 			}
 		}
 	}
