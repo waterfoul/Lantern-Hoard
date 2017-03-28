@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/waterfoul/Lantern-Hoard.svg?branch=master)](https://travis-ci.org/waterfoul/Lantern-Hoard)
 [![Heroku](https://heroku-badge.herokuapp.com/?svg=1&app=lantern-hoard)](https://lantern-hoard.herokuapp.com/)
 
-The Lantern Hoard is a fan reproduction of Kingdom Death: Monster made with Node.js, Express, SockJS, React, and Redux. The If you would like to play a game click the Heroku button above to visit our deployed site. We use GitHub issues and a Waffle board for tracking, so if you find any issues please report them and we will take a look.
+The Lantern Hoard is a fan reproduction of Kingdom Death: Monster made with Node.js, Express, SockJS, React, and Redux. If you would like to play a game click the Heroku button above to visit our deployed site. We use GitHub issues and a Waffle board for tracking, so if you find any issues please report them and we will take a look.
 
 ## Development
 In order to work on this project you need a working Node.js 6+ environment and a PostgreSQL database running on
