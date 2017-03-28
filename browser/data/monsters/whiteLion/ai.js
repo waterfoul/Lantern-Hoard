@@ -12,8 +12,8 @@ import {
 } from '../../../utils/pick';
 
 import { drawAICard } from '../../../reducers/gameState/ai';
-import { processNextAction } from '../../../reducers/gameState/monsterController';
 import { adjustMonsterStats } from '../../../../common/gameState/monsterStats';
+import { changeBoardStatusAction, BOARD_STATUSES } from '../../../../common/gameState/board';
 import { TRIGGERS } from '../../../utils/effects';
 
 export function sniff(getState) {
@@ -311,7 +311,7 @@ export const ai = {
 					thunk: () => (dispatch, setState) => {
 						dispatch(adjustMonsterStats({ damage: 1 }));
 						dispatch(drawAICard());
-						dispatch(processNextAction()); // Note: this will kill any further action triggered by this card.
+						dispatch(changeBoardStatusAction(BOARD_STATUSES.processMonsterAction, {step: 0})); // Note: this will kill any further action triggered by this card.
 					}
 				}
 			]

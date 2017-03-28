@@ -10,6 +10,8 @@ import {moveMonster} from './positions';
 import {endMonster, beginMonster} from '../../../common/gameState/knockedDownCharacters';
 import {startPlayerTurn} from './playerTurn';
 import {addMood} from '../../../common/gameState/effects';
+import {triggerEffectThunks} from '../../utils/triggerEffectThunks';
+import {TRIGGERS} from '../../utils/effects';
 
 // Internals
 const processPick = (options, nextStatus) => (
@@ -104,17 +106,18 @@ const passMonsterController = () => (
 	}
 );
 
-export const processNextAction = (board = {data: {step: 0}}) => (
+const processNextAction = (board) => (
 	(dispatch, getState) => {
 		const {room, auth: user} = getState();
 		const {gameState} = room;
 		if (gameState.monsterController === user.id) {
-			const AICard = getAICard(room);
-			const action = AICard.actions[board.data.step];
 			const nextState = [BOARD_STATUSES.processMonsterAction, {
 				step: board.data.step + 1,
-				target: board.data.target
+				target: board.data.target,
+				card: getAICardName(room)
 			}];
+			const AICard = getAICard(room);
+			const action = AICard.actions[board.data.step];
 			if (action) {
 				if (action.type === 'pick') {
 					dispatch(processPick(action.options, nextState));
@@ -123,12 +126,12 @@ export const processNextAction = (board = {data: {step: 0}}) => (
 				} else if (action.type === 'mood') {
 					dispatch(addMood(AICard.img, action.triggers));
 					dispatch(removeFromDiscard(getAICardName(room)));
-					dispatch(processNextAction({data: {step: board.data + 1}}));
+					dispatch(changeBoardStatusAction.apply(null, nextState));
 				} else if (action.type === 'special') {
-					dispatch(action.thunk(processNextAction({data: {step: board.data + 1}})));
+					dispatch(action.thunk(changeBoardStatusAction.apply(null, nextState)));
 				} else {
 					console.log('Skipping Action', action);
-					dispatch(processNextAction({data: {step: board.data + 1}}));
+					dispatch(changeBoardStatusAction.apply(null, nextState));
 				}
 			} else {
 				dispatch(passMonsterController());
@@ -140,7 +143,7 @@ export const processNextAction = (board = {data: {step: 0}}) => (
 );
 
 function getAICardName(room) {
-	return room.gameState.ai.discard[0] || 'Basic Action';
+	return room.gameState.board.data.card || room.gameState.ai.discard[0] || 'Basic Action';
 }
 
 function getAICard(room) {
@@ -181,7 +184,7 @@ export const startMonsterTurn = () => (
 		if (gameState.monsterController === user.id) {
 			dispatch(drawAICard());
 
-			dispatch(processNextAction());
+			dispatch(triggerEffectThunks(TRIGGERS.monsterTurnStart, [BOARD_STATUSES.processMonsterAction, {step: 0}]));
 		}
 	}
 );
@@ -197,6 +200,13 @@ export const processAttack = (target, action, nextStatus) => (
 		} else {
 			dispatch(changeBoardStatusAction.apply(null, nextStatus));
 		}
+	}
+);
+
+export const rollTrigger = () => (
+	(dispatch, getState) => {
+		const {room: {gameState: {board}}} = getState();
+		dispatch(changeBoardStatusAction(board.status, Object.assign({}, board.data, {roll: Math.floor(Math.random() * 10) + 1})));
 	}
 );
 
