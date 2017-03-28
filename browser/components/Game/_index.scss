@@ -5,6 +5,11 @@
 @import './gameBoardOverlay/_MonsterPosition';
 @import './gameBoardOverlay/_CriticalInjury';
 
+#logout-button {
+	position: absolute;
+	left: 5px;
+	bottom: 41px;
+}
 #game {
 	flex-direction: column;
 	display: flex;
