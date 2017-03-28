@@ -21,7 +21,7 @@ const effects = (state = [], action) => {
 			type: EFFECT_TYPES.addMood,
 			triggers: action.triggers,
 			image: action.image
-		}];
+		}, ...state];
 	default:
 		return state;
 	}

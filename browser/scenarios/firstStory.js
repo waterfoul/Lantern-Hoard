@@ -7,7 +7,7 @@ export function firstStory() {
 	return {
 		hl: {
 			deck: [
-				'Soft Belly', 'Strange Hand',
+				'Strange Hand',
 				...shuffle(Object.keys(whiteLion.hl).filter((ele) => (ele !== 'Strange Hand')))
 			],
 			discard: []

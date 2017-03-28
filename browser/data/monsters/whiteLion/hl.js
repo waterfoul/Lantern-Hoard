@@ -1,9 +1,10 @@
 import { moveMonster } from '../../../reducers/gameState/positions';
 import { processAttack } from '../../../reducers/gameState/monsterController';
-import { changeBoardStatusAction } from '../../../../common/gameState/board';
+import { changeBoardStatusAction, BOARD_STATUSES } from '../../../../common/gameState/board';
 import { adjustMonsterStats } from '../../../../common/gameState/monsterStats';
 import { addPersistentInjury } from '../../../../common/gameState/effects';
 import { removeFromDiscard } from '../../../../common/gameState/hl';
+import { woundAI } from '../../../reducers/gameState/ai';
 import { TRIGGERS } from '../../../utils/effects';
 import { ai } from './ai';
 
@@ -337,11 +338,24 @@ export const hl = {
 				card: 'Soft Belly',
 				thunk: 0
 			}]}));
-			console.log('CRIT!');
 		},
 		triggers: [
 			(nextState) => (dispatch, getState) => {
-				console.log('SOFT BELLY TRIGGER');
+				dispatch(changeBoardStatusAction(BOARD_STATUSES.triggerRoll, {
+					title: 'Roll for Soft Belly',
+					img: '/static/white-lion/hl/soft-belly.jpg',
+					trigger: {
+						type: 'hl',
+						card: 'Soft Belly',
+						thunk: 1
+					},
+					nextState
+				}));
+			},
+			(result, nextState) => (dispatch, getState) => {
+				if (result === 1) {
+					dispatch(woundAI());
+				}
 				dispatch(changeBoardStatusAction.apply(null, nextState));
 			}
 		]
