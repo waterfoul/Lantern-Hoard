@@ -5,6 +5,8 @@ import thunkMiddleware from 'redux-thunk';
 
 import {changeFixState, CHANGE_FIX_STATE} from './reducers/flexBoxFix';
 import {ROOM_RESULT} from './reducers/room';
+import {AUTHENTICATED} from './reducers/auth';
+import {ROOM_LIST} from './reducers/roomList';
 import {init} from './listenForBoardStatus';
 import {send} from './socket';
 
@@ -18,14 +20,16 @@ const flexboxFixMiddleware = (store) => (next) => (action) => {
 	return next(action);
 };
 
-const socketMiddleware = (store) => (next) => (action) => {
-	const {room} = store.getState();
-
+const socketExclude = [
+	ROOM_RESULT,
+	CHANGE_FIX_STATE,
+	AUTHENTICATED,
+	ROOM_LIST
+];
+const socketMiddleware = () => (next) => (action) => {
 	const nextAction = next(action);
 
-	const {room: roomAfter} = store.getState();
-
-	if (room && roomAfter && room.gameState !== roomAfter.gameState && !action.fromSocket && action.type !== ROOM_RESULT) {
+	if (!action.fromSocket && socketExclude.indexOf(action.type) === -1) {
 		send(action);
 	}
 

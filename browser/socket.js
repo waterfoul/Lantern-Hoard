@@ -55,5 +55,3 @@ export function send(body) {
 		}
 	});
 }
-
-send('connect');

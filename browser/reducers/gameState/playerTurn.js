@@ -34,7 +34,10 @@ export const endSingleTurn = ({availableCharacters, character}) => (
 	(dispatch, getState) => {
 		const { room } = getState();
 		const nextChars = availableCharacters.filter((element) => element !== character);
-		const validTurns = nextChars.filter((slot) => room.gameState.knockedDownCharacters[slot] === STATUSES.standing);
+		const validTurns = nextChars.filter((slot) => (
+			room.gameState.knockedDownCharacters[slot] === STATUSES.standing &&
+			!room[`Character${slot + 1}`].dead
+		));
 		if (validTurns.length === 0) {
 			dispatch(startMonsterTurn());
 		} else if (validTurns.length === 1) {

@@ -22,7 +22,6 @@ function removeFrom(client, room) {
 }
 
 function sendTo(roomNum, message, excludedClient) {
-	logger.info('Broadcasting message to all clients for room', {roomNum, message});
 	if (rooms[roomNum]) {
 		rooms[roomNum].forEach((client) => {
 			if (client !== excludedClient) {
