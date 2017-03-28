@@ -67,7 +67,7 @@
 					1fr;
 
 	.initialPlacement {
-		background-color: lightblue;
+		background-color: rgba(0, 94, 58, .5);
 		margin: 10%;
 		cursor: pointer;
 	}
@@ -76,68 +76,55 @@
 			content: '\21B7';
 		}
 	}
-	.white {
-		background-color: white;
-		border-radius: 50%;
-		margin: 25%;
 
-		&.knocked-down {
-			&:after {
-				color: black;
-			}
+	.green img {
+		border: 2px solid #6ccd36;
+	}
+	.yellow img {
+		border: 2px solid #d9c416;
+	}
+	.white img {
+		border: 2px solid #acbbcd;
+	}
+	.blue img {
+		border: 2px solid #179cc9;
+	}
+	.character {
+		width: 100%;
+		height: 100%;
+		box-sizing: border-box;
+		padding: 15%;
+		img {
+			border-radius: 50%;
+			width: 100%;
+			height: 100%;
 		}
 	}
-	.yellow {
-		background-color: yellow;
-		border-radius: 50%;
-		margin: 25%;
 
-		&.knocked-down {
-			&:after {
-				color: black;
-			}
-		}
-	}
-	.green {
-		background-color: green;
-		border-radius: 50%;
-		margin: 25%
-	}
-	.blue {
-		background-color: blue;
-		border-radius: 50%;
-		margin: 25%
-	}
 	.monster {
-		background-color: red;
-		border-radius: 50%;
-		margin: 15%;
-
+		img {
+			border: 4px solid #682828;
+			border-right-color: white;
+		}
 		&:after {
 			font-size: 45px;
 		}
 
 		&.direction-N {
-			&:after {
-				content: '\2191';
+			img {
+				transform: rotate(90deg);
 			}
 		}
 
 		&.direction-S {
-			&:after {
-				content: '\2193';
+			img {
+				transform: rotate(270deg);
 			}
 		}
 
 		&.direction-E {
-			&:after {
-				content: '\2192';
-			}
-		}
-
-		&.direction-W {
-			&:after {
-				content: '\2190';
+			img {
+				transform: scale(-1, 1);
 			}
 		}
 	}

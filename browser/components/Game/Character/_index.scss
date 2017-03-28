@@ -6,6 +6,9 @@
   min-width: 80%;
 
   > div {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto 100%;
     position: relative;
     height: 100%;
     border: 1px solid black;
@@ -14,29 +17,42 @@
 }
 
 #game-character-card-1 {
-  background-color: #777777;
+  background: url("/static/char-white.jpg");
+  background-color: #0e0e0e;
 }
 
 #game-character-card-2 {
-  background-color: #141659;
+  background: url("/static/char-blue.jpg");
+  background-color: #03171d;
 }
 
 #game-character-card-3 {
-  background-color: #165914;
+  background: url("/static/char-green.jpg");
+  background-color: #0c1405;
 }
 
 #game-character-card-4 {
-  background-color: #595514;
+  background: url("/static/char-yellow.jpg");
+  background-color: #151402;
 }
-
+@keyframes game-board-grey-over {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
 .game-board-grey-over {
+	animation-duration: 0.25s;
+	animation-name: game-board-grey-over;
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 10px;
   z-index: 10;
-  background-color: rgba(201, 201, 201, 0.6);
+  background-color: rgba(100, 100, 100, 0.6);
 
   > div {
     position: absolute;
@@ -67,6 +83,8 @@
   overflow: hidden;
   padding-left: 0;
   padding-right: 0;
+	height: 125px;
+	overflow: hidden;
 
   @media (min-width: 768px) {
     .col-sm-12 {
@@ -76,6 +94,8 @@
   }
 
   .attack-buttons {
+		height: 125px;
+		overflow: auto;
     div {
       padding-left: 3px;
       padding-right: 3px;
