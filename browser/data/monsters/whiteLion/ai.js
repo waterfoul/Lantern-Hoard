@@ -119,7 +119,7 @@ export const ai = {
 				},
 				{
 					type: 'special',
-					thunk: (nextAction) => (dispatch, setState) => {dispatch(nextAction)}
+					thunk: (nextAction) => (dispatch, setState) => {dispatch(nextAction);}
 				}
 			],
 			alternate: (boardState) => {
@@ -210,7 +210,7 @@ export const ai = {
 				},
 				{
 					type: 'special',
-					thunk: (nextAction) => (dispatch, setState) => {dispatch(nextAction)}
+					thunk: (nextAction) => (dispatch, setState) => {dispatch(nextAction);}
 				}
 			],
 		},
@@ -260,7 +260,7 @@ export const ai = {
 				},
 				{
 					type: 'special',
-					thunk: (nextAction) => (dispatch, setState) => {dispatch(nextAction)}
+					thunk: (nextAction) => (dispatch, setState) => {dispatch(nextAction);}
 				}
 			]
 		},
@@ -330,7 +330,7 @@ export const ai = {
 			actions: [
 				{
 					type: 'special',
-					thunk: (nextAction) => (dispatch, setState) => {dispatch(nextAction)}
+					thunk: (nextAction) => (dispatch, setState) => {dispatch(nextAction);}
 				}
 			]
 		},
@@ -363,7 +363,7 @@ export const ai = {
 			actions: [
 				{
 					type: 'special',
-					thunk: (nextAction) => (dispatch, setState) => {dispatch(nextAction)}
+					thunk: (nextAction) => (dispatch, setState) => {dispatch(nextAction);}
 				}
 			]
 		},
@@ -372,7 +372,7 @@ export const ai = {
 			actions: [
 				{
 					type: 'special',
-					thunk: (nextAction) => (dispatch, setState) => {dispatch(nextAction)}
+					thunk: (nextAction) => (dispatch, setState) => {dispatch(nextAction);}
 				}
 			]
 		}
