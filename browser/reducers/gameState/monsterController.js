@@ -106,17 +106,18 @@ const passMonsterController = () => (
 	}
 );
 
-export const processNextAction = (board) => (
+const processNextAction = (board) => (
 	(dispatch, getState) => {
 		const {room, auth: user} = getState();
 		const {gameState} = room;
 		if (gameState.monsterController === user.id) {
-			const AICard = getAICard(room);
-			const action = AICard.actions[board.data.step];
 			const nextState = [BOARD_STATUSES.processMonsterAction, {
 				step: board.data.step + 1,
-				target: board.data.target
+				target: board.data.target,
+				card: getAICardName(room)
 			}];
+			const AICard = getAICard(room);
+			const action = AICard.actions[board.data.step];
 			if (action) {
 				if (action.type === 'pick') {
 					dispatch(processPick(action.options, nextState));
@@ -125,12 +126,12 @@ export const processNextAction = (board) => (
 				} else if (action.type === 'mood') {
 					dispatch(addMood(AICard.img, action.triggers));
 					dispatch(removeFromDiscard(getAICardName(room)));
-					dispatch(processNextAction({data: {step: board.data + 1}}));
+					dispatch(changeBoardStatusAction.apply(null, nextState));
 				} else if (action.type === 'special') {
-					dispatch(action.thunk(processNextAction({data: {step: board.data + 1}})));
+					dispatch(action.thunk(nextState));
 				} else {
 					console.log('Skipping Action', action);
-					dispatch(processNextAction({data: {step: board.data + 1}}));
+					dispatch(changeBoardStatusAction.apply(null, nextState));
 				}
 			} else {
 				dispatch(passMonsterController());
@@ -142,7 +143,7 @@ export const processNextAction = (board) => (
 );
 
 function getAICardName(room) {
-	return room.gameState.ai.discard[0] || 'Basic Action';
+	return room.gameState.board.data.card || room.gameState.ai.discard[0] || 'Basic Action';
 }
 
 function getAICard(room) {
