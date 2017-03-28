@@ -1,4 +1,18 @@
 {
+  "name": "lantern-hoard",
+  "description": "[![Stories in Ready](https://badge.waffle.io/waterfoul/Lantern-Hoard.svg?label=ready&title=Ready)](http://waffle.io/waterfoul/Lantern-Hoard) [![Build Status](https://travis-ci.org/waterfoul/Lantern-Hoard.svg?branch=master)](https://travis-ci.org/waterfoul/Lantern-Hoard) [![Heroku](https://heroku-badge.herokuapp.com/?svg=1&app=lantern-hoard)](https://lantern-hoard.herokuapp.com/)",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/waterfoul/Lantern-Hoard.git"
+  },
+  "author": "Aaron Aichlmayr, Jason Lam, Jason Powell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/waterfoul/Lantern-Hoard/issues"
+  },
+  "homepage": "https://lantern-hoard.herokuapp.com",
   "dependencies": {
     "axios": "^0.15.3",
     "body-parser": "^1.17.1",
