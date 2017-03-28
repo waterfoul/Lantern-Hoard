@@ -55,12 +55,13 @@ export const Board = connect(
 				].join(' ')} ><img src="/static/survivor-lucy.jpg" /></div>  : '' }
 				<div className={[
 					'game-board-square',
+					'character',
 					'monster',
 					`direction-${monsterDirection}`,
 					'size-' + monsterStats.size,
 					'x-' + positions.monster[0],
 					'y-' + positions.monster[1]
-				].join(' ')} />
+				].join(' ')} ><img src="/static/white-lion-token.jpg" /></div>
 			</div>
 		</div>
 	)

@@ -67,7 +67,7 @@
 					1fr;
 
 	.initialPlacement {
-		background-color: lightblue;
+		background-color: rgba(0, 94, 58, .5);
 		margin: 10%;
 		cursor: pointer;
 	}
@@ -102,35 +102,29 @@
 	}
 
 	.monster {
-		background-color: red;
-		border-radius: 50%;
-		margin: 15%;
-
+		img {
+			border: 4px solid #682828;
+			border-right-color: white;
+		}
 		&:after {
 			font-size: 45px;
 		}
 
 		&.direction-N {
-			&:after {
-				content: '\2191';
+			img {
+				transform: rotate(90deg);
 			}
 		}
 
 		&.direction-S {
-			&:after {
-				content: '\2193';
+			img {
+				transform: rotate(270deg);
 			}
 		}
 
 		&.direction-E {
-			&:after {
-				content: '\2192';
-			}
-		}
-
-		&.direction-W {
-			&:after {
-				content: '\2190';
+			img {
+				transform: scale(-1, 1);
 			}
 		}
 	}
