@@ -2,6 +2,7 @@
 const DRAW_AI_CARD = 'DRAW_AI_CARD';
 const WOUND_AI = 'WOUND_AI';
 const SET_AI = 'SET_AI';
+const REMOVE_FROM_DISCARD = 'REMOVE_FROM_DISCARD';
 
 // reducer
 const ai = (state = null, action) => {
@@ -30,6 +31,10 @@ const ai = (state = null, action) => {
 			deck: action.deck,
 			discard: []
 		});
+	case REMOVE_FROM_DISCARD:
+		return Object.assign({}, state, {
+			discard: state.discard.filter((curCard) => curCard !== action.card)
+		});
 	default:
 		return state;
 	}
@@ -46,10 +51,15 @@ const setAIDeckAction = (deck) => ({
 	type: SET_AI,
 	deck
 });
+const removeFromDiscard = (card) => ({
+	type: REMOVE_FROM_DISCARD,
+	card
+});
 
 module.exports = {
 	ai,
 	drawAICardAction,
 	woundAIAction,
-	setAIDeckAction
+	setAIDeckAction,
+	removeFromDiscard
 };

@@ -11,10 +11,19 @@ import {
 	closestWithMostBleeding
 } from '../../../utils/pick';
 
+import { drawAICard } from '../../../reducers/gameState/ai';
+import { processNextAction } from '../../../reducers/gameState/monsterController';
+import { adjustMonsterStats } from '../../../../common/gameState/monsterStats';
+import { TRIGGERS } from '../../../utils/effects';
+
 export function sniff(getState) {
 	console.log('Sniff');
 	return Promise.resolve(null);
 }
+
+const enragedTrigger = () => (dispatch, setState) => {
+	console.log('enragedTrigger');
+};
 
 export const ai = {
 	back: '/static/white-lion/ai/back.jpg',
@@ -286,14 +295,24 @@ export const ai = {
 			actions: [
 				{
 					type: 'mood',
-					trigger: (boardState) => {},
-					persistant: {
-						damage: 1
-					}
+					triggers: [
+						{
+							trigger: TRIGGERS.dismemberment,
+							thunk: enragedTrigger
+						},
+						{
+							trigger: TRIGGERS.playerKilled,
+							thunk: enragedTrigger
+						}
+					]
 				},
 				{
 					type: 'special',
-					action: (boardState, target) => {}
+					thunk: () => (dispatch, setState) => {
+						dispatch(adjustMonsterStats({ damage: 1 }));
+						dispatch(drawAICard());
+						dispatch(processNextAction()); // Note: this will kill any further action triggered by this card.
+					}
 				}
 			]
 		},
