@@ -1,7 +1,8 @@
 import {listenForBoardStatus} from '../../listenForBoardStatus';
 import {monsters} from '../../data/monsters';
-import {drawAICard, removeFromDiscard} from '../../reducers/gameState/ai';
+import {drawAICard} from '../../reducers/gameState/ai';
 import {changeBoardStatusAction, BOARD_STATUSES} from '../../../common/gameState/board';
+import {removeFromDiscard} from '../../../common/gameState/ai';
 import {changeMonsterController} from '../../../common/gameState/monsterController';
 import {changeMonsterDirection} from '../../../common/gameState/monsterDirection';
 import {getDistance} from '../../utils/getDistance';
@@ -121,9 +122,10 @@ export const processNextAction = (board = {data: {step: 0}}) => (
 					dispatch(processAttack(board.data.target, action, nextState));
 				} else if (action.type === 'mood') {
 					dispatch(addMood(AICard.img, action.triggers));
-					dispatch(removeFromDiscard)	;
+					dispatch(removeFromDiscard(getAICardName(room)));
+					dispatch(processNextAction({data: {step: board.data + 1}}));
 				} else if (action.type === 'special') {
-					dispatch(action.thunk());
+					dispatch(action.thunk(processNextAction({data: {step: board.data + 1}})));
 				} else {
 					console.log('Skipping Action', action);
 					dispatch(processNextAction({data: {step: board.data + 1}}));
@@ -137,9 +139,12 @@ export const processNextAction = (board = {data: {step: 0}}) => (
 	}
 );
 
+function getAICardName(room) {
+	return room.gameState.ai.discard[0] || 'Basic Action';
+}
+
 function getAICard(room) {
-	const cardName = room.gameState.ai.discard[0] || 'Basic Action';
-	return monsters[room.gameState.monsterName].ai.cards[cardName];
+	return monsters[room.gameState.monsterName].ai.cards[getAICardName(room)];
 }
 
 // Results from UI

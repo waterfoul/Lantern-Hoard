@@ -13,6 +13,9 @@ import {send} from './socket';
 let timeout = -1;
 // This middleware triggers chrome to fix the flexbox any time the store changes to keep ui bugs from happening
 const flexboxFixMiddleware = (store) => (next) => (action) => {
+	if (!action) {
+		throw new Error('Null action passed to store!');
+	}
 	if (action.type !== CHANGE_FIX_STATE) {
 		clearTimeout(timeout);
 		timeout = setTimeout(() => store.dispatch(changeFixState()), 100);
