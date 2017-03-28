@@ -28,15 +28,24 @@
 #game-character-card-4 {
   background-color: #595514;
 }
-
+@keyframes game-board-grey-over {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
 .game-board-grey-over {
+	animation-duration: 0.25s;
+	animation-name: game-board-grey-over;
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 10px;
   z-index: 10;
-  background-color: rgba(201, 201, 201, 0.6);
+  background-color: rgba(100, 100, 100, 0.6);
 
   > div {
     position: absolute;
@@ -67,6 +76,8 @@
   overflow: hidden;
   padding-left: 0;
   padding-right: 0;
+	height: 125px;
+	overflow: hidden;
 
   @media (min-width: 768px) {
     .col-sm-12 {
@@ -76,6 +87,8 @@
   }
 
   .attack-buttons {
+		height: 125px;
+		overflow: auto;
     div {
       padding-left: 3px;
       padding-right: 3px;
