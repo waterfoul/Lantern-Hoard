@@ -23,32 +23,36 @@ export const Board = connect(
 			<div className="game-board-grid">
 				{ (positions.player1 && !room.Character1.dead) ? <div className={[
 					'game-board-square',
+					'character',
 					'white',
 					knockedDownCharacters[0] !== STATUSES.standing ? 'knocked-down' : '',
 					'x-' + positions.player1[0],
 					'y-' + positions.player1[1]
-				].join(' ')} /> : '' }
+				].join(' ')} ><img src="/static/survivor-ezra.jpg" /></div>  : '' }
 				{ (positions.player2 && !room.Character2.dead) ? <div className={[
 					'game-board-square',
+					'character',
 					'blue',
 					knockedDownCharacters[1] !== STATUSES.standing ? 'knocked-down' : '',
 					'x-' + positions.player2[0],
 					'y-' + positions.player2[1]
-				].join(' ')} /> : '' }
+				].join(' ')} ><img src="/static/survivor-zachary.jpg" /></div> : '' }
 				{ (positions.player3 && !room.Character3.dead) ? <div className={[
 					'game-board-square',
+					'character',
 					'green',
 					knockedDownCharacters[2] !== STATUSES.standing ? 'knocked-down' : '',
 					'x-' + positions.player3[0],
 					'y-' + positions.player3[1]
-				].join(' ')} /> : '' }
+				].join(' ')}><img src="/static/survivor-allister.jpg" /></div> : '' }
 				{ (positions.player4 && !room.Character4.dead) ? <div className={[
 					'game-board-square',
+					'character',
 					'yellow',
 					knockedDownCharacters[3] !== STATUSES.standing ? 'knocked-down' : '',
 					'x-' + positions.player4[0],
 					'y-' + positions.player4[1]
-				].join(' ')} /> : '' }
+				].join(' ')} ><img src="/static/survivor-lucy.jpg" /></div>  : '' }
 				<div className={[
 					'game-board-square',
 					'monster',

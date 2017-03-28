@@ -76,38 +76,56 @@
 			content: '\21B7';
 		}
 	}
-	.white {
-		background-color: white;
-		border-radius: 50%;
-		margin: 25%;
+	// .white {
+	// 	background-color: white;
+	// 	border-radius: 50%;
+	// 	margin: 25%;
 
-		&.knocked-down {
-			&:after {
-				color: black;
-			}
+	// 	&.knocked-down {
+	// 		&:after {
+	// 			color: black;
+	// 		}
+	// 	}
+	// }
+	// .yellow {
+	// 	background-color: yellow;
+	// 	border-radius: 50%;
+	// 	margin: 25%;
+
+	// 	&.knocked-down {
+	// 		&:after {
+	// 			color: black;
+	// 		}
+	// 	}
+	// }
+	.green img {
+		border: 2px solid green;
+	}
+	.yellow img {
+		border: 2px solid yellow;
+	}
+	.white img {
+		border: 2px solid white;
+	}
+	.blue img {
+		border: 2px solid blue;
+	}
+	.character {
+		width: 100%;
+		height: 100%;
+		box-sizing: border-box;
+		padding: 15%;
+		img {
+			border-radius: 50%;
+			width: 100%;
+			height: 100%;
 		}
 	}
-	.yellow {
-		background-color: yellow;
-		border-radius: 50%;
-		margin: 25%;
-
-		&.knocked-down {
-			&:after {
-				color: black;
-			}
-		}
-	}
-	.green {
-		background-color: green;
-		border-radius: 50%;
-		margin: 25%
-	}
-	.blue {
-		background-color: blue;
-		border-radius: 50%;
-		margin: 25%
-	}
+	// .blue {
+	// 	background-color: blue;
+	// 	border-radius: 50%;
+	// 	margin: 25%
+	// }
 	.monster {
 		background-color: red;
 		border-radius: 50%;

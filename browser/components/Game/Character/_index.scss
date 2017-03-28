@@ -6,6 +6,9 @@
   min-width: 80%;
 
   > div {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto 100%;
     position: relative;
     height: 100%;
     border: 1px solid black;
@@ -14,19 +17,23 @@
 }
 
 #game-character-card-1 {
-  background-color: #777777;
+  background: url("/static/char-white.jpg");
+  background-color: #0e0e0e;
 }
 
 #game-character-card-2 {
-  background-color: #141659;
+  background: url("/static/char-blue.jpg");
+  background-color: #03171d;
 }
 
 #game-character-card-3 {
-  background-color: #165914;
+   background: url("/static/char-green.jpg");
+  background-color: #0c1405;
 }
 
 #game-character-card-4 {
-  background-color: #595514;
+  background: url("/static/char-yellow.jpg");
+  background-color: #151402;
 }
 @keyframes game-board-grey-over {
 	0% {
