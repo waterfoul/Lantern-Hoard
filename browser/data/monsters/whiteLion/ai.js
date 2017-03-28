@@ -11,7 +11,7 @@ import {
 	closestWithMostBleeding
 } from '../../../utils/pick';
 
-export function sniff(boardState) {
+export function sniff(getState) {
 	console.log('Sniff');
 	return Promise.resolve(null);
 }

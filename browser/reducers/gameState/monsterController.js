@@ -12,14 +12,12 @@ import {startPlayerTurn} from './playerTurn';
 // Internals
 const processPick = (options, nextStatus) => (
 	(dispatch, getState) => {
-		const {room} = getState();
-		const {gameState} = room;
 
 		const recurse = (i) => {
 			if (i >= options.length) {
 				dispatch(changeBoardStatusAction.apply(null, nextStatus));
 			} else {
-				return options[i](gameState, dispatch).then((result) => {
+				return options[i](getState, dispatch).then((result) => {
 					if (result === null) {
 						return recurse(i + 1);
 					} else {
