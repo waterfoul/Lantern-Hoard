@@ -13,5 +13,7 @@ export const TRIGGERS = {
 	// monster being knocked down after running methods, and if so cancel the movement
 	grab: 'GRAB', // TODO: Add this as a trigger, Function which returns true/false if the grab goes off,
 	AIDraw: 'AI_DRAW', // TODO: Add this as a trigger, function which returns true/false if the attack is canceled
-	monsterTurnStart: 'MONSTER_TURN_START' // TODO: Add this as a trigger, thunk which fires at the start of the monster turn before anything happens
+	monsterTurnStart: 'MONSTER_TURN_START', // TODO: Add this as a trigger, thunk which fires at the start of the monster turn before anything happens
+	dismemberment: 'DISMEMBERMENT', // TODO: Add this as a trigger, thunk fires when player is dismembered
+	playerKilled: 'PLAYER_KILLED' // TODO: Add this as a trigger, thunk fires when player is killed
 };
