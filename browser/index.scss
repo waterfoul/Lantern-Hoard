@@ -42,3 +42,10 @@ html, body, #root, #root > div, #root > div > div, #root > div > div > div {
 a[disabled] {
   pointer-events: none;
 }
+
+#blocking-error {
+  text-align: center;
+  margin-top: 20%;
+  font-size: 50px;
+  height: auto !important;
+}
