@@ -12,4 +12,4 @@ rm -rf node_modules
 
 NPM_CONFIG_PRODUCTION=true
 
-yarn
+yarn --production

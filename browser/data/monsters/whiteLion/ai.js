@@ -395,6 +395,7 @@ export const ai = {
 	}
 };
 
+Object.assign = Object.assign || (() => ({})); //Removes an error on IE so we can display a nice error message
 ai.cards = Object.assign({}, ai.basic, ai.advanced, ai.legendary, ai.traits);
 
 ai.cards['Basic Action'] = {

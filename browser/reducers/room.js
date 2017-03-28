@@ -15,7 +15,13 @@ export const ROOM_RESULT = 'ROOM_RESULT';
 export const room = (state = null, action) => {
 	switch (action.type) {
 	case ROOM_RESULT:
-		return action.roomData;
+		if (state && !action.forceGameState && action.roomData.id === state.id) {
+			return Object.assign({}, action.roomData, {
+				gameState: state.gameState
+			});
+		} else {
+			return action.roomData;
+		}
 	default:
 		if (state && state.gameState) {
 			return Object.assign({}, state, {gameState: gameStateReducer(state.gameState, action)});
@@ -26,17 +32,18 @@ export const room = (state = null, action) => {
 };
 
 //action creators
-export const result = (roomData) => ({
+export const result = (roomData, forceGameState) => ({
 	type: ROOM_RESULT,
-	roomData
+	roomData,
+	forceGameState
 });
 
 //thunks
-export const fetch = (id) => (
+export const fetch = (id, forceGameState = false) => (
 	(dispatch) =>
 		axios.get(`/api/room/${id}`)
 			.then((response) => {
-				dispatch(result(response.data));
+				dispatch(result(response.data, forceGameState));
 				dispatch(checkGameState());
 				send('connect');
 			})
