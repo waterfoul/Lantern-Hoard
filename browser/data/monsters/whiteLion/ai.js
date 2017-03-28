@@ -16,7 +16,7 @@ import { processNextAction } from '../../../reducers/gameState/monsterController
 import { adjustMonsterStats } from '../../../../common/gameState/monsterStats';
 import { TRIGGERS } from '../../../utils/effects';
 
-export function sniff(boardState) {
+export function sniff(getState) {
 	console.log('Sniff');
 	return Promise.resolve(null);
 }

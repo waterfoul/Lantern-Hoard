@@ -3,7 +3,9 @@ import { randomIndex } from '../randomIndex';
 import { getDistance } from '../getDistance';
 import { STATUSES } from '../../../common/gameState/knockedDownCharacters';
 
-export function closestThreatFacingInRange(gameState, dispatch) {
+export function closestThreatFacingInRange(getState, dispatch) {
+	const {room: {gameState}} = getState();
+
 	const positions = [
 		gameState.positions.player1,
 		gameState.positions.player2,
@@ -37,7 +39,9 @@ export function closestThreatFacingInRange(gameState, dispatch) {
 	return findClosestAndChoose(distances, dispatch);
 }
 
-export function closestThreatInFieldOfView(gameState, dispatch) {
+export function closestThreatInFieldOfView(getState, dispatch) {
+	const {room: {gameState}} = getState();
+
 	const positions = [
 		gameState.positions.player1,
 		gameState.positions.player2,
@@ -51,7 +55,9 @@ export function closestThreatInFieldOfView(gameState, dispatch) {
 	return findClosestAndChoose(charactersInView, dispatch);
 }
 
-export function closestInFieldOfView(gameState, dispatch) {
+export function closestInFieldOfView(getState, dispatch) {
+	const {room: {gameState}} = getState();
+
 	const positions = [
 		gameState.positions.player1,
 		gameState.positions.player2,
@@ -65,7 +71,9 @@ export function closestInFieldOfView(gameState, dispatch) {
 	return findClosestAndChoose(charactersInView, dispatch);
 }
 
-export function closestKnockedDownInRange(gameState, dispatch) {
+export function closestKnockedDownInRange(getState, dispatch) {
+	const {room: {gameState}} = getState();
+
 	const positions = [
 		gameState.positions.player1,
 		gameState.positions.player2,
@@ -90,7 +98,9 @@ export function closestKnockedDownInRange(gameState, dispatch) {
 	return findClosestAndChoose(distances, dispatch);
 }
 
-export function closestInRange(gameState, dispatch) {
+export function closestInRange(getState, dispatch) {
+	const {room: {gameState}} = getState();
+
 	const positions = [
 		gameState.positions.player1,
 		gameState.positions.player2,
@@ -110,7 +120,8 @@ export function closestInRange(gameState, dispatch) {
 	return findClosestAndChoose(distances, dispatch);
 }
 
-export function lastToWoundInRange(gameState, dispatch) {
+export function lastToWoundInRange(getState, dispatch) {
+	const {room: {gameState}} = getState();
 	const lastToWoundOrder = gameState.woundOrder;
 	const positions = lastToWoundOrder.map((slot) => {
 		return gameState.positions[`player${slot + 1}`];
@@ -131,7 +142,9 @@ export function lastToWoundInRange(gameState, dispatch) {
 	return Promise.resolve(distances[0]);
 }
 
-export function randomThreatInFieldOfView(gameState) {
+export function randomThreatInFieldOfView(getState) {
+	const {room: {gameState}} = getState();
+
 	// Board positions of all characters
 	const positions = [
 		gameState.positions.player1,
@@ -147,7 +160,8 @@ export function randomThreatInFieldOfView(gameState) {
 	return Promise.resolve(randomIndex(charactersInView));
 }
 
-export function randomInRange(gameState) {
+export function randomInRange(getState) {
+	const {room: {gameState}} = getState();
 	const distances = [
 		gameState.positions.player1,
 		gameState.positions.player2,

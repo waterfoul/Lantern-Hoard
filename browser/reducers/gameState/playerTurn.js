@@ -31,12 +31,18 @@ export const startSingleTurn = (character, availableCharacters = null) => (
 );
 
 export const endSingleTurn = ({availableCharacters, character}) => (
-	(dispatch, getState) => {
-		const { room } = getState();
+	(dispatch) => {
 		const nextChars = availableCharacters.filter((element) => element !== character);
+		dispatch(promptForCharacters(nextChars));
+	}
+);
+
+export const promptForCharacters = (nextChars) => (
+	(dispatch, getState) => {
+		const {room} = getState();
+
 		const validTurns = nextChars.filter((slot) => (
-			room.gameState.knockedDownCharacters[slot] === STATUSES.standing &&
-			!room[`Character${slot + 1}`].dead
+			room.gameState.knockedDownCharacters[slot] === STATUSES.standing && !room[`Character${slot + 1}`].dead
 		));
 		if (validTurns.length === 0) {
 			dispatch(startMonsterTurn());
@@ -174,7 +180,7 @@ export const rollToWound = (location) => (
 // Externals
 export const startPlayerTurn = () => (
 	(dispatch) => {
-		dispatch(changeBoardStatusAction(BOARD_STATUSES.selectActingCharacter, [0, 1, 2, 3]));
+		dispatch(promptForCharacters([0, 1, 2, 3]));
 	}
 );
 
