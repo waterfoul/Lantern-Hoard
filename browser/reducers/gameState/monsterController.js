@@ -176,16 +176,11 @@ export const attackAfterMove = (target, action, newLocation, nextStatus) => (
 // Externals
 export const startMonsterTurn = () => (
 	(dispatch, getState) => {
-		const {room, auth: user} = getState();
-		const {gameState} = room;
-
 		dispatch(beginMonster());
 
-		if (gameState.monsterController === user.id) {
-			dispatch(drawAICard());
+		dispatch(drawAICard());
 
-			dispatch(triggerEffectThunks(TRIGGERS.monsterTurnStart, [BOARD_STATUSES.processMonsterAction, {step: 0}]));
-		}
+		dispatch(triggerEffectThunks(TRIGGERS.monsterTurnStart, [BOARD_STATUSES.processMonsterAction, {step: 0}]));
 	}
 );
 

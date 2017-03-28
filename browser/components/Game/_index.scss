@@ -72,8 +72,14 @@
 		cursor: pointer;
 	}
 	.knocked-down {
-		&:after {
-			content: '\21B7';
+		img {
+			transform: scale(1, -1);
+		}
+	}
+
+	.yellow.knocked-down {
+		img {
+			transform: scale(-1, -1);
 		}
 	}
 
@@ -82,6 +88,7 @@
 	}
 	.yellow img {
 		border: 2px solid #d9c416;
+		transform: scale(-1, 1);
 	}
 	.white img {
 		border: 2px solid #acbbcd;
