@@ -60,7 +60,7 @@
     "start": "node . -p $PORT",
     "start-watch": "nodemon . --watch server --watch common --",
     "start-dev": "cross-env NODE_ENV=development npm run start-watch -- --config $HOME/.lantern-hoard.json -vv",
-    "dev": "cross-env NODE_ENV=development concurrently --kill-others --prefix \"[{name}]\" --names \"   JS,SERVE,  CSS\" -c \"bgBlue.bold.blue,bgGreen.bold.green,bgBlack.bold.white\" \"npm run build-js-dev\" \"npm run start-dev\" \"npm run build-css-watch\"",
+    "dev": "cross-env NODE_ENV=development concurrently --kill-others --prefix \"[{name}]\" --names \"   JS,SERVE,  CSS\" -c \"bgBlue.bold.black,bgGreen.bold.black,bgBlack.bold.white\" \"npm run build-js-dev\" \"npm run start-dev\" \"npm run build-css-watch\"",
     "test": "mocha --compilers js:babel-register browser/**/*.test.js browser/**/*.test.jsx server/**/*.test.js common/**/*.test.js browser/**/**/*.test.js",
     "test-watch": "npm run test -- --watch",
     "seed": "node server/db/seed.js",

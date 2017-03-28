@@ -42,3 +42,12 @@ html, body, #root, #root > div, #root > div > div, #root > div > div > div {
 a[disabled] {
   pointer-events: none;
 }
+
+
+#github-link {
+  border: 0;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin: 5px
+}

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Room } from './Room';
 import { CreateRoom } from './CreateRoom';
 import { join, create } from '../../reducers/roomList';
+import { GithubLink } from '../GithubLink';
 
 
 export const Lobby = connect(
@@ -20,6 +21,7 @@ export const Lobby = connect(
 					</div>
 				)) : ''}
 			</div>
+			<GithubLink/>
 		</div>
 	)
 );
