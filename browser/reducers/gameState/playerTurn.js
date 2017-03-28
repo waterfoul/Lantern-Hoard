@@ -40,8 +40,6 @@ export const endSingleTurn = ({ availableCharacters, character }) => (
 export const promptForCharacters = (nextChars) => (
 	(dispatch, getState) => {
 		const { room } = getState();
-		// const charAliveStatus = room.
-		console.log(room);
 		if (room.Character1.dead && room.Character2.dead && room.Character3.dead && room.Character4.dead) {
 			dispatch(changeBoardStatusAction(BOARD_STATUSES.gameOver));
 		} else {
