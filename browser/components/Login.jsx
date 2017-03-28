@@ -22,6 +22,6 @@ export const Login = () => (
 				</a>
 			</div>
 		</div>
-		<GithubLink/>
+		<GithubLink />
 	</div>
 );

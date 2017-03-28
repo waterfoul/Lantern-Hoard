@@ -202,5 +202,12 @@ export const processAttack = (target, action, nextStatus) => (
 	}
 );
 
+export const rollTrigger = () => (
+	(dispatch, getState) => {
+		const {room: {gameState: {board}}} = getState();
+		dispatch(changeBoardStatusAction(board.status, Object.assign({}, board.data, {roll: Math.floor(Math.random() * 10) + 1})));
+	}
+);
+
 // Wrapup
 listenForBoardStatus(BOARD_STATUSES.processMonsterAction, processNextAction);
