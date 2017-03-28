@@ -5,7 +5,7 @@ import { Room } from './Room';
 import { CreateRoom } from './CreateRoom';
 import { join, create } from '../../reducers/roomList';
 import { GithubLink } from '../GithubLink';
-
+import { Logout } from '../Logout';
 
 export const Lobby = connect(
 	({ roomList, auth }) => ({ roomList, user: auth }),
@@ -21,7 +21,8 @@ export const Lobby = connect(
 					</div>
 				)) : ''}
 			</div>
-			<GithubLink/>
+			<Logout />
+			<GithubLink />
 		</div>
 	)
 );
