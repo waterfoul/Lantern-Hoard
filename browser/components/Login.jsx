@@ -1,4 +1,5 @@
 import React from 'react';
+import {GithubLink} from './GithubLink';
 
 export const Login = () => (
 	<div>
@@ -21,5 +22,6 @@ export const Login = () => (
 				</a>
 			</div>
 		</div>
+		<GithubLink/>
 	</div>
 );
