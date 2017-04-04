@@ -20,7 +20,7 @@ export const woundAI = (player = null) => (
 	(dispatch, getState) => {
 		let {room} = getState();
 
-		if(player !== null) {
+		if (player !== null) {
 			dispatch(playerHasWounded(player));
 		}
 

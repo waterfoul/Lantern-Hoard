@@ -14,20 +14,20 @@ export const ROOM_RESULT = 'ROOM_RESULT';
 //reducer
 export const room = (state = null, action) => {
 	switch (action.type) {
-	case ROOM_RESULT:
-		if (state && !action.forceGameState && action.roomData.id === state.id) {
-			return Object.assign({}, action.roomData, {
-				gameState: state.gameState
-			});
-		} else {
-			return action.roomData;
-		}
-	default:
-		if (state && state.gameState) {
-			return Object.assign({}, state, {gameState: gameStateReducer(state.gameState, action)});
-		} else {
-			return state;
-		}
+		case ROOM_RESULT:
+			if (state && !action.forceGameState && action.roomData.id === state.id) {
+				return Object.assign({}, action.roomData, {
+					gameState: state.gameState
+				});
+			} else {
+				return action.roomData;
+			}
+		default:
+			if (state && state.gameState) {
+				return Object.assign({}, state, {gameState: gameStateReducer(state.gameState, action)});
+			} else {
+				return state;
+			}
 	}
 };
 

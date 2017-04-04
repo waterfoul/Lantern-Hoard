@@ -6,10 +6,10 @@ export const AUTHENTICATED = 'AUTHENTICATED';
 //reducer
 export const auth = (state = null, action) => {
 	switch (action.type) {
-	case AUTHENTICATED:
-		return action.user;
-	default:
-		return state;
+		case AUTHENTICATED:
+			return action.user;
+		default:
+			return state;
 	}
 };
 

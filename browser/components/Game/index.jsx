@@ -37,30 +37,30 @@ class GameComponent extends Component {
 	getGameBoardOverlay() {
 		if (this.props.room.gameState && this.props.room.gameState.board) {
 			switch (this.props.room.gameState.board.status) {
-			case BOARD_STATUSES.initialPlacement:
-				return <InitialPlacement />;
-			case BOARD_STATUSES.showAvailableMovement:
-				return <MoveCharacter />;
-			case BOARD_STATUSES.showMonsterPositions:
-				return <MonsterPosition />;
-			case BOARD_STATUSES.targetChoice:
-				return <SelectMonsterTarget />;
-			case BOARD_STATUSES.selectActingCharacter:
-				return <div className="game-board-grey-over"><div>Please select a character to act</div></div>;
-			case BOARD_STATUSES.playerDamage:
-				return <PlayerDamage />;
-			case BOARD_STATUSES.playerAttack:
-				return <PlayerAttack />;
-			case BOARD_STATUSES.victory:
-				return <Victory />;
-			case BOARD_STATUSES.gameOver:
-				return <Defeat />;
-			case BOARD_STATUSES.triggerRoll:
-				return <TriggerRoll />;
-			case BOARD_STATUSES.criticalInjury:
-				return <CriticalInjury />;
-			default:
-				return null;
+				case BOARD_STATUSES.initialPlacement:
+					return <InitialPlacement />;
+				case BOARD_STATUSES.showAvailableMovement:
+					return <MoveCharacter />;
+				case BOARD_STATUSES.showMonsterPositions:
+					return <MonsterPosition />;
+				case BOARD_STATUSES.targetChoice:
+					return <SelectMonsterTarget />;
+				case BOARD_STATUSES.selectActingCharacter:
+					return <div className="game-board-grey-over"><div>Please select a character to act</div></div>;
+				case BOARD_STATUSES.playerDamage:
+					return <PlayerDamage />;
+				case BOARD_STATUSES.playerAttack:
+					return <PlayerAttack />;
+				case BOARD_STATUSES.victory:
+					return <Victory />;
+				case BOARD_STATUSES.gameOver:
+					return <Defeat />;
+				case BOARD_STATUSES.triggerRoll:
+					return <TriggerRoll />;
+				case BOARD_STATUSES.criticalInjury:
+					return <CriticalInjury />;
+				default:
+					return null;
 			}
 		} else {
 			return null;

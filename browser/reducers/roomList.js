@@ -6,10 +6,10 @@ export const ROOM_LIST = 'ROOM_LIST';
 //reducer
 export const roomList = (state = null, action) => {
 	switch (action.type) {
-	case ROOM_LIST:
-		return action.list;
-	default:
-		return state;
+		case ROOM_LIST:
+			return action.list;
+		default:
+			return state;
 	}
 };
 

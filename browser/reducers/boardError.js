@@ -4,10 +4,10 @@ export const SET_BOARD_ERROR = 'SET_BOARD_ERROR';
 //reducer
 export const boardError = (state = null, action) => {
 	switch (action.type) {
-	case SET_BOARD_ERROR:
-		return action.message;
-	default:
-		return state;
+		case SET_BOARD_ERROR:
+			return action.message;
+		default:
+			return state;
 	}
 };
 

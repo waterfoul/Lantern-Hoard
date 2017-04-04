@@ -10,20 +10,20 @@ const ADD_MOOD = 'ADD_MOOD';
 //reducer
 const effects = (state = [], action) => {
 	switch (action.type) {
-	case ADD_PERSISTENT_INJURY:
-		return [Object.assign({
-			type: EFFECT_TYPES.persistentInjury,
-			name: action.name,
-			image: action.image
-		}, action.other), ...state];
-	case ADD_MOOD:
-		return [{
-			type: EFFECT_TYPES.addMood,
-			triggers: action.triggers,
-			image: action.image
-		}, ...state];
-	default:
-		return state;
+		case ADD_PERSISTENT_INJURY:
+			return [Object.assign({
+				type: EFFECT_TYPES.persistentInjury,
+				name: action.name,
+				image: action.image
+			}, action.other), ...state];
+		case ADD_MOOD:
+			return [{
+				type: EFFECT_TYPES.addMood,
+				triggers: action.triggers,
+				image: action.image
+			}, ...state];
+		default:
+			return state;
 	}
 };
 

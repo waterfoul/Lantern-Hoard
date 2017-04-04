@@ -7,7 +7,11 @@
   "rules": {
     "arrow-parens": ["error", "always"],
     "semi": ["error", "always"],
-    "indent": ["error", "tab"],
+    "indent": [
+      "error",
+      "tab",
+      { "SwitchCase": 1 }
+    ],
     "space-infix-ops": ["error"],
     "no-shadow": ["error"],
     "no-trailing-spaces": ["error"],
@@ -16,6 +20,8 @@
     "no-unused-expressions": ["warn"],
     "id-length": ["off"],
     "react/prop-types": ["off"],
+    "no-return-assign": ["error"],
+    "keyword-spacing": ["error"],
     /*
       This disallows unused variables. This is one of those code smells which can improve performance as every variable
       takes up memory. It also catches extra imports which you've added at the top of the file which you aren't using

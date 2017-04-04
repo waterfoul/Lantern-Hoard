@@ -25,16 +25,16 @@ export function chooseBetween(characters, dispatch) {
 export function isFront(monsterDirection, size, monster, player) {
 	const {X, Y} = getXYDistance(size, monster, player);
 	switch (monsterDirection) {
-	case 'N':
-		return Y < 0;
-	case 'S':
-		return Y > 0;
-	case 'E':
-		return X < 0;
-	case 'W':
-		return X > 0;
-	default:
-		return false;
+		case 'N':
+			return Y < 0;
+		case 'S':
+			return Y > 0;
+		case 'E':
+			return X < 0;
+		case 'W':
+			return X > 0;
+		default:
+			return false;
 	}
 }
 

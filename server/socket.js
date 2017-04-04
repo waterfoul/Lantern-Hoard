@@ -61,7 +61,9 @@ svr.on('connection', function(conn) {
 				return Room.findById(data.room).then((room) => {
 					room.gameState = gameStateReducer(room.gameState, data.body);
 
-					return room.save().then(() => roomUpdate[roomNum] = null);
+					return room.save().then(() => {
+						roomUpdate[roomNum] = null;
+					});
 				}).catch((e) => logger.error('Failed to update room via socket', data, e));
 			});
 		}

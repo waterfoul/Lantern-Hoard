@@ -35,48 +35,48 @@ function getButtons({
 }) {
 	if (room[`Player${slot + 1}`]) {
 		switch (board.status) {
-		case BOARD_STATUSES.initialPlacement:
-			return (
+			case BOARD_STATUSES.initialPlacement:
+				return (
 				<div className="col-md-7 col-sm-12">
 					{getPlacementText(positions, room, slot, user)}
 				</div>
-			);
-		case BOARD_STATUSES.showMonsterPositions:
-			return (
+				);
+			case BOARD_STATUSES.showMonsterPositions:
+				return (
 				<div className="col-md-7 col-sm-12">
 					{ user.id === monsterController ? 'Move the monster' : '' }
 				</div>
-			);
-		case BOARD_STATUSES.targetChoice:
-			return <SelectCharacter slot={slot} />;
-		case BOARD_STATUSES.selectActingCharacter:
-			return <SelectActingCharacter slot={slot} />;
-		case BOARD_STATUSES.playerDamage:
-			return (
+				);
+			case BOARD_STATUSES.targetChoice:
+				return <SelectCharacter slot={slot} />;
+			case BOARD_STATUSES.selectActingCharacter:
+				return <SelectActingCharacter slot={slot} />;
+			case BOARD_STATUSES.playerDamage:
+				return (
 				<div className="col-md-7 col-sm-12">
 					{room.gameState.board.data.target === slot ? 'Damage Me' : ''}
 				</div>
-			);
-		case BOARD_STATUSES.playerTurn:
-			return (
+				);
+			case BOARD_STATUSES.playerTurn:
+				return (
 				<PlayerTurn slot={slot} />
-			);
-		case BOARD_STATUSES.showAvailableMovement:
-			return (
+				);
+			case BOARD_STATUSES.showAvailableMovement:
+				return (
 					<div className="col-md-7 col-sm-12">
 						{room.gameState.board.data.target === slot ? 'Move Me' : ''}
 					</div>
-			);
-		case BOARD_STATUSES.playerAttack:
-			return (
+				);
+			case BOARD_STATUSES.playerAttack:
+				return (
 				<div className="col-md-7 col-sm-12">
 					{room.gameState.board.data.slot === slot ? 'Attack!' : ''}
 				</div>
-			);
-		default:
-			return (
+				);
+			default:
+				return (
 				<PleaseWait />
-			);
+				);
 		}
 	} else {
 		return (

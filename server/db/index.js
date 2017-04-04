@@ -42,7 +42,7 @@ function sync(force = false, retries = 0, maxRetries = 5) {
 			return new Promise((resolve, reject) =>
 				// 'child_process.exec' docs: https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback
 				require('child_process').exec(`createdb "${name}"`, (err) => {
-					if(err) {
+					if (err) {
 						reject(err);
 					} else {
 						resolve();
