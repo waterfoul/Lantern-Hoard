@@ -147,15 +147,15 @@ export const rollToWound = (location) => (dispatch, getState) => {
 	const mods = getMods(room, data.slot, data.item, gameState, data.item.diceMods);
 
 	if (data.automaticCrits) {
-
+		data.woundRolls[location] = 'auto';
 		data.woundResults[location] = card.crit ? 'Crit' : 'Success';
 		data.automaticCrits--;
 
-	} else if (data.automaticHits) {
+	} else if (data.automaticWounds) {
 
 		data.woundRolls[location] = 'auto';
 		data.woundResults[location] = 'Success';
-		data.automaticHits--;
+		data.automaticWounds--;
 
 	} else {
 		const result = Math.floor(Math.random() * 10) + 1;
