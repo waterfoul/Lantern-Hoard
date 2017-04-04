@@ -24,6 +24,8 @@ export const whoami = () => (
 		axios.get('/api/auth/whoami')
 			.then((response) => dispatch(authenticated(response.data)))
 			.catch((e) => {
+				// UI won't really display this error, the user will just get logged out
+				// eslint-disable-next-line no-console
 				console.error('Error while logging in', e);
 				dispatch(authenticated(null));
 			})

@@ -30,7 +30,6 @@ export const PlayerAttack = connect(
 		const isController = user.id === room[`Player${slot + 1}`].id;
 		const monsterDistance = getDistance(monsterSize, positions.monster, positions[`player${slot + 1}`]);
 		const range = item.range || 1;
-		console.log(range < monsterDistance, range, monsterDistance);
 		const attackFinished = (
 			// Out of range
 			range < monsterDistance ||

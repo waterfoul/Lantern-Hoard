@@ -64,13 +64,11 @@ const persistentInjury = (card, name, other = {}) => (dispatch) => {
 // TODO: Stub! Implement and remove BOTH of these comments
 // eslint-disable-next-line
 const knockDownLion = () => (dispatch, getState) => {
-	console.log('Knock down lion');
 };
 
 // TODO: Stub! Implement and remove BOTH of these comments
 // eslint-disable-next-line
 const gainWhiteLionResource = (name = null) => (dispatch, getState) => {
-	console.log('Gain White Lion Resource!', name);
 };
 
 function counterAttack(dispatch, getState, mods = {}, nextState = null) {
@@ -125,7 +123,6 @@ export const hl = {
 		// TODO: Stub! Implement and remove BOTH of these comments
 		// eslint-disable-next-line
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
 			// Chance of WL dying instantly
 		}
 	},
@@ -152,7 +149,6 @@ export const hl = {
 		// TODO: Stub! Implement and remove BOTH of these comments
 		// eslint-disable-next-line
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
 		}
 	},
 	'Beasts Femur': {
@@ -169,7 +165,6 @@ export const hl = {
 				// TODO: Stub! Implement and remove BOTH of these comments
 				// eslint-disable-next-line
 				action: (dispatch, getState) => {
-					console.log('WOUND!');
 				}
 			}
 		],
@@ -208,7 +203,6 @@ export const hl = {
 				// TODO: Stub! Implement and remove BOTH of these comments
 				// eslint-disable-next-line
 				action: (dispatch, getState) => {
-					console.log('FAIL!');
 				}
 			}
 		],
@@ -244,7 +238,6 @@ export const hl = {
 				// TODO: Stub! Implement and remove BOTH of these comments
 				// eslint-disable-next-line
 				action: (dispatch, getState) => {
-					console.log('WOUND!');
 				}
 			}
 		],
@@ -307,7 +300,6 @@ export const hl = {
 		// TODO: Stub! Implement and remove BOTH of these comments
 		// eslint-disable-next-line
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
 		}
 	},
 	'Clever Ploy': {
@@ -331,7 +323,6 @@ export const hl = {
 		// TODO: Stub! Implement and remove BOTH of these comments
 		// eslint-disable-next-line
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
 		}
 	},
 	'Fuzzy Groin': {
@@ -349,7 +340,6 @@ export const hl = {
 		// TODO: Stub! Implement and remove BOTH of these comments
 		// eslint-disable-next-line
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
 		}
 	},
 	'Soft Belly': {

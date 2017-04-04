@@ -130,6 +130,8 @@ const processNextAction = (board) => (
 				} else if (action.type === 'special') {
 					dispatch(action.thunk(changeBoardStatusAction.apply(null, nextState)));
 				} else {
+					// This shouldn't really happen, logging it out just in case
+					// eslint-disable-next-line no-console
 					console.log('Skipping Action', action);
 					dispatch(changeBoardStatusAction.apply(null, nextState));
 				}

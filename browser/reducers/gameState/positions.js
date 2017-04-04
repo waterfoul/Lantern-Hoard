@@ -37,7 +37,6 @@ function squishChar(room, location, pos, char, players, dispatch, distance = 1) 
 	if (options.length === 0) {
 		return squishChar(room, location, pos, distance); //Not an ideal way to handle this but it will be a rare case so...
 	} else if (options.length === 1) {
-		console.log('Moving', char, 'to', options[0]);
 		dispatch(knockDownCharacter(char));
 		dispatch(move(`player${char + 1}`, options[0]));
 	} else {
