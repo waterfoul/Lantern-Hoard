@@ -8,7 +8,6 @@ import { woundAI } from '../../reducers/gameState/ai';
 import { items } from '../../data/items';
 import { getAccuracy, getStrength, getLuck } from '../../utils/getStats';
 import { monsters } from '../../data/monsters';
-import { playerHasWounded } from '../../../common/gameState/woundOrder';
 
 // Internals
 const trigger = (card, type, dispatch, getState) => (
@@ -124,61 +123,79 @@ export const closeAttack = () => (
 	}
 );
 
-export const rollToWound = (location) => (
-	(dispatch, getState) => {
-		const { room } = getState();
-		const data = Object.assign({}, room.gameState.board.data);
-		const playerStr = getStrength(room[`Character${data.slot + 1}`], room.gameState, data.slot, data.item.diceMods || {});
-		const playerLuck = getLuck(room[`Character${data.slot + 1}`], room.gameState, data.slot, data.item.diceMods || {});
-		const monsterName = room.gameState.monsterName;
-		const card = monsters[monsterName].hl[data.hitCards[location]];
-		let result = 0;
+function getMods (room, slot, item, gameState, diceMods) {
+	const playerStr = getStrength(room[`Character${slot + 1}`], gameState, slot, item.diceMods || {});
+	const playerLuck = getLuck(room[`Character${slot + 1}`], gameState, slot, item.diceMods || {});
 
-		if (data.automaticCrits) {
-			result = 'auto-crit';
-			data.automaticCrits--;
-		} else if (data.automaticHits) {
-			result = 'auto';
-			data.automaticHits--;
-		} else {
-			result = Math.floor(Math.random() * 10) + 1;
-		}
+	const mods = diceMods || {};
+
+	mods.luck = playerLuck + (mods.luck || 0);
+	mods.strength = playerStr + (mods.strength || 0);
+
+	return mods;
+}
+
+// This is as simple as I can get it
+// eslint-disable-next-line complexity
+export const rollToWound = (location) => (dispatch, getState) => {
+	const { room } = getState();
+	const { gameState } = room;
+	const { board } = gameState;
+	const data = Object.assign({}, board.data);
+	const monsterName = gameState.monsterName;
+	const card = monsters[monsterName].hl[data.hitCards[location]];
+	const mods = getMods(room, data.slot, data.item, gameState, data.item.diceMods);
+
+	if (data.automaticCrits) {
+
+		data.woundResults[location] = card.crit ? 'Crit' : 'Success';
+		data.automaticCrits--;
+
+	} else if (data.automaticHits) {
+
+		data.woundRolls[location] = 'auto';
+		data.woundResults[location] = 'Success';
+		data.automaticHits--;
+
+	} else {
+		const result = Math.floor(Math.random() * 10) + 1;
 		data.woundRolls[location] = result;
+
 		// Update the data
 		if (result === 1) {
 			data.woundResults[location] = 'Fail';
-		} else if (card.crit && (
-			result === 'auto-crit' ||
-			result + playerLuck + (data.item.diceMods && data.item.diceMods.luck || 0) >= 10
-		)) {
+		} else if (card.crit && (result + mods.luck) >= 10) {
 			data.woundResults[location] = 'Crit';
-		} else if (result === 10 || result === 'auto-crit' || result === 'auto') {
-			data.woundResults[location] = 'Success';
-		} else if ((result + playerStr) > room.gameState.monsterStats.toughness) {
+		} else if (result === 10 || (result + mods.strength) > gameState.monsterStats.toughness) {
 			data.woundResults[location] = 'Success';
 		} else {
 			data.woundResults[location] = 'Fail';
 		}
 
-		// Change Status
-		dispatch(changeBoardStatusAction(BOARD_STATUSES.playerAttack, data));
-
-		// Dispatch actions, this might change the status again
-		if (data.woundResults[location] === 'Fail') {
-			trigger(card, 'failure', dispatch, getState);
-			trigger(card, 'reflex', dispatch, getState);
-		} else if (data.woundResults[location] === 'Crit') {
-			card.crit(dispatch, getState);
-			dispatch(playerHasWounded(room.gameState.board.data.slot));
-			dispatch(woundAI());
-		} else if (data.woundResults[location] === 'Success') {
-			trigger(card, 'wound', dispatch, getState);
-			trigger(card, 'reflex', dispatch, getState);
-			dispatch(playerHasWounded(room.gameState.board.data.slot));
-			dispatch(woundAI());
-		}
 	}
-);
+
+	// Change Status
+	dispatch(changeBoardStatusAction(BOARD_STATUSES.playerAttack, data));
+
+	// Dispatch actions, this might change the status again
+	if (data.woundResults[location] === 'Fail') {
+
+		trigger(card, 'failure', dispatch, getState);
+		trigger(card, 'reflex', dispatch, getState);
+
+	} else if (data.woundResults[location] === 'Crit') {
+
+		card.crit(dispatch, getState);
+		dispatch(woundAI(board.data.slot));
+
+	} else if (data.woundResults[location] === 'Success') {
+
+		trigger(card, 'wound', dispatch, getState);
+		trigger(card, 'reflex', dispatch, getState);
+		dispatch(woundAI(board.data.slot));
+
+	}
+};
 
 // Externals
 export const startPlayerTurn = () => (
