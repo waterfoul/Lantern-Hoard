@@ -7,10 +7,10 @@ export function getXYDistance(size, monster, player) {
 	if (Y > 0) {
 		Y -= (size - 1);
 	}
-	return {X, Y};
+	return { X, Y };
 }
 
 export function getDistance(size, monster, player) {
-	const {X, Y} = getXYDistance(size, monster, player);
+	const { X, Y } = getXYDistance(size, monster, player);
 	return Math.abs(X) + Math.abs(Y);
 }

@@ -1,7 +1,7 @@
 const sockjs = require('sockjs');
 const logger = require('./utils/logger');
 const Room = require('./db/models/room');
-const {gameStateReducer} = require('../common/gameState');
+const { gameStateReducer } = require('../common/gameState');
 
 // This holds the clients connected to each room
 const rooms = {};
@@ -32,7 +32,7 @@ function sendTo(roomNum, message, excludedClient) {
 }
 
 function sendAll(message) {
-	logger.info('Broadcasting message to all clients', {message});
+	logger.info('Broadcasting message to all clients', { message });
 	allClients.forEach((client) => client.write(message));
 }
 
@@ -61,7 +61,9 @@ svr.on('connection', function(conn) {
 				return Room.findById(data.room).then((room) => {
 					room.gameState = gameStateReducer(room.gameState, data.body);
 
-					return room.save().then(() => roomUpdate[roomNum] = null);
+					return room.save().then(() => {
+						roomUpdate[roomNum] = null;
+					});
 				}).catch((e) => logger.error('Failed to update room via socket', data, e));
 			});
 		}

@@ -1,6 +1,6 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {STATUSES} from '../../../common/gameState/knockedDownCharacters';
+import { connect } from 'react-redux';
+import { STATUSES } from '../../../common/gameState/knockedDownCharacters';
 
 const IMAGES = [
 	'/static/survivor-ezra.jpg',
@@ -43,7 +43,7 @@ export const Board = connect(
 )(
 	({ room, positions, monsterDirection, knockedDownCharacters, monsterStats, flexBoxFix }) => (
 		<div>
-			<div style={{display: (flexBoxFix) ? 'block' : 'none'}}>
+			<div style={{ display: (flexBoxFix) ? 'block' : 'none' }}>
 				{/*This div is for fixing some flexbox issues, it just causes chrome to re-render the content below*/}
 			</div>
 			<img src="/static/board.jpg" className="game-main-image" />

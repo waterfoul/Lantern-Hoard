@@ -6,24 +6,24 @@ const REMOVE_FROM_DISCARD = 'REMOVE_FROM_DISCARD';
 // reducer
 const hl = (state = null, action) => {
 	switch (action.type) {
-	case DRAW_HL_CARD:
-		const [next, ...deck] = state.deck;
-		const newState = Object.assign({}, state, {
-			deck: deck,
-			discard: [next, ...state.discard]
-		});
-		return newState;
-	case SET_HL:
-		return Object.assign({}, state, {
-			deck: action.deck,
-			discard: []
-		});
-	case REMOVE_FROM_DISCARD:
-		return Object.assign({}, state, {
-			discard: state.discard.filter((curCard) => curCard !== action.card)
-		});
-	default:
-		return state;
+		case DRAW_HL_CARD:
+			const [next, ...deck] = state.deck;
+			const newState = Object.assign({}, state, {
+				deck: deck,
+				discard: [next, ...state.discard]
+			});
+			return newState;
+		case SET_HL:
+			return Object.assign({}, state, {
+				deck: action.deck,
+				discard: []
+			});
+		case REMOVE_FROM_DISCARD:
+			return Object.assign({}, state, {
+				discard: state.discard.filter((curCard) => curCard !== action.card)
+			});
+		default:
+			return state;
 	}
 };
 

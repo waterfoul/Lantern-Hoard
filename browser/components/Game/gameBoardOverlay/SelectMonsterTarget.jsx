@@ -1,10 +1,10 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-import {monsters} from '../../../data/monsters';
+import { monsters } from '../../../data/monsters';
 
 export const SelectMonsterTarget = connect(
-	({room}) => {
+	({ room }) => {
 		return {
 			card: room.gameState.ai.discard[0] || 'Basic Action',
 			monsterName: room.gameState.monsterName

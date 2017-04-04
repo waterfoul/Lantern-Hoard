@@ -1,14 +1,14 @@
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import {reducers} from './reducers';
+import { reducers } from './reducers';
 import thunkMiddleware from 'redux-thunk';
 
-import {changeFixState, CHANGE_FIX_STATE} from './reducers/flexBoxFix';
-import {ROOM_RESULT} from './reducers/room';
-import {AUTHENTICATED} from './reducers/auth';
-import {ROOM_LIST} from './reducers/roomList';
-import {init} from './listenForBoardStatus';
-import {send} from './socket';
+import { changeFixState, CHANGE_FIX_STATE } from './reducers/flexBoxFix';
+import { ROOM_RESULT } from './reducers/room';
+import { AUTHENTICATED } from './reducers/auth';
+import { ROOM_LIST } from './reducers/roomList';
+import { init } from './listenForBoardStatus';
+import { send } from './socket';
 
 let timeout = -1;
 // This middleware triggers chrome to fix the flexbox any time the store changes to keep ui bugs from happening

@@ -1,11 +1,11 @@
-import {isFront, findClosestAndChoose, checkFieldOfView, isThreat} from './utils';
+import { isFront, findClosestAndChoose, checkFieldOfView, isThreat } from './utils';
 import { randomIndex } from '../randomIndex';
 import { getDistance } from '../getDistance';
 import { STATUSES } from '../../../common/gameState/knockedDownCharacters';
 
 function getPlayerPositions(getState) {
-	const {room} = getState();
-	const {gameState: {positions}} = room;
+	const { room } = getState();
+	const { gameState: { positions } } = room;
 
 	return [
 		room.Character1.dead ? null : positions.player1,
@@ -16,7 +16,7 @@ function getPlayerPositions(getState) {
 }
 
 export function closestThreatFacingInRange(getState, dispatch) {
-	const {room: {gameState}} = getState();
+	const { room: { gameState } } = getState();
 
 	const positions = getPlayerPositions(getState);
 
@@ -50,7 +50,7 @@ export function closestThreatFacingInRange(getState, dispatch) {
 }
 
 export function closestThreatInFieldOfView(getState, dispatch) {
-	const {room: {gameState}} = getState();
+	const { room: { gameState } } = getState();
 
 	const positions = getPlayerPositions(getState);
 	const charactersInView = positions
@@ -61,7 +61,7 @@ export function closestThreatInFieldOfView(getState, dispatch) {
 }
 
 export function closestInFieldOfView(getState, dispatch) {
-	const {room: {gameState}} = getState();
+	const { room: { gameState } } = getState();
 
 	const positions = getPlayerPositions(getState);
 	const charactersInView = positions
@@ -72,7 +72,7 @@ export function closestInFieldOfView(getState, dispatch) {
 }
 
 export function closestKnockedDownInRange(getState, dispatch) {
-	const {room: {gameState}} = getState();
+	const { room: { gameState } } = getState();
 
 	const positions = getPlayerPositions(getState);
 
@@ -97,7 +97,7 @@ export function closestKnockedDownInRange(getState, dispatch) {
 }
 
 export function closestInRange(getState, dispatch) {
-	const {room: {gameState}} = getState();
+	const { room: { gameState } } = getState();
 
 	const positions = getPlayerPositions(getState);
 
@@ -117,7 +117,7 @@ export function closestInRange(getState, dispatch) {
 }
 
 export function lastToWoundInRange(getState) {
-	const {room: {gameState}} = getState();
+	const { room: { gameState } } = getState();
 	const lastToWoundOrder = gameState.woundOrder;
 	const positions = lastToWoundOrder.map((slot) => {
 		return gameState.positions[`player${slot + 1}`];
@@ -139,7 +139,7 @@ export function lastToWoundInRange(getState) {
 }
 
 export function randomThreatInFieldOfView(getState) {
-	const {room: {gameState}} = getState();
+	const { room: { gameState } } = getState();
 
 	// Board positions of all characters
 	const positions = getPlayerPositions(getState);
@@ -152,7 +152,7 @@ export function randomThreatInFieldOfView(getState) {
 }
 
 export function randomInRange(getState) {
-	const {room: {gameState}} = getState();
+	const { room: { gameState } } = getState();
 	const distances = getPlayerPositions(getState).map((val) => {
 		if (val === null) {
 			return null;

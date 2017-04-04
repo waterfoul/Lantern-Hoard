@@ -1,5 +1,5 @@
-import {addTokenToCharacter, TOKEN_TYPES} from '../../../common/gameState/tokens';
-import {killCharacter} from '../../reducers/character';
+import { addTokenToCharacter, TOKEN_TYPES } from '../../../common/gameState/tokens';
+import { killCharacter } from '../../reducers/character';
 
 export const killSurvivor = (target) => (dispatch, getState) => {
 	const { room } = getState();

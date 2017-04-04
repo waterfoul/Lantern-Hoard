@@ -4,10 +4,10 @@ export const CHANGE_FIX_STATE = 'CHANGE_FIX_STATE';
 //reducer
 export const flexBoxFix = (state = true, action) => {
 	switch (action.type) {
-	case CHANGE_FIX_STATE:
-		return !state;
-	default:
-		return state;
+		case CHANGE_FIX_STATE:
+			return !state;
+		default:
+			return state;
 	}
 };
 
