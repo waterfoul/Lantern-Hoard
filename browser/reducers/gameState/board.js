@@ -46,7 +46,7 @@ export const rollForMonsterWounds = () => (
 	(dispatch, getState) => {
 		const { room } = getState();
 		const data = Object.assign({}, room.gameState.board.data);
-		data.wounds = data.hits.map((v) => v ? Math.floor(Math.random() * 6) + 1 : null);
+		data.wounds = data.hits.map((v) => (v ? Math.floor(Math.random() * 6) + 1 : null));
 		dispatch(changeBoardStatus(BOARD_STATUSES.playerDamage, data));
 	}
 );

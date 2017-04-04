@@ -6,11 +6,12 @@
   "extends": "fullstack",
   "rules": {
     // Uncomment this when making the linter more strict
-    //"no-warning-comments": ["off"],
+    // "no-warning-comments": ["off"],
 
     "eqeqeq": ["error"],
     "guard-for-in": ["error"],
     "no-case-declarations": ["error"],
+    "no-confusing-arrow": ["error"],
     "camelcase": ["off"],
     // This enforces camelCasing or ALL_CAPS_WITH_UNDERSCORES but allows an _id suffix
     "id-match": [

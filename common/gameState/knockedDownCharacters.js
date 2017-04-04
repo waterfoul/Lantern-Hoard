@@ -23,9 +23,9 @@ const knockedDownCharacters = (state = [
 			return result;
 		}
 		case BEGIN_MONSTER:
-			return state.map((ele) => ele === STATUSES.knockedDown ? STATUSES.readyToStand : ele);
+			return state.map((ele) => (ele === STATUSES.knockedDown ? STATUSES.readyToStand : ele));
 		case END_MONSTER:
-			return state.map((ele) => ele === STATUSES.readyToStand ? STATUSES.standing : ele);
+			return state.map((ele) => (ele === STATUSES.readyToStand ? STATUSES.standing : ele));
 		default:
 			return state;
 	}

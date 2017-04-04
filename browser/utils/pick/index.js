@@ -169,7 +169,7 @@ export function randomInRange(getState) {
 	const min = Math.min.apply(Math, distances.filter((val) => val !== null));
 
 	const resultArr = distances
-		.map((val, i) => val === min ? i : null)
+		.map((val, i) => (val === min ? i : null))
 		.filter((val) => val !== null);
 
 	return Promise.resolve(randomIndex(resultArr));
