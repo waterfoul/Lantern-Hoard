@@ -22,6 +22,7 @@
     "react/prop-types": ["off"],
     "no-return-assign": ["error"],
     "keyword-spacing": ["error"],
+    "object-curly-spacing": ["error", "always"],
     /*
       This disallows unused variables. This is one of those code smells which can improve performance as every variable
       takes up memory. It also catches extra imports which you've added at the top of the file which you aren't using

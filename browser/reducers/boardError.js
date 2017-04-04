@@ -20,7 +20,7 @@ export const setErrorAction = (message) => ({
 //thunks
 export const setError = (message) => (
 	(dispatch, getState) => {
-		const {boardError: state} = getState();
+		const { boardError: state } = getState();
 
 		if (state !== message) {
 			dispatch(setErrorAction(message));

@@ -1,8 +1,8 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-import {monsters} from '../../../data/monsters';
-import {move} from '../../../reducers/gameState/positions';
+import { monsters } from '../../../data/monsters';
+import { move } from '../../../reducers/gameState/positions';
 
 export const InitialPlacement = connect(
 	({ room, auth }) => ({

@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import * as bowser from 'bowser';
 
 let errMsg = null;
@@ -14,8 +14,8 @@ if (bowser.chrome && parseFloat(bowser.version) < 57) {
 	errMsg = 'Edge is completely unsupported, please download firefox or chrome';
 }
 
-import {whoami} from '../reducers/auth';
-import {fetchList} from '../reducers/roomList';
+import { whoami } from '../reducers/auth';
+import { fetchList } from '../reducers/roomList';
 
 class RootComponent extends Component {
 	componentWillMount() {
@@ -42,5 +42,5 @@ class RootComponent extends Component {
 
 export const Root = connect(
 	null,
-	{whoami, fetchList}
+	{ whoami, fetchList }
 )(RootComponent);

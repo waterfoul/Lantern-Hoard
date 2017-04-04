@@ -1,4 +1,4 @@
-import {killSurvivor, addBleed} from './helpers';
+import { killSurvivor, addBleed } from './helpers';
 
 const death = {
 	top: '23.5%',

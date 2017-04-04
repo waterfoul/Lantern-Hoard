@@ -349,7 +349,7 @@ export const ai = {
 					thunk: () => (dispatch, getState) => {
 						dispatch(adjustMonsterStats({ damage: 1 }));
 						dispatch(drawAICard());
-						dispatch(changeBoardStatusAction(BOARD_STATUSES.processMonsterAction, {step: 0})); // Note: this will kill any further action triggered by this card.
+						dispatch(changeBoardStatusAction(BOARD_STATUSES.processMonsterAction, { step: 0 })); // Note: this will kill any further action triggered by this card.
 					}
 				}
 			]

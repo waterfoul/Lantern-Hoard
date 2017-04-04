@@ -1,4 +1,4 @@
-import {killSurvivor, addBleed} from './helpers';
+import { killSurvivor, addBleed } from './helpers';
 
 const headExplosion = {
 	top: '24%',

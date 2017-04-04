@@ -1,12 +1,12 @@
 import axios from 'axios';
-import {gameStateReducer} from '../../common/gameState';
-import {setError} from './boardError';
-import {BOARD_STATUSES} from '../../common/gameState/board';
-import {changeBoardStatus} from './gameState/board';
-import {changeMonsterController} from '../../common/gameState/monsterController';
-import {startMonsterTurn} from './gameState/monsterController';
-import {promptForCharacters} from './gameState/playerTurn';
-import {send} from '../socket';
+import { gameStateReducer } from '../../common/gameState';
+import { setError } from './boardError';
+import { BOARD_STATUSES } from '../../common/gameState/board';
+import { changeBoardStatus } from './gameState/board';
+import { changeMonsterController } from '../../common/gameState/monsterController';
+import { startMonsterTurn } from './gameState/monsterController';
+import { promptForCharacters } from './gameState/playerTurn';
+import { send } from '../socket';
 
 //actions
 export const ROOM_RESULT = 'ROOM_RESULT';
@@ -24,7 +24,7 @@ export const room = (state = null, action) => {
 			}
 		default:
 			if (state && state.gameState) {
-				return Object.assign({}, state, {gameState: gameStateReducer(state.gameState, action)});
+				return Object.assign({}, state, { gameState: gameStateReducer(state.gameState, action) });
 			} else {
 				return state;
 			}
@@ -55,7 +55,7 @@ export const fetch = (id, forceGameState = false) => (
 
 export const takeControl = (slot) => (
 	(dispatch, getState) => {
-		const {room: state} = getState();
+		const { room: state } = getState();
 		axios.post(`/api/room/${state.id}/takeControl/${slot}`)
 			.then(() => {
 				dispatch(fetch(state.id));
@@ -67,7 +67,7 @@ export const takeControl = (slot) => (
 );
 
 const checkMonsterController = () => (dispatch, getState) => {
-	const { room: {gameState: {monsterController}, Player1}, auth: user } = getState();
+	const { room: { gameState: { monsterController }, Player1 }, auth: user } = getState();
 	if (
 		(
 			monsterController === undefined ||
@@ -81,7 +81,7 @@ const checkMonsterController = () => (dispatch, getState) => {
 
 const checkCharacterPositions = () => (dispatch, getState) => {
 	const { room: state, auth: user } = getState();
-	const { gameState: {positions, board, monsterController} } = state;
+	const { gameState: { positions, board, monsterController } } = state;
 
 	if (
 		!positions.player1 ||
@@ -109,7 +109,7 @@ const checkCharacterPositions = () => (dispatch, getState) => {
 
 export const checkGameState = () => (
 	(dispatch, getState) => {
-		const { room: {Player1, Player2, Player3, Player4, gameState: {board}} } = getState();
+		const { room: { Player1, Player2, Player3, Player4, gameState: { board } } } = getState();
 		dispatch(checkMonsterController());
 
 		if (!Player1 || !Player2 || !Player3 || !Player4) {

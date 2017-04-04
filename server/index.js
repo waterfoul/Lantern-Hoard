@@ -5,7 +5,7 @@ const expressWinston = require('express-winston');
 const winston = require('winston');
 const passport = require('passport');
 const bodyParser = require('body-parser');
-const {resolve} = require('path');
+const { resolve } = require('path');
 const args = require('./utils/args');
 const db = require('./db');
 const socket = require('./socket');
@@ -53,9 +53,9 @@ const app = express()
 
 db.didSync.then(() => {
 	const server = http.createServer(app);
-	socket.svr.installHandlers(server, {prefix: '/socket'});
+	socket.svr.installHandlers(server, { prefix: '/socket' });
 	server.listen(args.port, () => {
-		const {address, port} = server.address();
+		const { address, port } = server.address();
 		const host = address === '::' ? 'localhost' : address;
 		const urlSafeHost = host.includes(':') ? `[${host}]` : host;
 		logger.info(`Listening on http://${urlSafeHost}:${port}`);

@@ -9,7 +9,7 @@ export const listenForBoardStatus = (status, thunk) => {
 
 export const init = (store) => {
 	store.subscribe(() => {
-		const {room} = store.getState();
+		const { room } = store.getState();
 		const newBoard = room && room.gameState && room.gameState.board || {};
 		if (oldBoard.status !== newBoard.status || oldBoard.data !== newBoard.data) {
 			oldBoard = newBoard;

@@ -1,11 +1,11 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {rollTrigger} from '../../../reducers/gameState/monsterController';
+import { connect } from 'react-redux';
+import { rollTrigger } from '../../../reducers/gameState/monsterController';
 
-import {monsters} from '../../../data/monsters';
+import { monsters } from '../../../data/monsters';
 
 export const TriggerRoll = connect(
-	({room}) => {
+	({ room }) => {
 		return {
 			title: room.gameState.board.data.title,
 			img: room.gameState.board.data.img,

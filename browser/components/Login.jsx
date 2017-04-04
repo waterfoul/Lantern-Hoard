@@ -1,5 +1,5 @@
 import React from 'react';
-import {GithubLink} from './GithubLink';
+import { GithubLink } from './GithubLink';
 
 export const Login = () => (
 	<div>

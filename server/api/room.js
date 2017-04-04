@@ -2,7 +2,7 @@ const express = require('express');
 const Room = require('../db/models/room');
 const Character = require('../db/models/character');
 const User = require('../db/models/user');
-const {sendTo, sendAll} = require('../socket');
+const { sendTo, sendAll } = require('../socket');
 
 module.exports = (new express.Router('api/room'))
 	.get('/', (req, res, next) => (
@@ -49,7 +49,7 @@ module.exports = (new express.Router('api/room'))
 			{ model: Character, as: 'Character2' },
 			{ model: Character, as: 'Character3' },
 			{ model: Character, as: 'Character4' }
-		]})
+		] })
 			.then((room) => {
 				res.json(room).status(201);
 
@@ -62,7 +62,7 @@ module.exports = (new express.Router('api/room'))
 	.put('/:id', (req, res, next) => (
 		Room.update(
 			req.body,
-			{where: {_id: req.params.id}}
+			{ where: { _id: req.params.id } }
 		)
 			.then((room) => {
 				res.json(room);

@@ -25,7 +25,7 @@ require('./models');
 
 // sync the db, creating it if necessary
 function sync(force = false, retries = 0, maxRetries = 5) {
-	return db.sync({force})
+	return db.sync({ force })
 		.then(() => logger.info(`Synced models to db ${url}`))
 		.catch((fail) => {
 			// Don't do this auto-create nonsense if we've retried too many times.

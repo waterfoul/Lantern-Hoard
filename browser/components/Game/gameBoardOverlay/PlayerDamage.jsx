@@ -1,11 +1,11 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-import {monsters} from '../../../data/monsters';
-import {rollForMonsterHits, rollForMonsterWounds, applyDamage} from '../../../reducers/gameState/board';
+import { monsters } from '../../../data/monsters';
+import { rollForMonsterHits, rollForMonsterWounds, applyDamage } from '../../../reducers/gameState/board';
 
 export const PlayerDamage = connect(
-	({room, auth}) => {
+	({ room, auth }) => {
 		const monsterName = room.gameState.monsterName;
 		const card = room.gameState.ai.discard[0] || 'Basic Action';
 		return {
@@ -14,7 +14,7 @@ export const PlayerDamage = connect(
 			isMonsterController: room.gameState.monsterController === auth.id
 		};
 	},
-	{rollForHitsEvt: rollForMonsterHits, rollForMonsterWoundsEvt: rollForMonsterWounds, applyDamageEvt: applyDamage}
+	{ rollForHitsEvt: rollForMonsterHits, rollForMonsterWoundsEvt: rollForMonsterWounds, applyDamageEvt: applyDamage }
 )(
 	({ card, data, isMonsterController, rollForHitsEvt, rollForMonsterWoundsEvt, applyDamageEvt }) => {
 		const monsterHits = (data.hits || []).filter((v) => v).length;

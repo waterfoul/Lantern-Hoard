@@ -1,6 +1,6 @@
-import {moveToken} from '../../../common/gameState/positions';
-import {knockDownCharacter} from '../../../common/gameState/knockedDownCharacters';
-import {checkGameState} from '../room';
+import { moveToken } from '../../../common/gameState/positions';
+import { knockDownCharacter } from '../../../common/gameState/knockedDownCharacters';
+import { checkGameState } from '../room';
 
 //thunks
 export const move = (token, location) => (
@@ -96,7 +96,7 @@ export const moveMonster = (location) => (
 			Math.max(Math.min(location[1], 14), 1)
 		];
 		// TODO: Knock over any players that the monster would run over
-		const {room} = getState();
+		const { room } = getState();
 		location = checkMaxRange(room, location);
 
 		squishChars(room, location, dispatch);

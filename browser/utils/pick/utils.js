@@ -1,7 +1,7 @@
-import {changeBoardStatusAction, BOARD_STATUSES} from '../../../common/gameState/board';
-import {STATUSES} from '../../../common/gameState/knockedDownCharacters';
-import {store} from '../../store';
-import {getXYDistance} from '../getDistance';
+import { changeBoardStatusAction, BOARD_STATUSES } from '../../../common/gameState/board';
+import { STATUSES } from '../../../common/gameState/knockedDownCharacters';
+import { store } from '../../store';
+import { getXYDistance } from '../getDistance';
 
 export function isThreat(gameState, i) {
 	return gameState.threats[i] && gameState.knockedDownCharacters[i] === STATUSES.standing;
@@ -12,7 +12,7 @@ export function chooseBetween(characters, dispatch) {
 		dispatch(changeBoardStatusAction(BOARD_STATUSES.targetChoice, characters));
 
 		const unsub = store.subscribe(() => {
-			const {room} = store.getState();
+			const { room } = store.getState();
 			if (room.gameState.board.status === BOARD_STATUSES.targetChosen) {
 				resolve(room.gameState.board.data);
 				dispatch(changeBoardStatusAction(BOARD_STATUSES.generic));
@@ -23,7 +23,7 @@ export function chooseBetween(characters, dispatch) {
 }
 
 export function isFront(monsterDirection, size, monster, player) {
-	const {X, Y} = getXYDistance(size, monster, player);
+	const { X, Y } = getXYDistance(size, monster, player);
 	switch (monsterDirection) {
 		case 'N':
 			return Y < 0;

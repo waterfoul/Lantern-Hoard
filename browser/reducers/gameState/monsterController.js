@@ -1,17 +1,17 @@
-import {listenForBoardStatus} from '../../listenForBoardStatus';
-import {monsters} from '../../data/monsters';
-import {drawAICard} from '../../reducers/gameState/ai';
-import {changeBoardStatusAction, BOARD_STATUSES} from '../../../common/gameState/board';
-import {removeFromDiscard} from '../../../common/gameState/ai';
-import {changeMonsterController} from '../../../common/gameState/monsterController';
-import {changeMonsterDirection} from '../../../common/gameState/monsterDirection';
-import {getDistance} from '../../utils/getDistance';
-import {moveMonster} from './positions';
-import {endMonster, beginMonster} from '../../../common/gameState/knockedDownCharacters';
-import {startPlayerTurn} from './playerTurn';
-import {addMood} from '../../../common/gameState/effects';
-import {triggerEffectThunks} from '../../utils/triggerEffectThunks';
-import {TRIGGERS} from '../../utils/effects';
+import { listenForBoardStatus } from '../../listenForBoardStatus';
+import { monsters } from '../../data/monsters';
+import { drawAICard } from '../../reducers/gameState/ai';
+import { changeBoardStatusAction, BOARD_STATUSES } from '../../../common/gameState/board';
+import { removeFromDiscard } from '../../../common/gameState/ai';
+import { changeMonsterController } from '../../../common/gameState/monsterController';
+import { changeMonsterDirection } from '../../../common/gameState/monsterDirection';
+import { getDistance } from '../../utils/getDistance';
+import { moveMonster } from './positions';
+import { endMonster, beginMonster } from '../../../common/gameState/knockedDownCharacters';
+import { startPlayerTurn } from './playerTurn';
+import { addMood } from '../../../common/gameState/effects';
+import { triggerEffectThunks } from '../../utils/triggerEffectThunks';
+import { TRIGGERS } from '../../utils/effects';
 
 // Internals
 const processPick = (options, nextStatus) => (
@@ -38,8 +38,8 @@ const processPick = (options, nextStatus) => (
 
 const getNewMonsterLocation = (target, action, nextStatus) => (
 	(dispatch, getState) => {
-		const {room} = getState();
-		const {gameState} = room;
+		const { room } = getState();
+		const { gameState } = room;
 
 		const playerPosition = gameState.positions['player' + (target + 1)];
 		const monsterSize = gameState.monsterStats.size;
@@ -69,18 +69,18 @@ const getNewMonsterLocation = (target, action, nextStatus) => (
 		} else if (results.length === 1) {
 			dispatch(attackAfterMove(target, action, results[0], nextStatus));
 		} else {
-			dispatch(changeBoardStatusAction(BOARD_STATUSES.showMonsterPositions, {target, action, positions: results, nextStatus}));
+			dispatch(changeBoardStatusAction(BOARD_STATUSES.showMonsterPositions, { target, action, positions: results, nextStatus }));
 		}
 	}
 );
 
-const attackPlayer = (target, {speed, accuracy, damage}, nextStatus) => (
+const attackPlayer = (target, { speed, accuracy, damage }, nextStatus) => (
 	(dispatch, getState) => {
-		const {room} = getState();
-		const {gameState} = room;
+		const { room } = getState();
+		const { gameState } = room;
 
 		if (getDistance(gameState.monsterStats.size, gameState.positions.monster, gameState.positions['player' + (target + 1)]) === 1) {
-			dispatch(changeBoardStatusAction(BOARD_STATUSES.playerDamage, {speed, accuracy, damage, target, nextStatus}));
+			dispatch(changeBoardStatusAction(BOARD_STATUSES.playerDamage, { speed, accuracy, damage, target, nextStatus }));
 		} else {
 			dispatch(changeBoardStatusAction.apply(null, nextStatus));
 		}
@@ -89,7 +89,7 @@ const attackPlayer = (target, {speed, accuracy, damage}, nextStatus) => (
 
 const passMonsterController = () => (
 	(dispatch, getState) => {
-		const {room} = getState();
+		const { room } = getState();
 		let playerIds = [
 			room.player1_id,
 			room.player2_id,
@@ -108,8 +108,8 @@ const passMonsterController = () => (
 
 const processNextAction = (board) => (
 	(dispatch, getState) => {
-		const {room, auth: user} = getState();
-		const {gameState} = room;
+		const { room, auth: user } = getState();
+		const { gameState } = room;
 		if (gameState.monsterController === user.id) {
 			const nextState = [BOARD_STATUSES.processMonsterAction, {
 				step: board.data.step + 1,
@@ -153,8 +153,8 @@ function getAICard(room) {
 // Results from UI
 export const attackAfterMove = (target, action, newLocation, nextStatus) => (
 	(dispatch, getState) => {
-		const {room} = getState();
-		const {gameState} = room;
+		const { room } = getState();
+		const { gameState } = room;
 
 		dispatch(moveMonster(newLocation));
 		const playerLoc = gameState.positions[`player${target + 1}`];
@@ -180,7 +180,7 @@ export const startMonsterTurn = () => (
 
 		dispatch(drawAICard());
 
-		dispatch(triggerEffectThunks(TRIGGERS.monsterTurnStart, [BOARD_STATUSES.processMonsterAction, {step: 0}]));
+		dispatch(triggerEffectThunks(TRIGGERS.monsterTurnStart, [BOARD_STATUSES.processMonsterAction, { step: 0 }]));
 	}
 );
 
@@ -200,8 +200,8 @@ export const processAttack = (target, action, nextStatus) => (
 
 export const rollTrigger = () => (
 	(dispatch, getState) => {
-		const {room: {gameState: {board}}} = getState();
-		dispatch(changeBoardStatusAction(board.status, Object.assign({}, board.data, {roll: Math.floor(Math.random() * 10) + 1})));
+		const { room: { gameState: { board } } } = getState();
+		dispatch(changeBoardStatusAction(board.status, Object.assign({}, board.data, { roll: Math.floor(Math.random() * 10) + 1 })));
 	}
 );
 

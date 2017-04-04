@@ -158,7 +158,7 @@ export const Collapsed = connect(
 							</span>
 					</div>
 				</div>
-				{ getButtons({positions, room, slot, user, board, boardError, monsterController, takeControlEvt}) }
+				{ getButtons({ positions, room, slot, user, board, boardError, monsterController, takeControlEvt }) }
 			</div>
 		</div>
 	));

@@ -1,7 +1,7 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-import {attackAfterMove} from '../../../reducers/gameState/monsterController';
+import { attackAfterMove } from '../../../reducers/gameState/monsterController';
 
 export const MonsterPosition = connect(
 	({ room, auth }) => ({
@@ -10,7 +10,7 @@ export const MonsterPosition = connect(
 		data: room.gameState.board.data,
 		user: auth
 	}),
-	{attackAfterMoveDisp: attackAfterMove}
+	{ attackAfterMoveDisp: attackAfterMove }
 )(
 	({ monsterController, monsterStats, data, user, attackAfterMoveDisp }) => (
 		<div>

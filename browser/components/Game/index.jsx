@@ -1,25 +1,25 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import {Character} from './Character';
-import {Board} from './Board';
-import {MonsterInfo} from './MonsterInfo';
+import { Character } from './Character';
+import { Board } from './Board';
+import { MonsterInfo } from './MonsterInfo';
 
-import {InitialPlacement} from './gameBoardOverlay/InitialPlacement';
-import {MoveCharacter} from './gameBoardOverlay/MoveCharacter';
-import {PlayerDamage} from './gameBoardOverlay/PlayerDamage';
-import {PlayerAttack} from './gameBoardOverlay/PlayerAttack';
-import {SelectMonsterTarget} from './gameBoardOverlay/SelectMonsterTarget';
-import {MonsterPosition} from './gameBoardOverlay/MonsterPosition';
-import {Victory} from './gameBoardOverlay/Victory';
-import {CriticalInjury} from './gameBoardOverlay/CriticalInjury';
-import {Defeat} from './gameBoardOverlay/Defeat';
-import {TriggerRoll} from './gameBoardOverlay/TriggerRoll';
+import { InitialPlacement } from './gameBoardOverlay/InitialPlacement';
+import { MoveCharacter } from './gameBoardOverlay/MoveCharacter';
+import { PlayerDamage } from './gameBoardOverlay/PlayerDamage';
+import { PlayerAttack } from './gameBoardOverlay/PlayerAttack';
+import { SelectMonsterTarget } from './gameBoardOverlay/SelectMonsterTarget';
+import { MonsterPosition } from './gameBoardOverlay/MonsterPosition';
+import { Victory } from './gameBoardOverlay/Victory';
+import { CriticalInjury } from './gameBoardOverlay/CriticalInjury';
+import { Defeat } from './gameBoardOverlay/Defeat';
+import { TriggerRoll } from './gameBoardOverlay/TriggerRoll';
 
-import {fetch} from '../../reducers/room';
-import {changeFixState} from '../../reducers/flexBoxFix';
-import {listResult} from '../../reducers/roomList';
-import {BOARD_STATUSES} from '../../../common/gameState/board';
+import { fetch } from '../../reducers/room';
+import { changeFixState } from '../../reducers/flexBoxFix';
+import { listResult } from '../../reducers/roomList';
+import { BOARD_STATUSES } from '../../../common/gameState/board';
 
 
 class GameComponent extends Component {
@@ -95,5 +95,5 @@ class GameComponent extends Component {
 
 export const Game  = connect(
 	({ room, boardError }) => ({ room, boardError }),
-	{fetch, changeFixState, listResult}
+	{ fetch, changeFixState, listResult }
 )(GameComponent);

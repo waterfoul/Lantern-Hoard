@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {Modal, ModalBody, ModalHeader, ModalFooter, ModalTitle} from 'react-bootstrap';
+import React, { Component } from 'react';
+import { Modal, ModalBody, ModalHeader, ModalFooter, ModalTitle } from 'react-bootstrap';
 
-import {firstStory} from '../../scenarios/firstStory';
+import { firstStory } from '../../scenarios/firstStory';
 
 const scenarios = {
 	'First Story': firstStory

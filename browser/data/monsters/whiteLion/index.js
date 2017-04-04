@@ -1,5 +1,5 @@
-import {ai} from './ai';
-import {hl} from './hl';
+import { ai } from './ai';
+import { hl } from './hl';
 
 export const whiteLion = {
 	name: 'White Lion',

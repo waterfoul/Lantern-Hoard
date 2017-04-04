@@ -1,19 +1,19 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import { severeInjuries } from '../../../data/severeInjuries';
 import { criticalTableRoll, applyInjury } from '../../../reducers/gameState/armor';
 
 export const CriticalInjury = connect(
-	({room}) => {
+	({ room }) => {
 		return {
 			data: room.gameState.board.data
 		};
 	},
-	{criticalTableRollDispatch: criticalTableRoll, applyInjuryDispatch: applyInjury}
+	{ criticalTableRollDispatch: criticalTableRoll, applyInjuryDispatch: applyInjury }
 )(
 	({ data, criticalTableRollDispatch, applyInjuryDispatch }) => {
-		const {roll, currentLocation} = data;
+		const { roll, currentLocation } = data;
 		const table = severeInjuries[currentLocation];
 		const info = roll && table.tableData[roll - 1];
 		return (
