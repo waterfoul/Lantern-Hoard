@@ -4,7 +4,9 @@ const logger = require('../utils/logger');
 
 const User = require('../db/models/user');
 const OAuth = require('../db/models/oauth');
-const auth = require('express').Router();
+const express = require('express');
+
+const auth = new express.Router();
 
 OAuth.setupStrategy({
 	provider: 'facebook',
