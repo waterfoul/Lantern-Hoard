@@ -32,6 +32,8 @@ class GameComponent extends Component {
 		this.props.listResult(null);
 	}
 
+	// This should effectively be just one large switch statement, don't put any other logic in it
+	// eslint-disable-next-line complexity
 	getGameBoardOverlay() {
 		if (this.props.room.gameState && this.props.room.gameState.board) {
 			switch (this.props.room.gameState.board.status) {

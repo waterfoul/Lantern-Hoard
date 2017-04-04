@@ -21,6 +21,9 @@ const getPlacementText = (positions, room, slot, user) => {
 	}
 };
 
+// This should effectively be just one large switch statement, don't put any other logic in it
+// TODO: remove non switch logic
+// eslint-disable-next-line complexity
 function getButtons({
 	positions,
 	room,
