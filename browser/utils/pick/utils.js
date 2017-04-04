@@ -61,24 +61,28 @@ export const findClosestAndChoose = (distances, dispatch) => {
 	}
 };
 
-export function checkFieldOfView(gameState, position ) {
+// This method's compexity is OK since most of it comes from the return statements
+// eslint-disable-next-line complexity
+export function checkFieldOfView(gameState, position) {
 	const monsterPosition = gameState.positions.monster;
 	const monsterSize = gameState.monsterStats.size;
 
+	const xDifference = position[0] - monsterPosition[0];
+	const xWithinMonster = xDifference < 0 || xDifference >= monsterSize;
+
+	const yDfference = monsterPosition[1] - position[1];
+	const yWithinMonster = yDfference < 0 || yDfference >= monsterSize;
+
 	if (gameState.monsterDirection === 'S') {
-		const difference = position[0] - monsterPosition[0];
-		return position[1] !== (monsterPosition[1] + 1) || difference < 0 || difference >= monsterSize;
+		return position[1] !== (monsterPosition[1] + 1) || xWithinMonster;
 	}
 	else if (gameState.monsterDirection === 'N') {
-		const difference = position[0] - monsterPosition[0];
-		return position[1] !== (monsterPosition[1] - monsterSize) || difference < 0 || difference >= monsterSize;
+		return position[1] !== (monsterPosition[1] - monsterSize) || xWithinMonster;
 	}
 	else if (gameState.monsterDirection === 'E') {
-		const difference = monsterPosition[1] - position[1];
-		return position[0] !== (monsterPosition[0] - 1) || difference < 0 || difference >= monsterSize;
+		return position[0] !== (monsterPosition[0] - 1) || yWithinMonster;
 	}
 	else if (gameState.monsterDirection === 'W') {
-		const difference =  monsterPosition[1] - position[1];
-		return position[0] !== (monsterPosition[0] + monsterSize) || difference < 0 || difference >= monsterSize;
+		return position[0] !== (monsterPosition[0] + monsterSize) || yWithinMonster;
 	}
 }

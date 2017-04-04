@@ -66,54 +66,63 @@ export const takeControl = (slot) => (
 	}
 );
 
+const checkMonsterController = () => (dispatch, getState) => {
+	const { room: {gameState: {monsterController}, Player1}, auth: user } = getState();
+	if (
+		(
+			monsterController === undefined ||
+			monsterController === null
+		) &&
+		Player1.id === user.id
+	) {
+		dispatch(changeMonsterController(user.id));
+	}
+};
+
+const checkCharacterPositions = () => (dispatch, getState) => {
+	const { room: state, auth: user } = getState();
+	const { gameState: {positions, board, monsterController} } = state;
+
+	if (
+		!positions.player1 ||
+		!positions.player2 ||
+		!positions.player3 ||
+		!positions.player4
+	) {
+		dispatch(changeBoardStatus(BOARD_STATUSES.initialPlacement));
+	} else if (
+		board.status === BOARD_STATUSES.initialPlacement &&
+		monsterController === user.id
+	) {
+		dispatch(changeBoardStatus(BOARD_STATUSES.generic));
+		dispatch(startMonsterTurn());
+	}
+
+	if (
+		board.status === BOARD_STATUSES.playerTurn &&
+		state[`Character${board.data.character + 1}`].dead
+	) {
+		// The player who's turn it is has died, re-select a char
+		promptForCharacters(board.data.availableCharacters);
+	}
+};
+
 export const checkGameState = () => (
 	(dispatch, getState) => {
-		const { room: state, auth: user } = getState();
-		if (
-			(
-				state.gameState.monsterController === undefined ||
-				state.gameState.monsterController === null
-			) &&
-			state.Player1.id === user.id
-		) {
-			dispatch(changeMonsterController(user.id));
-		}
+		const { room: {Player1, Player2, Player3, Player4, gameState: {board}} } = getState();
+		dispatch(checkMonsterController());
 
-
-		if (!state.Player1 || !state.Player2 || !state.Player3 || !state.Player4) {
+		if (!Player1 || !Player2 || !Player3 || !Player4) {
 			dispatch(setError('All characters must be controlled'));
 			dispatch(changeBoardStatus(BOARD_STATUSES.generic));
 		} else {
 			dispatch(setError(null));
 
-			if (
-				!state.gameState.positions.player1 ||
-				!state.gameState.positions.player2 ||
-				!state.gameState.positions.player3 ||
-				!state.gameState.positions.player4
-			) {
-				dispatch(changeBoardStatus(BOARD_STATUSES.initialPlacement));
-			} else if (
-				state.gameState.board.status === BOARD_STATUSES.initialPlacement &&
-				state.gameState.monsterController === user.id
-			) {
-				dispatch(changeBoardStatus(BOARD_STATUSES.generic));
-				dispatch(startMonsterTurn());
-			}
+			dispatch(checkCharacterPositions());
 
-			if (
-				state.gameState.board.status === BOARD_STATUSES.playerTurn &&
-				state[`Character${state.gameState.board.data.character + 1}`].dead
-			) {
-				// The player who's turn it is has died, re-select a char
-				promptForCharacters(state.gameState.board.data.availableCharacters);
-			}
-
-			if (
-				state.gameState.board.status === BOARD_STATUSES.selectActingCharacter
-			) {
+			if (board.status === BOARD_STATUSES.selectActingCharacter) {
 				// We're waiting for a selection, re-start the selection just in case
-				promptForCharacters(state.gameState.board.data);
+				promptForCharacters(board.data);
 			}
 		}
 	}
