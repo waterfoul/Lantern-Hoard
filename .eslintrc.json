@@ -16,7 +16,15 @@
     "no-unused-expressions": ["warn"],
     "id-length": ["off"],
     "react/prop-types": ["off"],
+    /*
+      This disallows unused variables. This is one of those code smells which can improve performance as every variable
+      takes up memory. It also catches extra imports which you've added at the top of the file which you aren't using
+    */
     "no-unused-vars": ["error"],
+    /*
+      This disallows functions to be too logically complicated. This can help prompt you to break a function down since
+      functions which break this rule often times really shouldn't be one big function
+    */
     "complexity": ["error"]
   }
 }

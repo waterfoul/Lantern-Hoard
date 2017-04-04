@@ -16,12 +16,16 @@ import { adjustMonsterStats } from '../../../../common/gameState/monsterStats';
 import { changeBoardStatusAction, BOARD_STATUSES } from '../../../../common/gameState/board';
 import { TRIGGERS } from '../../../utils/effects';
 
+// TODO: Stub! Implement and remove BOTH of these comments
+// eslint-disable-next-line
 export function sniff(getState) {
 	console.log('Sniff');
 	return Promise.resolve(null);
 }
 
-const enragedTrigger = () => (dispatch, setState) => {
+// TODO: Stub! Implement and remove BOTH of these comments
+// eslint-disable-next-line
+const enragedTrigger = () => (dispatch, getState) => {
 	console.log('enragedTrigger');
 };
 
@@ -47,6 +51,8 @@ export const ai = {
 					damage: 1,
 					trigger: {
 						type: 'afterDamage',
+						// TODO: Stub! Implement and remove BOTH of these comments
+						// eslint-disable-next-line
 						action: (boardState, target) => {}
 					}
 				}
@@ -71,10 +77,14 @@ export const ai = {
 					damage: 1,
 					trigger: {
 						type: 'afterHit',
+						// TODO: Stub! Implement and remove BOTH of these comments
+						// eslint-disable-next-line
 						action: (boardState, target, hits) => {}
 					}
 				}
 			],
+			// TODO: Stub! Implement and remove BOTH of these comments
+			// eslint-disable-next-line
 			alternate: (boardState) => {
 				return true;
 			}
@@ -119,9 +129,13 @@ export const ai = {
 				},
 				{
 					type: 'special',
-					thunk: (nextAction) => (dispatch, setState) => {dispatch(nextAction);}
+					// TODO: Stub! Implement and remove BOTH of these comments
+					// eslint-disable-next-line
+					thunk: (nextAction) => (dispatch, getState) => {dispatch(nextAction);}
 				}
 			],
+			// TODO: Stub! Implement and remove BOTH of these comments
+			// eslint-disable-next-line
 			alternate: (boardState) => {
 				return true;
 			}
@@ -145,6 +159,8 @@ export const ai = {
 					damage: 1,
 					trigger: {
 						type: 'afterDamage',
+						// TODO: Stub! Implement and remove BOTH of these comments
+						// eslint-disable-next-line
 						action: (boardState, target) => {}
 					}
 				}
@@ -169,6 +185,8 @@ export const ai = {
 					damage: 2,
 					trigger: {
 						type: 'afterDamage',
+						// TODO: Stub! Implement and remove BOTH of these comments
+						// eslint-disable-next-line
 						action: (boardState, target) => {}
 					}
 				}
@@ -193,6 +211,8 @@ export const ai = {
 					damage: 2,
 					trigger: {
 						type: 'afterDamage',
+						// TODO: Stub! Implement and remove BOTH of these comments
+						// eslint-disable-next-line
 						action: (boardState, target) => {}
 					}
 				}
@@ -210,7 +230,9 @@ export const ai = {
 				},
 				{
 					type: 'special',
-					thunk: (nextAction) => (dispatch, setState) => {dispatch(nextAction);}
+					// TODO: Stub! Implement and remove BOTH of these comments
+					// eslint-disable-next-line
+					thunk: (nextAction) => (dispatch, getState) => {dispatch(nextAction);}
 				}
 			],
 		},
@@ -232,10 +254,14 @@ export const ai = {
 					damage: 1,
 					trigger: {
 						type: 'afterDamage',
+						// TODO: Stub! Implement and remove BOTH of these comments
+						// eslint-disable-next-line
 						action: (boardState, target) => {}
 					}
 				}
 			],
+			// TODO: Stub! Implement and remove BOTH of these comments
+			// eslint-disable-next-line
 			alternate: (boardState) => {
 				return true;
 			}
@@ -247,6 +273,8 @@ export const ai = {
 			actions: [
 				{
 					type: 'mood',
+					// TODO: Stub! Implement and remove BOTH of these comments
+					// eslint-disable-next-line
 					trigger: (boardState) => {}
 				}
 			]
@@ -256,11 +284,15 @@ export const ai = {
 			actions: [
 				{
 					type: 'mood',
+					// TODO: Stub! Implement and remove BOTH of these comments
+					// eslint-disable-next-line
 					trigger: (boardState) => {}
 				},
 				{
 					type: 'special',
-					thunk: (nextAction) => (dispatch, setState) => {dispatch(nextAction);}
+					// TODO: Stub! Implement and remove BOTH of these comments
+					// eslint-disable-next-line
+					thunk: (nextAction) => (dispatch, getState) => {dispatch(nextAction);}
 				}
 			]
 		},
@@ -282,10 +314,14 @@ export const ai = {
 					damage: 2,
 					trigger: {
 						type: 'afterDamage',
+						// TODO: Stub! Implement and remove BOTH of these comments
+						// eslint-disable-next-line
 						action: (boardState, target) => {}
 					}
 				}
 			],
+			// TODO: Stub! Implement and remove BOTH of these comments
+			// eslint-disable-next-line
 			alternate: (boardState) => {
 				return true;
 			}
@@ -308,7 +344,9 @@ export const ai = {
 				},
 				{
 					type: 'special',
-					thunk: () => (dispatch, setState) => {
+					// TODO: Stub! Implement and remove BOTH of these comments
+					// eslint-disable-next-line
+					thunk: () => (dispatch, getState) => {
 						dispatch(adjustMonsterStats({ damage: 1 }));
 						dispatch(drawAICard());
 						dispatch(changeBoardStatusAction(BOARD_STATUSES.processMonsterAction, {step: 0})); // Note: this will kill any further action triggered by this card.
@@ -321,6 +359,8 @@ export const ai = {
 			actions: [
 				{
 					type: 'mood',
+					// TODO: Stub! Implement and remove BOTH of these comments
+					// eslint-disable-next-line
 					trigger: (boardState) => {}
 				}
 			]
@@ -330,7 +370,9 @@ export const ai = {
 			actions: [
 				{
 					type: 'special',
-					thunk: (nextAction) => (dispatch, setState) => {dispatch(nextAction);}
+					// TODO: Stub! Implement and remove BOTH of these comments
+					// eslint-disable-next-line
+					thunk: (nextAction) => (dispatch, getState) => {dispatch(nextAction);}
 				}
 			]
 		},
@@ -353,6 +395,8 @@ export const ai = {
 					damage: 3,
 					trigger: {
 						type: 'afterDamage',
+						// TODO: Stub! Implement and remove BOTH of these comments
+						// eslint-disable-next-line
 						action: (boardState, target) => {}
 					}
 				}
@@ -363,7 +407,9 @@ export const ai = {
 			actions: [
 				{
 					type: 'special',
-					thunk: (nextAction) => (dispatch, setState) => {dispatch(nextAction);}
+					// TODO: Stub! Implement and remove BOTH of these comments
+					// eslint-disable-next-line
+					thunk: (nextAction) => (dispatch, getState) => {dispatch(nextAction);}
 				}
 			]
 		},
@@ -372,7 +418,9 @@ export const ai = {
 			actions: [
 				{
 					type: 'special',
-					thunk: (nextAction) => (dispatch, setState) => {dispatch(nextAction);}
+					// TODO: Stub! Implement and remove BOTH of these comments
+					// eslint-disable-next-line
+					thunk: (nextAction) => (dispatch, getState) => {dispatch(nextAction);}
 				}
 			]
 		}

@@ -26,7 +26,7 @@ require('./models');
 // sync the db, creating it if necessary
 function sync(force = false, retries = 0, maxRetries = 5) {
 	return db.sync({force})
-		.then((ok) => logger.info(`Synced models to db ${url}`))
+		.then(() => logger.info(`Synced models to db ${url}`))
 		.catch((fail) => {
 			// Don't do this auto-create nonsense if we've retried too many times.
 			if (retries > maxRetries) {
@@ -41,7 +41,13 @@ function sync(force = false, retries = 0, maxRetries = 5) {
 			logger.info(`${retries ? `[retry ${retries}]` : ''} Creating database ${name}...`);
 			return new Promise((resolve, reject) =>
 				// 'child_process.exec' docs: https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback
-				require('child_process').exec(`createdb "${name}"`, resolve)
+				require('child_process').exec(`createdb "${name}"`, (err) => {
+					if(err) {
+						reject(err);
+					} else {
+						resolve();
+					}
+				})
 			).then(() => sync(true, retries + 1));
 		});
 }

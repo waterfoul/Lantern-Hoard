@@ -1,8 +1,7 @@
 const express = require('express');
 const Room = require('../db/models/room');
 const Character = require('../db/models/character');
-const User = require('../db/models/user');
-const {sendTo, sendAll} = require('../socket');
+const {sendTo} = require('../socket');
 
 module.exports = (new express.Router('api/character'))
 	.get('/:id', (req, res, next) => {

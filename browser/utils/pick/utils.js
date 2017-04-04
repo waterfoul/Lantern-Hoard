@@ -8,7 +8,7 @@ export function isThreat(gameState, i) {
 }
 
 export function chooseBetween(characters, dispatch) {
-	return new Promise((resolve, reject) => {
+	return new Promise((resolve) => {
 		dispatch(changeBoardStatusAction(BOARD_STATUSES.targetChoice, characters));
 
 		const unsub = store.subscribe(() => {

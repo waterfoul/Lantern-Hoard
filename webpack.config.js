@@ -46,7 +46,7 @@ module.exports = {
 		}),
 		{
 			apply: (compiler) => {
-				compiler.plugin('compilation', function(compilation) {
+				compiler.plugin('compilation', function() {
 					console.log(new Date(), 'Build Started!');
 				});
 			}

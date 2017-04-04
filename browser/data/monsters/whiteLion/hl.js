@@ -61,10 +61,14 @@ const persistentInjury = (card, name, other = {}) => (dispatch) => {
 	dispatch(removeFromDiscard(card));
 };
 
+// TODO: Stub! Implement and remove BOTH of these comments
+// eslint-disable-next-line
 const knockDownLion = () => (dispatch, getState) => {
 	console.log('Knock down lion');
 };
 
+// TODO: Stub! Implement and remove BOTH of these comments
+// eslint-disable-next-line
 const gainWhiteLionResource = (name = null) => (dispatch, getState) => {
 	console.log('Gain White Lion Resource!', name);
 };
@@ -118,6 +122,8 @@ export const hl = {
 				action: moveForward
 			}
 		],
+		// TODO: Stub! Implement and remove BOTH of these comments
+		// eslint-disable-next-line
 		crit: (dispatch, getState) => {
 			console.log('CRIT!');
 			// Chance of WL dying instantly
@@ -143,6 +149,8 @@ export const hl = {
 				action: moveForward
 			}
 		],
+		// TODO: Stub! Implement and remove BOTH of these comments
+		// eslint-disable-next-line
 		crit: (dispatch, getState) => {
 			console.log('CRIT!');
 		}
@@ -158,6 +166,8 @@ export const hl = {
 		triggers: [
 			{
 				type: 'wound',
+				// TODO: Stub! Implement and remove BOTH of these comments
+				// eslint-disable-next-line
 				action: (dispatch, getState) => {
 					console.log('WOUND!');
 				}
@@ -175,6 +185,8 @@ export const hl = {
 				'Ruptured Tendon',
 				{triggers: [{
 					trigger: TRIGGERS.monsterMovementStart,
+					// TODO: Stub! Implement and remove BOTH of these comments
+					// eslint-disable-next-line
 					thunk: () => (dispatchInner, getState) => {
 						// TODO: roll a d10, on a 1 knock down lion
 					}
@@ -193,6 +205,8 @@ export const hl = {
 		triggers: [
 			{
 				type: 'failure',
+				// TODO: Stub! Implement and remove BOTH of these comments
+				// eslint-disable-next-line
 				action: (dispatch, getState) => {
 					console.log('FAIL!');
 				}
@@ -227,6 +241,8 @@ export const hl = {
 		triggers: [
 			{
 				type: 'wound',
+				// TODO: Stub! Implement and remove BOTH of these comments
+				// eslint-disable-next-line
 				action: (dispatch, getState) => {
 					console.log('WOUND!');
 				}
@@ -268,6 +284,8 @@ export const hl = {
 				action: counterAttack
 			}
 		],
+		// TODO: Stub! Implement and remove BOTH of these comments
+		// eslint-disable-next-line
 		crit: (dispatch, getState) => {
 			dispatch(persistentInjury('Beasts Temple', 'Beasts Temple', {triggers: [{
 				trigger: TRIGGERS.AIDraw,
@@ -286,6 +304,8 @@ export const hl = {
 				action: counterAttack
 			}
 		],
+		// TODO: Stub! Implement and remove BOTH of these comments
+		// eslint-disable-next-line
 		crit: (dispatch, getState) => {
 			console.log('CRIT!');
 		}
@@ -308,6 +328,8 @@ export const hl = {
 				action: counterAttack
 			}
 		],
+		// TODO: Stub! Implement and remove BOTH of these comments
+		// eslint-disable-next-line
 		crit: (dispatch, getState) => {
 			console.log('CRIT!');
 		}
@@ -324,6 +346,8 @@ export const hl = {
 	'Glorious Mane': {
 		img: '/static/white-lion/hl/glorious-mane.jpg',
 		impervious: true,
+		// TODO: Stub! Implement and remove BOTH of these comments
+		// eslint-disable-next-line
 		crit: (dispatch, getState) => {
 			console.log('CRIT!');
 		}
@@ -340,6 +364,8 @@ export const hl = {
 			}]}));
 		},
 		triggers: [
+			// TODO: Stub! Implement and remove BOTH of these comments
+			// eslint-disable-next-line
 			(nextState) => (dispatch, getState) => {
 				dispatch(changeBoardStatusAction(BOARD_STATUSES.triggerRoll, {
 					title: 'Roll for Soft Belly',
@@ -352,6 +378,8 @@ export const hl = {
 					nextState
 				}));
 			},
+			// TODO: Stub! Implement and remove BOTH of these comments
+			// eslint-disable-next-line
 			(result, nextState) => (dispatch, getState) => {
 				if (result === 1) {
 					dispatch(woundAI());
@@ -362,6 +390,8 @@ export const hl = {
 	},
 	'Straining Neck': {
 		img: '/static/white-lion/hl/straining-neck.jpg',
+		// TODO: Stub! Implement and remove BOTH of these comments
+		// eslint-disable-next-line
 		crit: (dispatch, getState) => {
 			// TODO
 		}
@@ -374,6 +404,8 @@ export const hl = {
 				action: counterAttack
 			}
 		],
+		// TODO: Stub! Implement and remove BOTH of these comments
+		// eslint-disable-next-line
 		crit: (dispatch, getState) => {
 			// TODO: Spend 1 survival to gain 1 permant strength
 			dispatch(persistentInjury('Strange Hand', 'Lost Hand'));

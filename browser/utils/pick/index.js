@@ -65,7 +65,7 @@ export function closestInFieldOfView(getState, dispatch) {
 
 	const positions = getPlayerPositions(getState);
 	const charactersInView = positions
-		.map((position, i) => ((position !== null && checkFieldOfView(gameState, position)) ? (
+		.map((position) => ((position !== null && checkFieldOfView(gameState, position)) ? (
 				getDistance(gameState.monsterStats.size, gameState.positions.monster, position)
 			) : null));
 	return findClosestAndChoose(charactersInView, dispatch);
@@ -101,7 +101,7 @@ export function closestInRange(getState, dispatch) {
 
 	const positions = getPlayerPositions(getState);
 
-	const distances = positions.map((val, i) => {
+	const distances = positions.map((val) => {
 		if (val === null) {
 			return null;
 		}
@@ -116,7 +116,7 @@ export function closestInRange(getState, dispatch) {
 	return findClosestAndChoose(distances, dispatch);
 }
 
-export function lastToWoundInRange(getState, dispatch) {
+export function lastToWoundInRange(getState) {
 	const {room: {gameState}} = getState();
 	const lastToWoundOrder = gameState.woundOrder;
 	const positions = lastToWoundOrder.map((slot) => {
@@ -175,10 +175,14 @@ export function randomInRange(getState) {
 	return Promise.resolve(randomIndex(resultArr));
 }
 
-export function closestWithMostBleeding(boardState) {
+// TODO: Stub! Implement and remove BOTH of these comments
+// eslint-disable-next-line
+export function closestWithMostBleeding(getState, dispatch) {
 	return Promise.resolve(null);
 }
 
-export function victimOfGrabLastRound(boardState) {
+// TODO: Stub! Implement and remove BOTH of these comments
+// eslint-disable-next-line
+export function victimOfGrabLastRound(getState, dispatch) {
 	return Promise.resolve(null);
 }
