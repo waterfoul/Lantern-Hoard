@@ -5,7 +5,7 @@
   },
   "extends": "fullstack",
   "rules": {
-    // Uncomment this when making the linter more strict
+    // Uncomment this when making the linter more strict to hide the todo comments from the eslint output
     // "no-warning-comments": ["off"],
 
     "eqeqeq": ["error"],
@@ -16,6 +16,9 @@
     "no-alert": ["error"],
     "no-console": ["error"],
     "camelcase": ["off"],
+    "no-use-before-define": ["off"], // Let and const handle this properly, the rule isn't really necessary
+    "react/no-array-index-key": ["off"], // We were ignoring this anyway
+    "no-nested-ternary": ["off"], // We were ignoring this anyway
     // This enforces camelCasing or ALL_CAPS_WITH_UNDERSCORES but allows an _id suffix
     "id-match": [
       "error",
