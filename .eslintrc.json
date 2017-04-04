@@ -6,6 +6,7 @@
   "extends": "fullstack",
   "rules": {
     "eqeqeq": ["error"],
+    "no-case-declarations": ["error"],
     "camelcase": ["off"],
     // This enforces camelCasing or ALL_CAPS_WITH_UNDERSCORES but allows an _id suffix
     "id-match": [
