@@ -127,6 +127,8 @@ module.exports = (new express.Router('api/room'))
 			} }
 		)
 			.then((room) => {
+				// The slot sometimes comes in as a string
+				/* eslint-disable eqeqeq */
 				if (req.params.slot == 1) {
 					room.player1_id = req.user.id;
 				} else if (req.params.slot == 2) {
@@ -136,6 +138,7 @@ module.exports = (new express.Router('api/room'))
 				} else if (req.params.slot == 4) {
 					room.player4_id = req.user.id;
 				}
+				/* eslint-enable eqeqeq */
 				return room.save();
 			})
 			.then((room) => {
