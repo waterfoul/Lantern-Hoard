@@ -86,7 +86,7 @@
     "seed": "node server/db/seed.js",
     "heroku-prebuild": "./bin/heroku-prebuild.sh",
     "lint": "eslint --ext js,jsx .",
-    "ci": "npm --silent run lint && npm --silent run test",
+    "ci": "npm --silent run lint -- --quiet && npm --silent run test",
     "fix": "eslint --ext js,jsx . --fix"
   }
 }
