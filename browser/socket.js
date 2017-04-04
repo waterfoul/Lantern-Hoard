@@ -1,10 +1,9 @@
 import SockJS from 'sockjs-client';
 
 import { store } from './store';
-import { fetch } from './reducers/room';
+import { fetch, checkGameState } from './reducers/room';
 import { fetchList } from './reducers/roomList';
 import { BOARD_STATUSES } from '../common/gameState/board';
-import { checkGameState } from './reducers/room';
 
 // If we are in node, skip socket init cause we are probably testing and it breaks things
 const sock = (global.process && global.process.title) ? {} : new SockJS('/socket');
