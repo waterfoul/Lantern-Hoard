@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { takeControl } from '../../../reducers/room';
-import { changeBoardStatusAction, BOARD_STATUSES } from '../../../../common/gameState/board';
+import { BOARD_STATUSES } from '../../../../common/gameState/board';
 import { getStats } from '../../../utils/getStats';
 
 import { PleaseWait } from './CollapsedActions/PleaseWait';
@@ -21,6 +21,9 @@ const getPlacementText = (positions, room, slot, user) => {
 	}
 };
 
+// This should effectively be just one large switch statement, don't put any other logic in it
+// TODO: remove non switch logic
+// eslint-disable-next-line complexity
 function getButtons({
 	positions,
 	room,
@@ -28,8 +31,7 @@ function getButtons({
 	user,
 	board,
 	monsterController,
-	takeControlEvt,
-	changeBoardStatusActionDisp
+	takeControlEvt
 }) {
 	if (room[`Player${slot + 1}`]) {
 		switch (board.status) {
@@ -106,8 +108,8 @@ export const Collapsed = connect(
 		user: auth,
 		boardError
 	}),
-	{ takeControlEvt: takeControl, changeBoardStatusActionDisp: changeBoardStatusAction }
-)(({ tokens, armor, slot, room, monsterController, board, positions, user, boardError, takeControlEvt, changeBoardStatusActionDisp }) => {
+	{ takeControlEvt: takeControl }
+)(({ tokens, armor, slot, room, monsterController, board, positions, user, boardError, takeControlEvt }) => {
 	const character = room['Character' + (slot + 1)];
 	const stats = getStats(character, room.gameState, slot);
 	const player = room[`Player${slot + 1}`] || {};
@@ -156,7 +158,7 @@ export const Collapsed = connect(
 							</span>
 					</div>
 				</div>
-				{ getButtons({positions, room, slot, user, board, boardError, monsterController, takeControlEvt, changeBoardStatusActionDisp}) }
+				{ getButtons({positions, room, slot, user, board, boardError, monsterController, takeControlEvt}) }
 			</div>
 		</div>
 	));

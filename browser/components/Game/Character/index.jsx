@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import { Collapsed } from './Collapsed';
 import { Card } from './Card';

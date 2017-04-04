@@ -33,7 +33,7 @@ export const items = Object.assign(
 					action: true,
 					movement: false,
 					range: 999,
-					thunk: (slot, row, column) => (dispatch, getState) => {
+					thunk: (slot, row, column) => (dispatch) => {
 						dispatch(startAttack(slot, 'Founding Stone', 1, 0, 1, {
 							dice: 1,
 							range: 999

@@ -5,6 +5,8 @@ const headExplosion = {
 	left: '49%',
 	bottom: '69%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(killSurvivor(target));
 		// TODO: Remove 1 survival from all survivors
@@ -16,7 +18,7 @@ const decapitation = {
 	left: '49%',
 	bottom: '64.5%',
 	right: '0%',
-	thunk: (target) => (dispatch, getState) => {
+	thunk: (target) => (dispatch) => {
 		dispatch(killSurvivor(target));
 	}
 };
@@ -26,6 +28,8 @@ const hemorrage = {
 	left: '50%',
 	bottom: '55%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: Permant Can't use survival
 		dispatch(addBleed(target, 1));
@@ -37,6 +41,8 @@ const deaf = {
 	left: '50%',
 	bottom: '47%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: IF not deaf
 			// TODO: record deaf
@@ -50,6 +56,8 @@ const blind = {
 	left: '50%',
 	bottom: '32%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: IF not blind
 			// TODO: record blindx1
@@ -67,6 +75,8 @@ const concussion = {
 	left: '50%',
 	bottom: '25%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: gain a random disorder
 		dispatch(addBleed(target, 1));
@@ -78,6 +88,8 @@ const shatteredJaw = {
 	left: '50%',
 	bottom: '12%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: if do not have shattered jaw
 			// TODO: record shattered jaw
@@ -92,6 +104,8 @@ const destroyedTooth = {
 	left: '49%',
 	bottom: '1%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: if 3+ courage
 			// TODO: +2 insanity

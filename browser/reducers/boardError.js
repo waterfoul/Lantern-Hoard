@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 //actions
 export const SET_BOARD_ERROR = 'SET_BOARD_ERROR';
 

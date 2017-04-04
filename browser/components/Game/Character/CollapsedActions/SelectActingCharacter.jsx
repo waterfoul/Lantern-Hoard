@@ -4,7 +4,7 @@ import {STATUSES} from '../../../../../common/gameState/knockedDownCharacters';
 import {startSingleTurn} from '../../../../reducers/gameState/playerTurn';
 
 export const SelectActingCharacter = connect(
-	({room, auth}) => ({
+	({room}) => ({
 		room
 	}),
 	{startTurnEvt: startSingleTurn}

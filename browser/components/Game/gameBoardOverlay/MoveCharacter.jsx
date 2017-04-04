@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { BOARD_STATUSES, changeBoardStatusAction } from '../../../../common/gameState/board';
 import { finishMovement } from '../../../reducers/gameState/playerTurn';
 import { getMovement } from '../../../utils/getStats';
 

@@ -5,7 +5,7 @@ const death = {
 	left: '50%',
 	bottom: '71%',
 	right: '0%',
-	thunk: (target) => (dispatch, getState) => {
+	thunk: (target) => (dispatch) => {
 		dispatch(killSurvivor(target));
 	}
 };
@@ -15,7 +15,7 @@ const bleeding = {
 	left: '50%',
 	bottom: '67%',
 	right: '0%',
-	thunk: (target) => (dispatch, getState) => {
+	thunk: (target) => (dispatch) => {
 		dispatch(addBleed(target, 2));
 	}
 };
@@ -25,6 +25,8 @@ const internalProlapse = {
 	left: '50%',
 	bottom: '57%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(addBleed(target, 1));
 	}
@@ -35,6 +37,8 @@ const warpedPelvis = {
 	left: '50%',
 	bottom: '47%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(addBleed(target, 1));
 	}
@@ -45,6 +49,8 @@ const destroyedGenitals = {
 	left: '50%',
 	bottom: '32%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(addBleed(target, 1));
 	}
@@ -55,6 +61,8 @@ const brokenHip = {
 	left: '50%',
 	bottom: '22%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(addBleed(target, 1));
 	}
@@ -65,6 +73,8 @@ const slashedBack = {
 	left: '50%',
 	bottom: '14%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(addBleed(target, 1));
 	}
@@ -75,6 +85,8 @@ const bruisedTailBone = {
 	left: '50%',
 	bottom: '6%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(addBleed(target, 1));
 	}
@@ -85,6 +97,8 @@ const knockedDown = {
 	left: '50%',
 	bottom: '0.5%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: Knocked down
 	}

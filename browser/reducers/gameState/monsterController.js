@@ -175,7 +175,7 @@ export const attackAfterMove = (target, action, newLocation, nextStatus) => (
 
 // Externals
 export const startMonsterTurn = () => (
-	(dispatch, getState) => {
+	(dispatch) => {
 		dispatch(beginMonster());
 
 		dispatch(drawAICard());

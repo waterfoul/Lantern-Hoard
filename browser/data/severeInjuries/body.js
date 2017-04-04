@@ -5,7 +5,7 @@ const death = {
 	left: '50%',
 	bottom: '71%',
 	right: '0%',
-	thunk: (target) => (dispatch, getState) => {
+	thunk: (target) => (dispatch) => {
 		dispatch(killSurvivor(target));
 	}
 };
@@ -15,7 +15,7 @@ const bleeding = {
 	left: '50%',
 	bottom: '67%',
 	right: '0%',
-	thunk: (target) => (dispatch, getState) => {
+	thunk: (target) => (dispatch) => {
 		dispatch(addBleed(target, 2));
 	}
 };
@@ -25,6 +25,8 @@ const wound = {
 	left: '50%',
 	bottom: '58.5%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: Permant -1 strength
 		dispatch(addBleed(target, 1));
@@ -36,6 +38,8 @@ const destroyedBack = {
 	left: '50%',
 	bottom: '46%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: IF not destroyed back
 		// TODO: record destroyed back
@@ -50,6 +54,8 @@ const disemboweled = {
 	left: '50%',
 	bottom: '29%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: add - movement tokens till movement is 1
 		// TODO: mark dead if all other survivors die
@@ -63,6 +69,8 @@ const spleen = {
 	left: '50%',
 	bottom: '22.5%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: mark skip next hunt
 		dispatch(addBleed(target, 2));
@@ -74,6 +82,8 @@ const rib = {
 	left: '50%',
 	bottom: '14%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: permant -1 speed
 		dispatch(addBleed(target, 1));
@@ -85,6 +95,8 @@ const lung = {
 	left: '50%',
 	bottom: '7.5%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: -1 movment token
 		dispatch(addBleed(target, 1));
@@ -96,6 +108,8 @@ const bowled = {
 	left: '50%',
 	bottom: '1.5%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: Knocked down
 	}
