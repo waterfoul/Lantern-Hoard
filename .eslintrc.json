@@ -15,6 +15,7 @@
     "no-duplicate-imports": ["error"],
     "no-alert": ["error"],
     "no-console": ["error"],
+    "max-params": ["error"],
     "camelcase": ["off"],
     "no-use-before-define": ["off"], // Let and const handle this properly, the rule isn't really necessary
     "react/no-array-index-key": ["off"], // We were ignoring this anyway
