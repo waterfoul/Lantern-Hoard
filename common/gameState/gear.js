@@ -27,12 +27,13 @@ const initialState = [
 
 const gear = (state = initialState, action) => {
 	switch (action.type) {
-		case ARCHIVE_ITEM:
+		case ARCHIVE_ITEM: {
 			const newState = [...state];
 			newState[action.slot] = [...newState[action.slot]];
 			newState[action.slot][action.row] = [...newState[action.slot][action.row]];
 			newState[action.slot][action.row][action.column] = '';
 			return newState;
+		}
 		default:
 			return state;
 	}

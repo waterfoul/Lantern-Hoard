@@ -44,7 +44,7 @@ export const findClosestAndChoose = (distances, dispatch) => {
 
 	// Null out the values > min, converting the correct values into their indexes
 	let resultArr = distances
-		.map((val, i) => val === min ? i : null);
+		.map((val, i) => (val === min ? i : null));
 
 	// Filter off the nulls
 	resultArr = resultArr

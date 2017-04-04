@@ -5,6 +5,29 @@
   },
   "extends": "fullstack",
   "rules": {
+    // Uncomment this when making the linter more strict to hide the todo comments from the eslint output
+    // "no-warning-comments": ["off"],
+
+    "eqeqeq": ["error"],
+    "guard-for-in": ["error"],
+    "no-case-declarations": ["error"],
+    "no-confusing-arrow": ["error"],
+    "no-duplicate-imports": ["error"],
+    "no-alert": ["error"],
+    "no-console": ["error"],
+    "max-params": ["error"],
+    "camelcase": ["off"],
+    "no-use-before-define": ["off"], // Let and const handle this properly, the rule isn't really necessary
+    "react/no-array-index-key": ["off"], // We were ignoring this anyway
+    "no-nested-ternary": ["off"], // We were ignoring this anyway
+    // This enforces camelCasing or ALL_CAPS_WITH_UNDERSCORES but allows an _id suffix
+    "id-match": [
+      "error",
+      "^(([A-Za-z_$][A-Za-z0-9]*(_id)?_?)|([A-Z_]+))$",
+      {
+        "properties": true
+      }
+    ],
     "arrow-parens": ["error", "always"],
     "semi": ["error", "always"],
     "indent": [
@@ -23,6 +46,12 @@
     "no-return-assign": ["error"],
     "keyword-spacing": ["error"],
     "object-curly-spacing": ["error", "always"],
+    "new-cap": [
+      "error",
+      {
+        "capIsNewExceptionPattern": "^Sequelize\\.[A-Z]+$"
+      }
+    ],
     /*
       This disallows unused variables. This is one of those code smells which can improve performance as every variable
       takes up memory. It also catches extra imports which you've added at the top of the file which you aren't using

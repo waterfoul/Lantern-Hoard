@@ -53,7 +53,6 @@ OAuth.V2 = (accessToken, refreshToken, profile, done) =>
 			});
 		})
 		.then(({ oauth, newUser }) => {
-			console.log(profile);
 			return newUser ||
 				User.create({
 					name: profile.displayName,

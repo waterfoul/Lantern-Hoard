@@ -30,11 +30,11 @@ function sync(force = false, retries = 0, maxRetries = 5) {
 		.catch((fail) => {
 			// Don't do this auto-create nonsense if we've retried too many times.
 			if (retries > maxRetries) {
-				console.error(chalk.red(`********** database error ***********`));
-				console.error(chalk.red(`    Couldn't connect to ${url}`));
-				console.error();
-				console.error(chalk.red(fail));
-				console.error(chalk.red(`*************************************`));
+				logger.error(chalk.red(`********** database error ***********`));
+				logger.error(chalk.red(`    Couldn't connect to ${url}`));
+				logger.error();
+				logger.error(chalk.red(fail));
+				logger.error(chalk.red(`*************************************`));
 				return;
 			}
 			// Otherwise, do this autocreate nonsense

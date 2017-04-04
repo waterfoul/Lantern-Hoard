@@ -9,6 +9,8 @@ if (bowser.chrome && parseFloat(bowser.version) < 57) {
 } else if (bowser.firefox && parseFloat(bowser.version) < 52) {
 	errMsg = 'You must update your version of firefox to at least version 52';
 } else if (bowser.msie) {
+	// The UI isn't accessable yet and won't be. YEAY IE. Using an alert instead
+	// eslint-disable-next-line no-alert
 	alert('IE is completely unsupported, please download firefox or chrome');
 } else if (bowser.edge) {
 	errMsg = 'Edge is completely unsupported, please download firefox or chrome';

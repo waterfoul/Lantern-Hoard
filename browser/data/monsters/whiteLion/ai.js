@@ -19,14 +19,12 @@ import { TRIGGERS } from '../../../utils/effects';
 // TODO: Stub! Implement and remove BOTH of these comments
 // eslint-disable-next-line
 export function sniff(getState) {
-	console.log('Sniff');
 	return Promise.resolve(null);
 }
 
 // TODO: Stub! Implement and remove BOTH of these comments
 // eslint-disable-next-line
 const enragedTrigger = () => (dispatch, getState) => {
-	console.log('enragedTrigger');
 };
 
 export const ai = {

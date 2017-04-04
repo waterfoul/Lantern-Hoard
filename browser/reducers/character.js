@@ -7,6 +7,8 @@ export const killCharacter = (id) => (
 			dead: true
 		})
 			.catch((e) => {
+				// TODO: Display an error on the UI
+				// eslint-disable-next-line no-console
 				console.error('Error while killing character', e);
 			})
 );

@@ -17,14 +17,15 @@ const knockedDownCharacters = (state = [
 	STATUSES.standing
 ], action) => {
 	switch (action.type) {
-		case KNOCK_DOWN_CHARACTER:
+		case KNOCK_DOWN_CHARACTER: {
 			const result = [...state];
 			result[action.player] = result[action.player] === STATUSES.standing ? STATUSES.knockedDown : result[action.player];
 			return result;
+		}
 		case BEGIN_MONSTER:
-			return state.map((ele) => ele === STATUSES.knockedDown ? STATUSES.readyToStand : ele);
+			return state.map((ele) => (ele === STATUSES.knockedDown ? STATUSES.readyToStand : ele));
 		case END_MONSTER:
-			return state.map((ele) => ele === STATUSES.readyToStand ? STATUSES.standing : ele);
+			return state.map((ele) => (ele === STATUSES.readyToStand ? STATUSES.standing : ele));
 		default:
 			return state;
 	}

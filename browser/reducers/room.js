@@ -48,6 +48,8 @@ export const fetch = (id, forceGameState = false) => (
 				send('connect');
 			})
 			.catch((e) => {
+				// TODO: Display an error on the UI
+				// eslint-disable-next-line no-console
 				console.error('Error while loading rooms', e);
 				dispatch(result(null));
 			})
@@ -61,6 +63,8 @@ export const takeControl = (slot) => (
 				dispatch(fetch(state.id));
 			})
 			.catch((e) => {
+				// TODO: Display an error on the UI
+				// eslint-disable-next-line no-console
 				console.error('Error while taking control', e);
 			});
 	}
