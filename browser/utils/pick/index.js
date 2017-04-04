@@ -1,11 +1,11 @@
-import {isFront, findClosestAndChoose, checkFieldOfView, isThreat} from './utils';
+import { isFront, findClosestAndChoose, checkFieldOfView, isThreat } from './utils';
 import { randomIndex } from '../randomIndex';
 import { getDistance } from '../getDistance';
 import { STATUSES } from '../../../common/gameState/knockedDownCharacters';
 
 function getPlayerPositions(getState) {
-	const {room} = getState();
-	const {gameState: {positions}} = room;
+	const { room } = getState();
+	const { gameState: { positions } } = room;
 
 	return [
 		room.Character1.dead ? null : positions.player1,
@@ -16,7 +16,7 @@ function getPlayerPositions(getState) {
 }
 
 export function closestThreatFacingInRange(getState, dispatch) {
-	const {room: {gameState}} = getState();
+	const { room: { gameState } } = getState();
 
 	const positions = getPlayerPositions(getState);
 
@@ -50,7 +50,7 @@ export function closestThreatFacingInRange(getState, dispatch) {
 }
 
 export function closestThreatInFieldOfView(getState, dispatch) {
-	const {room: {gameState}} = getState();
+	const { room: { gameState } } = getState();
 
 	const positions = getPlayerPositions(getState);
 	const charactersInView = positions
@@ -61,18 +61,18 @@ export function closestThreatInFieldOfView(getState, dispatch) {
 }
 
 export function closestInFieldOfView(getState, dispatch) {
-	const {room: {gameState}} = getState();
+	const { room: { gameState } } = getState();
 
 	const positions = getPlayerPositions(getState);
 	const charactersInView = positions
-		.map((position, i) => ((position !== null && checkFieldOfView(gameState, position)) ? (
+		.map((position) => ((position !== null && checkFieldOfView(gameState, position)) ? (
 				getDistance(gameState.monsterStats.size, gameState.positions.monster, position)
 			) : null));
 	return findClosestAndChoose(charactersInView, dispatch);
 }
 
 export function closestKnockedDownInRange(getState, dispatch) {
-	const {room: {gameState}} = getState();
+	const { room: { gameState } } = getState();
 
 	const positions = getPlayerPositions(getState);
 
@@ -97,11 +97,11 @@ export function closestKnockedDownInRange(getState, dispatch) {
 }
 
 export function closestInRange(getState, dispatch) {
-	const {room: {gameState}} = getState();
+	const { room: { gameState } } = getState();
 
 	const positions = getPlayerPositions(getState);
 
-	const distances = positions.map((val, i) => {
+	const distances = positions.map((val) => {
 		if (val === null) {
 			return null;
 		}
@@ -116,8 +116,8 @@ export function closestInRange(getState, dispatch) {
 	return findClosestAndChoose(distances, dispatch);
 }
 
-export function lastToWoundInRange(getState, dispatch) {
-	const {room: {gameState}} = getState();
+export function lastToWoundInRange(getState) {
+	const { room: { gameState } } = getState();
 	const lastToWoundOrder = gameState.woundOrder;
 	const positions = lastToWoundOrder.map((slot) => {
 		return gameState.positions[`player${slot + 1}`];
@@ -139,7 +139,7 @@ export function lastToWoundInRange(getState, dispatch) {
 }
 
 export function randomThreatInFieldOfView(getState) {
-	const {room: {gameState}} = getState();
+	const { room: { gameState } } = getState();
 
 	// Board positions of all characters
 	const positions = getPlayerPositions(getState);
@@ -152,7 +152,7 @@ export function randomThreatInFieldOfView(getState) {
 }
 
 export function randomInRange(getState) {
-	const {room: {gameState}} = getState();
+	const { room: { gameState } } = getState();
 	const distances = getPlayerPositions(getState).map((val) => {
 		if (val === null) {
 			return null;
@@ -169,16 +169,20 @@ export function randomInRange(getState) {
 	const min = Math.min.apply(Math, distances.filter((val) => val !== null));
 
 	const resultArr = distances
-		.map((val, i) => val === min ? i : null)
+		.map((val, i) => (val === min ? i : null))
 		.filter((val) => val !== null);
 
 	return Promise.resolve(randomIndex(resultArr));
 }
 
-export function closestWithMostBleeding(boardState) {
+// TODO: Stub! Implement and remove BOTH of these comments
+// eslint-disable-next-line
+export function closestWithMostBleeding(getState, dispatch) {
 	return Promise.resolve(null);
 }
 
-export function victimOfGrabLastRound(boardState) {
+// TODO: Stub! Implement and remove BOTH of these comments
+// eslint-disable-next-line
+export function victimOfGrabLastRound(getState, dispatch) {
 	return Promise.resolve(null);
 }

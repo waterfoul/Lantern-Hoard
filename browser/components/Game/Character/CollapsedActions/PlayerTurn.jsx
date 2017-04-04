@@ -6,7 +6,7 @@ import { getDistance } from '../../../../utils/getDistance';
 import { STATUSES } from '../../../../../common/gameState/knockedDownCharacters';
 import { items } from '../../../../data/items';
 
-function buildButtonsForItem(name, result, slot, row, column, dispatch, startAttackDispatch) {
+function buildButtonsForItem({ name, result, slot, row, column, dispatch, startAttackDispatch }) {
 	const item = items[name];
 	if (item) {
 		item.specialAbilities.forEach((ability) => {
@@ -59,13 +59,22 @@ export const PlayerTurn = connect(
 			actionList = room.gameState.gear[slot].reduce((acc, data, row) => {
 				const result = [...acc];
 				data.map((name, column) => {
-					buildButtonsForItem(name, result, slot, row, column, dispatch, startAttackDispatch);
+					buildButtonsForItem({ name, result, slot, row, column, dispatch, startAttackDispatch });
 				});
 				return result;
 			}, []);
 		}
 
-		buildButtonsForItem('Fist & Tooth', actionList, slot, -1, -1, dispatch, startAttackDispatch);
+		buildButtonsForItem({
+			name: 'Fist & Tooth',
+			result: actionList,
+			slot,
+			row: -1,
+			column: -1,
+			dispatch,
+			startAttackDispatch
+		});
+
 		return (
 			<div className="col-md-7 col-sm-12 attack-buttons container-fluid">
 				{ !knockedDown && playerResources.movements > 0 ? (

@@ -1,8 +1,8 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-import {Lobby} from './Lobby';
-import {Login} from './Login';
+import { Lobby } from './Lobby';
+import { Login } from './Login';
 
 export const RootSelector = connect(
 	({ auth }) => ({ user: auth })

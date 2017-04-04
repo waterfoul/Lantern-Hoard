@@ -1,7 +1,7 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-export const Room = ({room, user, join}) => {
+export const Room = ({ room, user, join }) => {
 	const inRoom = (
 		(room.Player1 && room.Player1.id === user.id) ||
 		(room.Player2 && room.Player2.id === user.id) ||

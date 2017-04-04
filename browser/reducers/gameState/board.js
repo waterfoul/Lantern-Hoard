@@ -1,11 +1,11 @@
-import {changeBoardStatusAction, BOARD_STATUSES} from '../../../common/gameState/board';
-import {damageArmor} from './armor';
-import {getEvasion} from '../../utils/getStats';
+import { changeBoardStatusAction, BOARD_STATUSES } from '../../../common/gameState/board';
+import { damageArmor } from './armor';
+import { getEvasion } from '../../utils/getStats';
 
 //thunks
 export const changeBoardStatus = (status, data) => (
 	(dispatch, getState) => {
-		const {room} = getState();
+		const { room } = getState();
 
 		if (
 			!room.gameState.board ||
@@ -19,7 +19,7 @@ export const changeBoardStatus = (status, data) => (
 
 export const rollForMonsterHits = () => (
 	(dispatch, getState) => {
-		const {room} = getState();
+		const { room } = getState();
 		const data = Object.assign({}, room.gameState.board.data);
 		const target = room['Character' + (data.target + 1)];
 		const evasion = getEvasion(target, room.gameState, data.target);
@@ -44,9 +44,9 @@ export const rollForMonsterHits = () => (
 
 export const rollForMonsterWounds = () => (
 	(dispatch, getState) => {
-		const {room} = getState();
+		const { room } = getState();
 		const data = Object.assign({}, room.gameState.board.data);
-		data.wounds = data.hits.map((v) => v ? Math.floor(Math.random() * 6) + 1 : null);
+		data.wounds = data.hits.map((v) => (v ? Math.floor(Math.random() * 6) + 1 : null));
 		dispatch(changeBoardStatus(BOARD_STATUSES.playerDamage, data));
 	}
 );
@@ -63,7 +63,7 @@ const locations = [
 
 export const applyDamage = () => (
 	(dispatch, getState) => {
-		const {room} = getState();
+		const { room } = getState();
 		const data = room.gameState.board.data;
 		dispatch(damageArmor(data.target, (data.wounds || []).map((roll) => locations[roll]), data.damage, data.nextStatus));
 	}

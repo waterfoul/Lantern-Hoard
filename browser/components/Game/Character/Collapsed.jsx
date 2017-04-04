@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { takeControl } from '../../../reducers/room';
-import { changeBoardStatusAction, BOARD_STATUSES } from '../../../../common/gameState/board';
+import { BOARD_STATUSES } from '../../../../common/gameState/board';
 import { getStats } from '../../../utils/getStats';
 
 import { PleaseWait } from './CollapsedActions/PleaseWait';
@@ -21,6 +21,9 @@ const getPlacementText = (positions, room, slot, user) => {
 	}
 };
 
+// This should effectively be just one large switch statement, don't put any other logic in it
+// TODO: remove non switch logic
+// eslint-disable-next-line complexity
 function getButtons({
 	positions,
 	room,
@@ -28,53 +31,52 @@ function getButtons({
 	user,
 	board,
 	monsterController,
-	takeControlEvt,
-	changeBoardStatusActionDisp
+	takeControlEvt
 }) {
 	if (room[`Player${slot + 1}`]) {
 		switch (board.status) {
-		case BOARD_STATUSES.initialPlacement:
-			return (
+			case BOARD_STATUSES.initialPlacement:
+				return (
 				<div className="col-md-7 col-sm-12">
 					{getPlacementText(positions, room, slot, user)}
 				</div>
-			);
-		case BOARD_STATUSES.showMonsterPositions:
-			return (
+				);
+			case BOARD_STATUSES.showMonsterPositions:
+				return (
 				<div className="col-md-7 col-sm-12">
 					{ user.id === monsterController ? 'Move the monster' : '' }
 				</div>
-			);
-		case BOARD_STATUSES.targetChoice:
-			return <SelectCharacter slot={slot} />;
-		case BOARD_STATUSES.selectActingCharacter:
-			return <SelectActingCharacter slot={slot} />;
-		case BOARD_STATUSES.playerDamage:
-			return (
+				);
+			case BOARD_STATUSES.targetChoice:
+				return <SelectCharacter slot={slot} />;
+			case BOARD_STATUSES.selectActingCharacter:
+				return <SelectActingCharacter slot={slot} />;
+			case BOARD_STATUSES.playerDamage:
+				return (
 				<div className="col-md-7 col-sm-12">
 					{room.gameState.board.data.target === slot ? 'Damage Me' : ''}
 				</div>
-			);
-		case BOARD_STATUSES.playerTurn:
-			return (
+				);
+			case BOARD_STATUSES.playerTurn:
+				return (
 				<PlayerTurn slot={slot} />
-			);
-		case BOARD_STATUSES.showAvailableMovement:
-			return (
+				);
+			case BOARD_STATUSES.showAvailableMovement:
+				return (
 					<div className="col-md-7 col-sm-12">
 						{room.gameState.board.data.target === slot ? 'Move Me' : ''}
 					</div>
-			);
-		case BOARD_STATUSES.playerAttack:
-			return (
+				);
+			case BOARD_STATUSES.playerAttack:
+				return (
 				<div className="col-md-7 col-sm-12">
 					{room.gameState.board.data.slot === slot ? 'Attack!' : ''}
 				</div>
-			);
-		default:
-			return (
+				);
+			default:
+				return (
 				<PleaseWait />
-			);
+				);
 		}
 	} else {
 		return (
@@ -106,8 +108,8 @@ export const Collapsed = connect(
 		user: auth,
 		boardError
 	}),
-	{ takeControlEvt: takeControl, changeBoardStatusActionDisp: changeBoardStatusAction }
-)(({ tokens, armor, slot, room, monsterController, board, positions, user, boardError, takeControlEvt, changeBoardStatusActionDisp }) => {
+	{ takeControlEvt: takeControl }
+)(({ tokens, armor, slot, room, monsterController, board, positions, user, boardError, takeControlEvt }) => {
 	const character = room['Character' + (slot + 1)];
 	const stats = getStats(character, room.gameState, slot);
 	const player = room[`Player${slot + 1}`] || {};
@@ -156,7 +158,7 @@ export const Collapsed = connect(
 							</span>
 					</div>
 				</div>
-				{ getButtons({positions, room, slot, user, board, boardError, monsterController, takeControlEvt, changeBoardStatusActionDisp}) }
+				{ getButtons({ positions, room, slot, user, board, boardError, monsterController, takeControlEvt }) }
 			</div>
 		</div>
 	));

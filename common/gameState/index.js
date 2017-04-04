@@ -1,7 +1,7 @@
-const {combineReducers} = require('redux');
+const { combineReducers } = require('redux');
 
-const {board} = require('./board');
-const {positions} = require('./positions');
+const { board } = require('./board');
+const { positions } = require('./positions');
 const { monsterController } = require('./monsterController');
 const { armor } = require('./armor');
 const { ai } = require('./ai');

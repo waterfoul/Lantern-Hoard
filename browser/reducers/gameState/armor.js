@@ -34,7 +34,7 @@ export const damageArmor = (player, locations, amount, nextState) => (
 			}
 
 			if (critical) {
-				dispatch(changeBoardStatusAction(BOARD_STATUSES.criticalInjury, {player, locations: newLocations, amount, nextState, currentLocation}));
+				dispatch(changeBoardStatusAction(BOARD_STATUSES.criticalInjury, { player, locations: newLocations, amount, nextState, currentLocation }));
 			} else {
 				dispatch(damageArmor(player, newLocations, amount, nextState));
 			}

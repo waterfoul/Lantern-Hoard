@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { BOARD_STATUSES, changeBoardStatusAction } from '../../../../common/gameState/board';
 import { finishMovement } from '../../../reducers/gameState/playerTurn';
 import { getMovement } from '../../../utils/getStats';
 
@@ -14,7 +13,7 @@ export const MoveCharacter = connect(
 		room: room,
 		user: auth
 	}),
-	{placeCurrent: finishMovement}
+	{ placeCurrent: finishMovement }
 )(
 	({ positions, room, placeCurrent, data }) => {
 		const currentCharacterMovement = getMovement(room[`Character${data.character + 1}`], room.gameState, data.character);

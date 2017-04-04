@@ -5,7 +5,7 @@ const expressWinston = require('express-winston');
 const winston = require('winston');
 const passport = require('passport');
 const bodyParser = require('body-parser');
-const {resolve} = require('path');
+const { resolve } = require('path');
 const args = require('./utils/args');
 const db = require('./db');
 const socket = require('./socket');
@@ -23,8 +23,7 @@ const app = express()
 		],
 		meta: false, // optional: control whether you want to log the meta data about the request (default to true)
 		expressFormat: true, // Use the default Express/morgan request formatting. Enabling this will override any msg if true. Will only output colors with colorize set to true
-		colorize: true, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
-		ignoreRoute: function (req, res) { return false; } // optional: allows to skip some log messages based on request and/or response
+		colorize: true, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX
 	}))
 
 	.use(require('cookie-session')({
@@ -54,9 +53,9 @@ const app = express()
 
 db.didSync.then(() => {
 	const server = http.createServer(app);
-	socket.svr.installHandlers(server, {prefix: '/socket'});
+	socket.svr.installHandlers(server, { prefix: '/socket' });
 	server.listen(args.port, () => {
-		const {address, port} = server.address();
+		const { address, port } = server.address();
 		const host = address === '::' ? 'localhost' : address;
 		const urlSafeHost = host.includes(':') ? `[${host}]` : host;
 		logger.info(`Listening on http://${urlSafeHost}:${port}`);

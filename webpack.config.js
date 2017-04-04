@@ -46,7 +46,9 @@ module.exports = {
 		}),
 		{
 			apply: (compiler) => {
-				compiler.plugin('compilation', function(compilation) {
+				compiler.plugin('compilation', function() {
+					// This is just a utility, not part of the server
+					// eslint-disable-next-line no-console
 					console.log(new Date(), 'Build Started!');
 				});
 			}

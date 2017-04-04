@@ -1,13 +1,13 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-import {rollToHit, rollToWound, closeAttack} from '../../../reducers/gameState/playerTurn';
-import {STATUSES} from '../../../../common/gameState/knockedDownCharacters';
-import {monsters} from '../../../data/monsters';
-import {getDistance} from '../../../utils/getDistance';
+import { rollToHit, rollToWound, closeAttack } from '../../../reducers/gameState/playerTurn';
+import { STATUSES } from '../../../../common/gameState/knockedDownCharacters';
+import { monsters } from '../../../data/monsters';
+import { getDistance } from '../../../utils/getDistance';
 
 export const PlayerAttack = connect(
-	({room, auth}) => {
+	({ room, auth }) => {
 		return {
 			user: auth,
 			slot: room.gameState.board.data.slot,
@@ -24,13 +24,12 @@ export const PlayerAttack = connect(
 			room
 		};
 	},
-	{rollToHitEvt: rollToHit, rollToWoundEvt: rollToWound, closeAttackEvt: closeAttack}
+	{ rollToHitEvt: rollToHit, rollToWoundEvt: rollToWound, closeAttackEvt: closeAttack }
 )(
 	({ slot, item, trap, hitRolls, hitCards, woundRolls, woundResults, monsterName, user, knockedDownCharacters, monsterSize, positions, room, rollToHitEvt, rollToWoundEvt, closeAttackEvt }) => {
 		const isController = user.id === room[`Player${slot + 1}`].id;
 		const monsterDistance = getDistance(monsterSize, positions.monster, positions[`player${slot + 1}`]);
 		const range = item.range || 1;
-		console.log(range < monsterDistance, range, monsterDistance);
 		const attackFinished = (
 			// Out of range
 			range < monsterDistance ||

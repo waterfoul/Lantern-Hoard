@@ -4,14 +4,17 @@ const ADJUST_MONSTER_STATS = 'ADJUST_MONSTER_STATS';
 //reducer
 const monsterStats = (state = {}, action) => {
 	switch (action.type) {
-	case ADJUST_MONSTER_STATS:
-		const newState = Object.assign({}, state);
-		for (let i in action.statAdjustments) {
-			newState[i] += action.statAdjustments[i];
+		case ADJUST_MONSTER_STATS: {
+			const newState = Object.assign({}, state);
+			// Iterating over a basic object
+			// eslint-disable-next-line guard-for-in
+			for (let i in action.statAdjustments) {
+				newState[i] += action.statAdjustments[i];
+			}
+			return newState;
 		}
-		return newState;
-	default:
-		return state;
+		default:
+			return state;
 	}
 };
 

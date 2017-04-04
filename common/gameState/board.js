@@ -33,17 +33,17 @@ const initialState = {
 //reducer
 const board = (state = initialState, action) => {
 	switch (action.type) {
-	case CHANGE_BOARD_STATUS:
-		if (state.status !== BOARD_STATUSES.victory) {
-			return {
-				status: action.status,
-				data: action.data
-			};
-		} else {
+		case CHANGE_BOARD_STATUS:
+			if (state.status !== BOARD_STATUSES.victory) {
+				return {
+					status: action.status,
+					data: action.data
+				};
+			} else {
+				return state;
+			}
+		default:
 			return state;
-		}
-	default:
-		return state;
 	}
 };
 

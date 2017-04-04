@@ -15,27 +15,27 @@ function moveForward(dispatch, getState) {
 	const monsterPosition = room.gameState.positions.monster;
 	const monsterDirection = room.gameState.monsterDirection;
 	switch (monsterDirection) {
-	case 'N':
-		dispatch(moveMonster([monsterPosition[0], monsterPosition[1] + monsterMovement]));
-		break;
-	case 'S':
-		dispatch(moveMonster([monsterPosition[0], monsterPosition[1] - monsterMovement]));
-		break;
-	case 'E':
-		dispatch(moveMonster([monsterPosition[0] + monsterMovement, monsterPosition[1]]));
-		break;
-	case 'W':
-		dispatch(moveMonster([monsterPosition[0] - monsterMovement, monsterPosition[1]]));
-		break;
+		case 'N':
+			dispatch(moveMonster([monsterPosition[0], monsterPosition[1] + monsterMovement]));
+			break;
+		case 'S':
+			dispatch(moveMonster([monsterPosition[0], monsterPosition[1] - monsterMovement]));
+			break;
+		case 'E':
+			dispatch(moveMonster([monsterPosition[0] + monsterMovement, monsterPosition[1]]));
+			break;
+		case 'W':
+			dispatch(moveMonster([monsterPosition[0] - monsterMovement, monsterPosition[1]]));
+			break;
 		// default makes linter happy
-	default:
-		return null;
+		default:
+			return null;
 	}
 	// TODO: Add Grab functionality
 }
 
 function jumpBack(dispatch, getState) {
-	const {room} = getState();
+	const { room } = getState();
 	const attacker = room.gameState.board.data.slot;
 	const attackerPosition = room.gameState.positions[`player${attacker + 1}`];
 	const monsterPosition = room.gameState.positions.monster;
@@ -53,7 +53,7 @@ function jumpBack(dispatch, getState) {
 }
 
 function giveToken(dispatch, getState, value, tokenType) {
-	dispatch(adjustMonsterStats({ [tokenType]: value} ));
+	dispatch(adjustMonsterStats({ [tokenType]: value } ));
 }
 
 const persistentInjury = (card, name, other = {}) => (dispatch) => {
@@ -61,16 +61,18 @@ const persistentInjury = (card, name, other = {}) => (dispatch) => {
 	dispatch(removeFromDiscard(card));
 };
 
+// TODO: Stub! Implement and remove BOTH of these comments
+// eslint-disable-next-line
 const knockDownLion = () => (dispatch, getState) => {
-	console.log('Knock down lion');
 };
 
+// TODO: Stub! Implement and remove BOTH of these comments
+// eslint-disable-next-line
 const gainWhiteLionResource = (name = null) => (dispatch, getState) => {
-	console.log('Gain White Lion Resource!', name);
 };
 
 function counterAttack(dispatch, getState, mods = {}, nextState = null) {
-	const {room} = getState();
+	const { room } = getState();
 	if (!nextState) {
 		nextState = [room.gameState.board.status, room.gameState.board.data];
 	}
@@ -118,8 +120,9 @@ export const hl = {
 				action: moveForward
 			}
 		],
+		// TODO: Stub! Implement and remove BOTH of these comments
+		// eslint-disable-next-line
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
 			// Chance of WL dying instantly
 		}
 	},
@@ -143,8 +146,9 @@ export const hl = {
 				action: moveForward
 			}
 		],
+		// TODO: Stub! Implement and remove BOTH of these comments
+		// eslint-disable-next-line
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
 		}
 	},
 	'Beasts Femur': {
@@ -158,8 +162,9 @@ export const hl = {
 		triggers: [
 			{
 				type: 'wound',
+				// TODO: Stub! Implement and remove BOTH of these comments
+				// eslint-disable-next-line
 				action: (dispatch, getState) => {
-					console.log('WOUND!');
 				}
 			}
 		],
@@ -173,12 +178,14 @@ export const hl = {
 			dispatch(persistentInjury(
 				'Beasts Heel',
 				'Ruptured Tendon',
-				{triggers: [{
+				{ triggers: [{
 					trigger: TRIGGERS.monsterMovementStart,
+					// TODO: Stub! Implement and remove BOTH of these comments
+					// eslint-disable-next-line
 					thunk: () => (dispatchInner, getState) => {
 						// TODO: roll a d10, on a 1 knock down lion
 					}
-				}]}
+				}] }
 			));
 		}
 	},
@@ -193,8 +200,9 @@ export const hl = {
 		triggers: [
 			{
 				type: 'failure',
+				// TODO: Stub! Implement and remove BOTH of these comments
+				// eslint-disable-next-line
 				action: (dispatch, getState) => {
-					console.log('FAIL!');
 				}
 			}
 		],
@@ -209,15 +217,15 @@ export const hl = {
 			{
 				type: 'failure',
 				action: (dispatch, getState) => {
-					counterAttack(dispatch, getState, {damage: 3});
+					counterAttack(dispatch, getState, { damage: 3 });
 				}
 			}
 		],
 		crit: (dispatch, getState) => {
-			dispatch(persistentInjury('Beasts Paw', 'Broken Foot', {triggers: [{
+			dispatch(persistentInjury('Beasts Paw', 'Broken Foot', { triggers: [{
 				trigger: TRIGGERS.grab,
 				fn: () => false
-			}]}));
+			}] }));
 			giveToken(dispatch, getState, -1, 'movement');
 			dispatch(gainWhiteLionResource());
 		}
@@ -227,8 +235,9 @@ export const hl = {
 		triggers: [
 			{
 				type: 'wound',
+				// TODO: Stub! Implement and remove BOTH of these comments
+				// eslint-disable-next-line
 				action: (dispatch, getState) => {
-					console.log('WOUND!');
 				}
 			}
 		],
@@ -268,14 +277,16 @@ export const hl = {
 				action: counterAttack
 			}
 		],
+		// TODO: Stub! Implement and remove BOTH of these comments
+		// eslint-disable-next-line
 		crit: (dispatch, getState) => {
-			dispatch(persistentInjury('Beasts Temple', 'Beasts Temple', {triggers: [{
+			dispatch(persistentInjury('Beasts Temple', 'Beasts Temple', { triggers: [{
 				trigger: TRIGGERS.AIDraw,
 				fn: () => {
 					// TODO: roll die, on 1/2 end lion turn and return true
 					return false;
 				}
-			}]}));
+			}] }));
 		}
 	},
 	'Beasts Tricep': {
@@ -286,15 +297,16 @@ export const hl = {
 				action: counterAttack
 			}
 		],
+		// TODO: Stub! Implement and remove BOTH of these comments
+		// eslint-disable-next-line
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
 		}
 	},
 	'Clever Ploy': {
 		img: '/static/white-lion/hl/clever-ploy.jpg',
 		trap: true,
 		action: (dispatch, getState) => {
-			const {room} = getState();
+			const { room } = getState();
 			const data = room.gameState.board.data;
 
 			counterAttack(dispatch, getState, {}, [data.turnStatus.status, data.turnStatus.data]);
@@ -308,8 +320,9 @@ export const hl = {
 				action: counterAttack
 			}
 		],
+		// TODO: Stub! Implement and remove BOTH of these comments
+		// eslint-disable-next-line
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
 		}
 	},
 	'Fuzzy Groin': {
@@ -324,22 +337,25 @@ export const hl = {
 	'Glorious Mane': {
 		img: '/static/white-lion/hl/glorious-mane.jpg',
 		impervious: true,
+		// TODO: Stub! Implement and remove BOTH of these comments
+		// eslint-disable-next-line
 		crit: (dispatch, getState) => {
-			console.log('CRIT!');
 		}
 	},
 	'Soft Belly': {
 		img: '/static/white-lion/hl/soft-belly.jpg',
 		crit: (dispatch) => {
 			dispatch(gainWhiteLionResource());
-			dispatch(persistentInjury('Soft Belly', 'Organ Trail', {triggers: [{
+			dispatch(persistentInjury('Soft Belly', 'Organ Trail', { triggers: [{
 				trigger: TRIGGERS.monsterTurnStart,
 				type: 'hl',
 				card: 'Soft Belly',
 				thunk: 0
-			}]}));
+			}] }));
 		},
 		triggers: [
+			// TODO: Stub! Implement and remove BOTH of these comments
+			// eslint-disable-next-line
 			(nextState) => (dispatch, getState) => {
 				dispatch(changeBoardStatusAction(BOARD_STATUSES.triggerRoll, {
 					title: 'Roll for Soft Belly',
@@ -352,6 +368,8 @@ export const hl = {
 					nextState
 				}));
 			},
+			// TODO: Stub! Implement and remove BOTH of these comments
+			// eslint-disable-next-line
 			(result, nextState) => (dispatch, getState) => {
 				if (result === 1) {
 					dispatch(woundAI());
@@ -362,6 +380,8 @@ export const hl = {
 	},
 	'Straining Neck': {
 		img: '/static/white-lion/hl/straining-neck.jpg',
+		// TODO: Stub! Implement and remove BOTH of these comments
+		// eslint-disable-next-line
 		crit: (dispatch, getState) => {
 			// TODO
 		}
@@ -374,6 +394,8 @@ export const hl = {
 				action: counterAttack
 			}
 		],
+		// TODO: Stub! Implement and remove BOTH of these comments
+		// eslint-disable-next-line
 		crit: (dispatch, getState) => {
 			// TODO: Spend 1 survival to gain 1 permant strength
 			dispatch(persistentInjury('Strange Hand', 'Lost Hand'));

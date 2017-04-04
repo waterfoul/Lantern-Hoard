@@ -1,11 +1,11 @@
-import {killSurvivor, addBleed} from './helpers';
+import { killSurvivor, addBleed } from './helpers';
 
 const death = {
 	top: '22.5%',
 	left: '50%',
 	bottom: '72.5%',
 	right: '0%',
-	thunk: (target) => (dispatch, getState) => {
+	thunk: (target) => (dispatch) => {
 		dispatch(killSurvivor(target));
 	}
 };
@@ -15,7 +15,7 @@ const bleeding = {
 	left: '50%',
 	bottom: '68.5%',
 	right: '0%',
-	thunk: (target) => (dispatch, getState) => {
+	thunk: (target) => (dispatch) => {
 		dispatch(addBleed(target, 2));
 	}
 };
@@ -25,6 +25,8 @@ const dismemberedLeg = {
 	left: '50%',
 	bottom: '52%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: IF not dismemberedLegx2
 			// TODO: record dismemberedLeg or dismemberedLegx2
@@ -41,6 +43,8 @@ const hamstrung = {
 	left: '50%',
 	bottom: '42%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: If not hamstrung
 			// TODO: record hanstrung
@@ -54,6 +58,8 @@ const tornAchilles = {
 	left: '50%',
 	bottom: '29.5%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: until end of showdown, any light, heavy, or severe injury knocks you down
 		// TODO: Skip next hunt
@@ -66,6 +72,8 @@ const tornMuscle = {
 	left: '50%',
 	bottom: '21.5%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: Cannot dash till end of showdown
 		// TODO: mark skip next hunt
@@ -78,6 +86,8 @@ const brokenLeg = {
 	left: '50%',
 	bottom: '11%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: IF not brokenLegx2
 			// TODO: record brokenLeg or brokenLegx2
@@ -92,6 +102,8 @@ const bloodyThighs = {
 	left: '50%',
 	bottom: '6.5%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		dispatch(addBleed(target, 2));
 	}
@@ -102,6 +114,8 @@ const knockedDown = {
 	left: '50%',
 	bottom: '0.5%',
 	right: '0%',
+	// TODO: Stub! Implement and remove BOTH of these comments
+	// eslint-disable-next-line
 	thunk: (target) => (dispatch, getState) => {
 		// TODO: Knocked down
 	}

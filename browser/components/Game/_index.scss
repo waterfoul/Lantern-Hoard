@@ -67,13 +67,19 @@
 					1fr;
 
 	.initialPlacement {
-		background-color: lightblue;
+		background-color: rgba(0, 94, 58, .5);
 		margin: 10%;
 		cursor: pointer;
 	}
 	.knocked-down {
-		&:after {
-			content: '\21B7';
+		img {
+			transform: scale(1, -1);
+		}
+	}
+
+	.yellow.knocked-down {
+		img {
+			transform: scale(-1, -1);
 		}
 	}
 
@@ -82,6 +88,7 @@
 	}
 	.yellow img {
 		border: 2px solid #d9c416;
+		transform: scale(-1, 1);
 	}
 	.white img {
 		border: 2px solid #acbbcd;
@@ -102,35 +109,29 @@
 	}
 
 	.monster {
-		background-color: red;
-		border-radius: 50%;
-		margin: 15%;
-
+		img {
+			border: 4px solid #682828;
+			border-right-color: white;
+		}
 		&:after {
 			font-size: 45px;
 		}
 
 		&.direction-N {
-			&:after {
-				content: '\2191';
+			img {
+				transform: rotate(90deg);
 			}
 		}
 
 		&.direction-S {
-			&:after {
-				content: '\2193';
+			img {
+				transform: rotate(270deg);
 			}
 		}
 
 		&.direction-E {
-			&:after {
-				content: '\2192';
-			}
-		}
-
-		&.direction-W {
-			&:after {
-				content: '\2190';
+			img {
+				transform: scale(-1, 1);
 			}
 		}
 	}

@@ -6,10 +6,10 @@ export const AUTHENTICATED = 'AUTHENTICATED';
 //reducer
 export const auth = (state = null, action) => {
 	switch (action.type) {
-	case AUTHENTICATED:
-		return action.user;
-	default:
-		return state;
+		case AUTHENTICATED:
+			return action.user;
+		default:
+			return state;
 	}
 };
 
@@ -24,6 +24,8 @@ export const whoami = () => (
 		axios.get('/api/auth/whoami')
 			.then((response) => dispatch(authenticated(response.data)))
 			.catch((e) => {
+				// UI won't really display this error, the user will just get logged out
+				// eslint-disable-next-line no-console
 				console.error('Error while logging in', e);
 				dispatch(authenticated(null));
 			})

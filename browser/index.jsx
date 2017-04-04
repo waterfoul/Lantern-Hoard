@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
-import {Provider} from 'react-redux';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
-import {store} from './store';
-import {startTrigger} from './reducers/flexBoxFix';
+import { store } from './store';
+import { startTrigger } from './reducers/flexBoxFix';
 
-import {Root} from './components/Root';
-import {RootSelector} from './components/RootSelector';
-import {Login} from './components/Login';
-import {Game} from './components/Game';
+import { Root } from './components/Root';
+import { RootSelector } from './components/RootSelector';
+import { Login } from './components/Login';
+import { Game } from './components/Game';
 import { Lobby } from './components/Lobby';
 
 import './socket';

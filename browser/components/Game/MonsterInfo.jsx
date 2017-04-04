@@ -1,7 +1,7 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-import {monsters} from '../../data/monsters';
+import { monsters } from '../../data/monsters';
 
 export const MonsterInfo = connect(
 	({ room, flexBoxFix }) => ({
@@ -16,7 +16,7 @@ export const MonsterInfo = connect(
 	({ monsterStats, monsterName, flexBoxFix, ai, hl, effects }) => {
 		return (
 			<div id="game-board-monster">
-				<div style={{display: (flexBoxFix) ? 'block' : 'none'}}>
+				<div style={{ display: (flexBoxFix) ? 'block' : 'none' }}>
 					{/*This div is for fixing some flexbox issues, it just causes chrome to re-render the content below*/}
 				</div>
 				<img src="/static/monster-info.jpg" className="game-main-image" />

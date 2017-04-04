@@ -23,7 +23,7 @@ const OAuth = db.define('oauth', {
 	// Further reading on indexes:
 	// 1. Sequelize and indexes: http://docs.sequelizejs.com/en/2.0/docs/models-definition/#indexes
 	// 2. Postgres documentation: https://www.postgresql.org/docs/9.1/static/indexes.html
-	indexes: [{fields: ['uid'], unique: true}],
+	indexes: [{ fields: ['uid'], unique: true }],
 });
 
 // OAuth.V2 is a default argument for the OAuth.setupStrategy method - it's our callback function that will execute when the user has successfully logged in
@@ -53,7 +53,6 @@ OAuth.V2 = (accessToken, refreshToken, profile, done) =>
 			});
 		})
 		.then(({ oauth, newUser }) => {
-			console.log(profile);
 			return newUser ||
 				User.create({
 					name: profile.displayName,
@@ -63,7 +62,7 @@ OAuth.V2 = (accessToken, refreshToken, profile, done) =>
 						user,
 						_setOauthUser: oauth.setUser(user)
 					}))
-					.then(({user}) => user);
+					.then(({ user }) => user);
 		})
 		.then((user) => done(null, user))
 		.catch(done);

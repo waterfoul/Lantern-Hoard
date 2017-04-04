@@ -1,7 +1,7 @@
-import {shuffle} from '../utils/shuffle';
-import {whiteLion} from '../data/monsters/whiteLion';
-import {randomNames} from '../utils/randomNames';
-import {randomIndex} from '../utils/randomIndex';
+import { shuffle } from '../utils/shuffle';
+import { whiteLion } from '../data/monsters/whiteLion';
+import { randomNames } from '../utils/randomNames';
+import { randomIndex } from '../utils/randomIndex';
 
 export function firstStory() {
 	return {

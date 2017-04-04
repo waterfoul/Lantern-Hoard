@@ -7,7 +7,7 @@ import {
 } from '.';
 import chai, { expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-import {STATUSES} from '../../../common/gameState/knockedDownCharacters';
+import { STATUSES } from '../../../common/gameState/knockedDownCharacters';
 
 chai.use(chaiAsPromised);
 
@@ -17,10 +17,10 @@ describe('utils/pick', () => {
 	beforeEach(() => {
 		scenario = {
 			room: {
-				Character1: {dead: false},
-				Character2: {dead: false},
-				Character3: {dead: false},
-				Character4: {dead: false},
+				Character1: { dead: false },
+				Character2: { dead: false },
+				Character3: { dead: false },
+				Character4: { dead: false },
 				gameState: {
 					monsterStats: {
 						size: 2,

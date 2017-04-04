@@ -1,12 +1,12 @@
-import {boneSmith} from './boneSmith';
-import {catarium} from './catarium';
-import {leatherWorker} from './leatherWorker';
-import {organGrinder} from './organGrinder';
-import {skinnery} from './skinnery';
-import {stoneCircle} from './stoneCircle';
-import {weaponCrafter} from './weaponCrafter';
-import {startAttack} from '../../reducers/gameState/playerTurn';
-import {archiveItem} from '../../../common/gameState/gear';
+import { boneSmith } from './boneSmith';
+import { catarium } from './catarium';
+import { leatherWorker } from './leatherWorker';
+import { organGrinder } from './organGrinder';
+import { skinnery } from './skinnery';
+import { stoneCircle } from './stoneCircle';
+import { weaponCrafter } from './weaponCrafter';
+import { startAttack } from '../../reducers/gameState/playerTurn';
+import { archiveItem } from '../../../common/gameState/gear';
 
 export const items = Object.assign(
 	{
@@ -33,7 +33,7 @@ export const items = Object.assign(
 					action: true,
 					movement: false,
 					range: 999,
-					thunk: (slot, row, column) => (dispatch, getState) => {
+					thunk: (slot, row, column) => (dispatch) => {
 						dispatch(startAttack(slot, 'Founding Stone', 1, 0, 1, {
 							dice: 1,
 							range: 999

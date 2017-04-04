@@ -1,7 +1,7 @@
 'use strict';
 
-import {isFront, checkFieldOfView} from './utils';
-import chai, {expect} from 'chai';
+import { isFront, checkFieldOfView } from './utils';
+import chai, { expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 
 chai.use(chaiAsPromised);
