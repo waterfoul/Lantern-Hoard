@@ -88,10 +88,7 @@ const checkCharacterPositions = () => (dispatch, getState) => {
 	const { gameState: { positions, board, monsterController } } = state;
 
 	if (
-		!positions.player1 ||
-		!positions.player2 ||
-		!positions.player3 ||
-		!positions.player4
+		!positions.player1 || !positions.player2 || !positions.player3 || !positions.player4
 	) {
 		dispatch(changeBoardStatus(BOARD_STATUSES.initialPlacement));
 	} else if (
@@ -101,19 +98,27 @@ const checkCharacterPositions = () => (dispatch, getState) => {
 		dispatch(changeBoardStatus(BOARD_STATUSES.generic));
 		dispatch(startMonsterTurn());
 	}
+};
+
+const checkActingCharacter = () => (dispatch, getState) => {
+	const { room: state, auth: user } = getState();
+	const { gameState: { board, monsterController } } = state;
 
 	if (
 		(
 			(
-				board.status === BOARD_STATUSES.playerTurn ||
-				board.status === BOARD_STATUSES.playerAttack
-			) &&
-			state[`Character${board.data.character + 1}`].dead
-		) || (
-			board.status === BOARD_STATUSES.playerDamage &&
-			board.data.nextStatus[0] === BOARD_STATUSES.playerAttack &&
-			state[`Character${board.data.target + 1}`].dead
-		)
+				(
+					board.status === BOARD_STATUSES.playerTurn ||
+					board.status === BOARD_STATUSES.playerAttack
+				) &&
+				state[`Character${board.data.character + 1}`].dead
+			) || (
+				board.status === BOARD_STATUSES.playerDamage &&
+				board.data.nextStatus[0] === BOARD_STATUSES.playerAttack &&
+				state[`Character${board.data.target + 1}`].dead
+			)
+		) &&
+		monsterController === user.id
 	) {
 		// The player who's turn it is has died, re-select a char
 		dispatch(promptForCharacters(board.data.availableCharacters));
@@ -132,6 +137,8 @@ export const checkGameState = () => (
 			dispatch(setError(null));
 
 			dispatch(checkCharacterPositions());
+
+			dispatch(checkActingCharacter());
 
 			if (board.status === BOARD_STATUSES.selectActingCharacter) {
 				// We're waiting for a selection, re-start the selection just in case
