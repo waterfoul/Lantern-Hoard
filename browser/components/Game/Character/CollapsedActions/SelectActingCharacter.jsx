@@ -4,15 +4,17 @@ import { STATUSES } from '../../../../../common/gameState/knockedDownCharacters'
 import { startSingleTurn } from '../../../../reducers/gameState/playerTurn';
 
 export const SelectActingCharacter = connect(
-	({ room }) => ({
-		room
+	({ room, auth: user }) => ({
+		room,
+		user
 	}),
 	{ startTurnEvt: startSingleTurn }
-)(({ room, slot, startTurnEvt }) => (
+)(({ room, user, slot, startTurnEvt }) => (
 	<div className="col-md-7 col-sm-12">
 		{(
 			room.gameState.board.data.indexOf(slot) !== -1 &&
-			room.gameState.knockedDownCharacters[slot] === STATUSES.standing
+			room.gameState.knockedDownCharacters[slot] === STATUSES.standing &&
+			user.id === room[`Player${slot + 1}`].id
 		) ? (
 				<div className="col-md-6 col-sm-12">
 					<button className="btn btn-primary" onClick={() => startTurnEvt(slot)}>Begin Turn</button>
