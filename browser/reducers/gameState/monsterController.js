@@ -98,9 +98,9 @@ const passMonsterController = () => (
 		];
 		playerIds = playerIds.filter((val, idx) => playerIds.indexOf(val) === idx);
 		let playerIdx = playerIds.indexOf(room.gameState.monsterController);
-		playerIdx++;
-		if (playerIdx >= playerIds.length) {
-			playerIdx = 0;
+		playerIdx--;
+		if (playerIdx < 0) {
+			playerIdx = playerIds.length - 1;
 		}
 		dispatch(changeMonsterController(playerIds[playerIdx]));
 	}
@@ -136,7 +136,6 @@ const processNextAction = (board) => (
 					dispatch(changeBoardStatusAction.apply(null, nextState));
 				}
 			} else {
-				dispatch(passMonsterController());
 				dispatch(endMonster());
 				dispatch(startPlayerTurn());
 			}
@@ -179,6 +178,8 @@ export const attackAfterMove = (target, action, newLocation, nextStatus) => (
 export const startMonsterTurn = () => (
 	(dispatch) => {
 		dispatch(beginMonster());
+
+		dispatch(passMonsterController());
 
 		dispatch(drawAICard());
 
