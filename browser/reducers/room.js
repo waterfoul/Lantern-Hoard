@@ -103,11 +103,20 @@ const checkCharacterPositions = () => (dispatch, getState) => {
 	}
 
 	if (
-		board.status === BOARD_STATUSES.playerTurn &&
-		state[`Character${board.data.character + 1}`].dead
+		(
+			(
+				board.status === BOARD_STATUSES.playerTurn ||
+				board.status === BOARD_STATUSES.playerAttack
+			) &&
+			state[`Character${board.data.character + 1}`].dead
+		) || (
+			board.status === BOARD_STATUSES.playerDamage &&
+			board.data.nextStatus[0] === BOARD_STATUSES.playerAttack &&
+			state[`Character${board.data.target + 1}`].dead
+		)
 	) {
 		// The player who's turn it is has died, re-select a char
-		promptForCharacters(board.data.availableCharacters);
+		dispatch(promptForCharacters(board.data.availableCharacters));
 	}
 };
 
@@ -126,7 +135,7 @@ export const checkGameState = () => (
 
 			if (board.status === BOARD_STATUSES.selectActingCharacter) {
 				// We're waiting for a selection, re-start the selection just in case
-				promptForCharacters(board.data);
+				dispatch(promptForCharacters(board.data.availableCharacters));
 			}
 		}
 	}
