@@ -91,8 +91,8 @@ function checkMaxRange(room, location) {
 export const moveMonster = (location) => (
 	(dispatch, getState) => {
 		location = [
-			Math.max(Math.min(location[0], 20), 1),
-			Math.max(Math.min(location[1], 14), 1)
+			Math.max(Math.min(location[0], 20), 0),
+			Math.max(Math.min(location[1], 15), 1)
 		];
 		// TODO: Knock over any players that the monster would run over
 		const { room } = getState();
